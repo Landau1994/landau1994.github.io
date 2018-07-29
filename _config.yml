@@ -13,7 +13,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://deep-insight-in-biostat-hts.com
+url: https://Landau1994.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -81,4 +81,4 @@ deploy:
   type: git
   repo: git@github.com:Landau1994/biostat-hts.git
   branch: gh-pages
-  message: [自定义的提交信息]
+  message: 
