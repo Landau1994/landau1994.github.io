@@ -7,10 +7,11 @@ authorLink: https://github.com/Landau1994
 authorAbout: https://github.com/Landau1994
 authorDesc: A PhD student in bioinformatics
 categories: 
+- NGS
 - 生物学-知识与实验技术
 - 统计学习
 - 建模 
-- 编程实现
+- 编程实践
 - 案例
 - 参考
 tags: 
@@ -20,10 +21,18 @@ tags:
 - RNA-seq
 - DNA microarray
 - scRNA-seq
+- single cell sequencing
+- sequencing
+- ChIP-seq
+- ATAC-seq
+- HiC
+- ENCODE
+- NGS
 - R
 - Python
 - Shell
-- NGS
+- hexo
+- NodeJS
 keywords: 
 description: 
 photos: 

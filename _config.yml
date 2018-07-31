@@ -14,7 +14,7 @@ timezone:
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://Landau1994.github.io/biostat-hts/
-root: /biostat-hts
+root: /biostat-hts/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -54,9 +54,34 @@ index_generator:
   order_by: -date
   
 # Category & Tag
-default_category: uncategorized
+default_category: NGS
 category_map:
+   NGS: NGS
+   生物学-知识与实验技术: biology
+   统计学习: stat-learning
+   建模: modeling
+   编程实践: implementation
+   案例: example
+   参考: reference
 tag_map:
+   biostat: biostat
+   machine learning: machine learning
+   biology: biology
+   RNA-seq: RNA-seq
+   DNA microarray: DNA microarray
+   scRNA-seq: scRNA-seq
+   single cell sequencing: sc-seq
+   sequencing: sequencing
+   ChIP-seq: ChIP-seq
+   ATAC-seq: ATAC-seq
+   HiC: HiC
+   ENCODE: ENCODE
+   NGS: NGS
+   R: R
+   Python: Python
+   Shell: Shell
+   hexo: hexo
+   NodeJS: NodeJS
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date

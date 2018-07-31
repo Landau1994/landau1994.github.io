@@ -1,5 +1,12 @@
 ---
 title: Hello World
+date: 2018-07-29 11:35:19
+categories:
+- implementation
+tags:
+- hexo
+- NodeJS
+comments: false
 ---
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
