@@ -13,8 +13,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://Landau1994.github.io/biostat-hts
-root: /biostat-hts/
+url: https://landau1994.github.io
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -104,6 +104,6 @@ theme: jsimple
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:Landau1994/biostat-hts.git
+  repo: git@github.com:Landau1994/landau1994.github.io.git
   branch: gh-pages
   message: 
