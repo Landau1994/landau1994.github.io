@@ -13,18 +13,18 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://Landau1994.github.io/biostat-hts/
+url: https://Landau1994.github.io/biostat-hts
 root: /biostat-hts/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
 # Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
+source_dir: /biostat-hts/source
+public_dir: /biostat-hts/public
+tag_dir: /biostat-hts/tags
+archive_dir: /biostat-hts/archives
+category_dir: /biostat-hts/categories
+code_dir: /biostat-hts/downloads/code
 i18n_dir: :lang
 skip_render:
 
