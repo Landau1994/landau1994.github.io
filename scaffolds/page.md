@@ -1,7 +1,6 @@
 ---
 title: {{ title }}
 date: {{ date }}
-mathjax: true
 author: 夏目沉吟
 avatar: /images/faceicon.png
 authorLink: https://github.com/Landau1994
