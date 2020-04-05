@@ -9,6 +9,5 @@ authorDesc: A PhD student in bioinformatics
 keywords: 
 description: 
 photos: 
-- /biostat-hts/images/demo.jpg
 comments: false
 ---
