@@ -64,6 +64,7 @@ category_map:
    数学学习: math
    其他: others
 tag_map:
+   学习笔记: note
    biostat: biostat
    machine learning: machine learning
    Stochastic Process: stochastic Process
