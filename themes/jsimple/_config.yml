@@ -1,0 +1,126 @@
+# site name
+site_name: Coding for Life Science
+short_name: CLS
+
+# Master info. It won't work if the one from (author|authorLink|avatar|authorDesc) be written in post.md
+webmaster:
+  name: landau1994
+  avatar: /images/favicon.png
+  home: https://landau1994.github.io
+  desc: A PhD student in bioinformatics
+
+# CSP Mode, true means #Content-Security-Policy = upgrade-insecure-requests# in meat tag
+csp_enable: false
+
+# Read Mode. day or night
+read_mode: day
+
+# favicon
+favicon: /images/favicon.png
+# unique avatar
+avatar_show: false
+avatar_image: /images/favicon.png
+
+# Home page sort type: -1: newer first，1: older first.
+home_page_sort: -1
+# Home page article shown number
+home_article_shown: 10
+
+# Post sticky top support (you need to set top:number in post.md. )
+sticky_top:
+  enable: true
+
+# your site build time or domain buy time
+site_building_time: 08/01/2018
+
+# Top navigate menu name
+## Notice:
+## Name order decide show index.The name also called category alias,so you must set category alias before start server.
+## BTW,'category_map' and 'tag_map' field in site '_config.yml' file must one to one correspondence with menus below.
+menu:
+   基因组学: genomics
+   编程实践: implementation
+   文献阅读: reference
+   数学学习: math
+   其他: others
+
+# Customize left navigation menus. faName is FontAwesome style name
+left_nav_menus:
+- uri: help
+  title: 帮助
+  faName: fa-question-circle
+
+
+# cover info config
+cover_title: Coding for Life Science
+cover_description: 关注从数据和模型中获取生物知识的博客
+
+# sns url
+sns:
+  telegram: 
+  instagram: 
+  twitter: https://twitter.com/Landau1994
+  github: https://github.com/Landau1994
+
+# article declare. default content in languages
+post_declare: true
+
+# Local search
+# Dependencies: https://github.com/theme-next/hexo-generator-searchdb
+local_search:
+  # if auto, trigger search by changing input
+  # if manual, trigger search by pressing enter key or search button
+  trigger: auto
+  # show top n results per article, show all results by setting to -1
+  top_n_per_article: 1
+  # unescape html strings to the readable one
+  unescape: false
+
+## Analytics setting. Google default
+analytics:
+  enable: false
+  google_analytics_id:
+
+## Google AdSense.
+adsense:
+  enable: false
+  auto: false
+  client_id: 
+  page_tb_id: 
+  archive_id: 
+  tags_id: 
+  post_inner_id: 
+  post_left_id: 
+  post_right_id: 
+
+
+## Comments settings. Disqus
+##                  | Gitment（Introduction: https://imsun.net/posts/gitment-introduction/）
+##                  | gitalk  (Official website: https://gitalk.github.io/)
+comments:
+  enable: false
+  disqus_shortname:
+  gitment:
+    repo:
+    githubID:
+    ClientID:
+    ClientSecret:
+    lazy: true
+  gitalk:
+    on: true
+    owner: xx
+    repo: xx.github.io
+    admin: ['xxx']
+    clientID:
+    clientSecret:
+
+# Git-pages server info (Coding Pages|Github Pages)
+server_name:
+server_url:
+
+  
+mathjax:
+  enable: true
+
+## Baidu ziyuan auto-commit. see https://ziyuan.baidu.com/
+baidu_auto_push: false
