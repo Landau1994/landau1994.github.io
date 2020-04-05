@@ -77,6 +77,7 @@ tag_map:
    genomics: genomics
    genetics: genetics
    cell biology: cell biology
+   immunology: immunology
    RNA-seq: RNA-seq
    DNA microarray: DNA microarray
    scRNA-seq: scRNA-seq
