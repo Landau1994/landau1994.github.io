@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Biostat&HTS
-subtitle: for primer
-description: Data analysis in high-throughput sequencing and the biostatistics behind it
-keywords:
+title: Coding for Life Sciences
+subtitle: 从数据，模型中获取生物知识
+description: 关注从数据和模型中获取生物知识的博客
+keywords: Biology, Data Science,AI,Informatics,Modeling;
 author: Longteng Wang
 language: zh-cn
 timezone:
@@ -27,13 +27,14 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - README.md
 
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
-filename_case: 0
+filename_case: 0s
 render_drafts: false
 post_asset_folder: false
 relative_link: false
@@ -54,19 +55,27 @@ index_generator:
   order_by: -date
   
 # Category & Tag
-default_category: NGS
+default_category: genomics
+defatul_tag: genomics
 category_map:
-   NGS: NGS
-   生物学-知识与实验技术: biology
-   统计学习: stat-learning
-   建模: modeling
+   基因组学: genomics
    编程实践: implementation
-   案例: example
-   参考: reference
+   文献阅读: reference
+   数学学习: math
+   其他: others
 tag_map:
    biostat: biostat
    machine learning: machine learning
+   Stochastic Process: stochastic Process
+   Probability: Probability
+   Modeling: Modeling
+   Graph: Graph
+   Causal Inference: Causal Inference
+   Bayesian: Bayesian
    biology: biology
+   genomics: genomics
+   genetics: genetics
+   cell biology: cell biology
    RNA-seq: RNA-seq
    DNA microarray: DNA microarray
    scRNA-seq: scRNA-seq
@@ -77,6 +86,7 @@ tag_map:
    HiC: HiC
    ENCODE: ENCODE
    NGS: NGS
+   biotech: biotech 
    R: R
    Python: Python
    Shell: Shell
@@ -95,14 +105,21 @@ time_format: HH:mm:ss
 per_page: 10
 pagination_dir: page
 
+
+
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 
-plugins:
-  - hexo-renderer-mathjax
 
-theme: hexo-theme-Claudia
+
+theme: jsimple
+
+# Local search
+search:
+  path: search.json
+  field: all
+  content: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
