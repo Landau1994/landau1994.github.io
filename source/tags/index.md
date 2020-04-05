@@ -6,7 +6,7 @@ authorLink: 'https://github.com/Landau1994'
 authorAbout: 'https://github.com/Landau1994'
 authorDesc: A PhD student in bioinformatics
 mathjax: true
-type: "tags"
+layout: "tags"
 comments: false
 date: 2020-04-05 22:04:00
 keywords:
