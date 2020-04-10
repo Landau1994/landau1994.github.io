@@ -41,6 +41,6 @@ for (a in items[1:8]){
 cowplot::plot_grid(plotlist = plot_list[1:8],ncol = 2,nrow = 4)
 ```
 
-<img src="/source/figure/combine_pheatmap_files/figure-markdown_github/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+<img src="figure/post/combine_pheatmap_files/figure-markdown_github/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 
 test equation: $E=mc^2$, math formula need second editing?

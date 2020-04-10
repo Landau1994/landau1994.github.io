@@ -1,5 +1,5 @@
 ---
-title: Combine pheatmap
+title: rmarkdown-test
 author:
 avatar: /images/faceicon.png
 authorLink: 'https://github.com/Landau1994'
@@ -65,4 +65,4 @@ pie(
 )
 ```
 
-![](source/figure/rmarkdown-test_files/figure-gfm/pie-1.png)<!-- -->
+![](figure/post/rmarkdown-test_files/figure-gfm/pie-1.png)<!-- -->
