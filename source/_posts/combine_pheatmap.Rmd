@@ -36,6 +36,7 @@ for (a in items[1:8]){
               main = a,
               height = 3,
               width = 3,
+              border_color = NA,
               color = colormap_pal(colormap = colormaps[[a]])(100),silent = T)
   plot_list[[a]] = x[[4]]     ##to save each plot into a list. note the [[4]]
 }
