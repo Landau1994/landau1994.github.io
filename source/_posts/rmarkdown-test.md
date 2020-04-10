@@ -1,9 +1,26 @@
+---
+title: Combine pheatmap
+author:
+avatar: /images/faceicon.png
+authorLink: 'https://github.com/Landau1994'
+authorAbout: 'https://github.com/Landau1994'
+authorDesc: A PhD student in bioinformatics
+mathjax: true
+categories:
+  - implementation
+tags:
+  - R
+date:
+keywords:
+  description: show how to combine pheatmap and test Rmd
+photos:
+---
+
 This post test blogdown, reference this
 [repo](https://github.com/yihui/blogdown-hexo) This post generate by
 *blogdown::new\_post(title = “Rmarkdown\_test”,ext=“.Rmd”)*
 
-R Markdown
-==========
+# R Markdown
 
 This is an R Markdown document. Please note this page was **not**
 rendered using the [**rmarkdown**](http://rmarkdown.rstudio.com) package
@@ -34,8 +51,7 @@ fit
 ##     -17.579        3.932
 ```
 
-Including Plots
-===============
+# Including Plots
 
 You can also embed R plots:
 
@@ -49,4 +65,4 @@ pie(
 )
 ```
 
-![](2020-04-09-rmarkdown-test_files/figure-markdown_github/pie-1.png)
+![](source/figure/rmarkdown-test_files/figure-gfm/pie-1.png)<!-- -->

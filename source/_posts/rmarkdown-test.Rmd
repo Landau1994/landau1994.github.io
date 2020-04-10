@@ -16,15 +16,21 @@ description: Add rmarkdown function test
 photos:
 output: 
   md_document:
-    variant: markdown_github
+    variant: gfm
 ---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+
+
 
 This post test blogdown, reference this [repo](https://github.com/yihui/blogdown-hexo)
 This post generate by *blogdown::new_post(title = "Rmarkdown_test",ext=".Rmd")*
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE)
-```
+
+
 
 # R Markdown
 
