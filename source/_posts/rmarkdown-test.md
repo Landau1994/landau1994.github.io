@@ -65,4 +65,4 @@ pie(
 )
 ```
 
-![](figure/post/rmarkdown-test_files/figure-gfm/pie-1.png)<!-- -->
+![](figure/posts/rmarkdown-test_files/figure-gfm/pie-1.png)<!-- -->
