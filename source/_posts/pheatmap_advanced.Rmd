@@ -42,7 +42,7 @@ data %>% head(3) %>% select(1:3) %>% kable() %>%
 
 
 
-```{r, fig.align="center", fig.width=6, fig.height=6, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, fig.align="center", fig.width=6, fig.height=6, warning=FALSE, message=FALSE}
 
 ### the following function were embeded in pheatmap source code
 scale_rows = function(x){

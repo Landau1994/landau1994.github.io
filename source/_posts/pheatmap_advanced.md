@@ -158,6 +158,48 @@ Europe
 
 </table>
 
+```r
+### the following function were embeded in pheatmap source code
+scale_rows = function(x){
+    m = apply(x, 1, mean, na.rm = T)
+    s = apply(x, 1, sd, na.rm = T)
+    return((x - m) / s)
+}
+
+scale_mat = function(mat, scale){
+    if(!(scale %in% c("none", "row", "column"))){
+        stop("scale argument shoud take values: 'none', 'row' or 'column'")
+    }
+    mat = switch(scale, none = mat, row = scale_rows(mat), column = t(scale_rows(t(mat))))
+    return(mat)
+}
+
+generate_breaks = function(x, n, center = F){
+    if(center){
+        m = max(abs(c(min(x, na.rm = T), max(x, na.rm = T))))
+        res = seq(-m, m, length.out = n + 1)
+    }
+    else{
+        res = seq(min(x, na.rm = T), max(x, na.rm = T), length.out = n + 1)
+    }
+    
+    return(res)
+}
+
+
+data.plot <- scale_mat(mat = data,scale = "column")
+breaks <- generate_breaks(data.plot,n = 256,center = F)
+
+pheatmap::pheatmap(mat = data.plot,
+                   cluster_cols = F,
+                   cluster_rows = F,
+                   scale = "column",border_color = "white",
+                   color = viridis(n = 256, alpha = 1, 
+                                   begin = 0, end = 1, option = "viridis"),
+                   breaks = breaks)
+```
+
+
 <img src="/figure/posts/pheatmap_advanced_files/figure-gfm/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ### case 2
