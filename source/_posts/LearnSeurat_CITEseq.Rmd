@@ -1,0 +1,299 @@
+---
+title: LearnSeurat_CITE_seq
+author: Landau1994
+avatar: /images/faceicon.png
+authorLink: 'https://github.com/Landau1994'
+authorAbout: 'https://github.com/Landau1994'
+authorDesc: A PhD student in bioinformatics
+mathjax: true
+categories:
+  - implementation
+tags:
+  - R
+date: 2020.04.12
+keywords:
+  description:
+photos:
+output:
+  md_document:
+    variant: gfm
+always_allow_html: true
+---
+
+### 前言 
+
+CITE-seq是Rahul Satija和Peter Smibert两个组合作开发的在单细胞精度，同时测量细胞表面蛋白表达和转录组的[技术](https://www.nature.com/articles/nmeth.4380)。该技术原理如下：
+
+[CITE-seq 原理图，来自原始文献]()
+
+该项技术可以用于免疫相关的单细胞测序研究中。例如, 有[研究表明](https://www.nature.com/articles/s41586-020-2134-y)称：
+
+> 他们在人和小鼠非小细胞肺癌中进行单细胞RNA测序，鉴定了一群DC，并将其命名为“富含免疫调节分子的成熟DC”（mregDC），这是由于它们共表达了免疫调节基因（Cd274，Pdcd1lg2和Cd200）和成熟基因（Cd40，Ccr7和Il12b）。
+
+这段中文报道来自[小柯机器人](http://news.sciencenet.cn/htmlpaper/2020/3/20203301537131655622.shtm)
+
+Rahul Satija组开发的软件Seurat有一个[教程](https://satijalab.org/seurat/v3.1/multimodal_vignette.html)，可以分析CITE-seq数据。本文基于该教程对该类型数据的分析进行说明。
+
+### 数据载入
+
+首先我们需要获取数据，该数据集取样为8617个脐带血单核细胞，包含了表达谱数据和11个抗体来源标签数据（antibody-derived tags ,ADT)。
+
+```{r,message=FALSE,warning=FALSE}
+library(Seurat)
+library(SeuratData)
+library(ggplot2)
+library(patchwork)
+### AvailableData() check avaliable data: we choose cbmc
+### InstallData('cbmc')
+library(cbmc.SeuratData)
+data("cbmc")
+### expression matrix
+cbmc[["RNA"]]@counts[1:10,1:10]
+### ADT count matrix
+### Actually there are just 10 surface protein
+cbmc[["ADT"]]@counts[1:10,1:10] 
+### show default assay
+DefaultAssay(cbmc)
+```
+
+### 根据基因表达进行聚类
+
+注意在默认参数的情况下，下述操作时对`Default Assay`进行的
+
+```{r,fig.align="center",fig.height=6,message=FALSE,warning=FALSE}
+# standard log-normalization
+cbmc <- NormalizeData(cbmc)
+# choose ~1k variable features
+cbmc <- FindVariableFeatures(cbmc)
+# standard scaling (no regression)
+cbmc <- ScaleData(cbmc)
+# Run PCA, select 13 PCs for tSNE visualization and graph-based clustering
+cbmc <- RunPCA(cbmc, verbose = FALSE)
+```
+
+下面的图是根据标准差来选择PCs
+
+```{r,fig.align="center",fig.height=6,message=FALSE,warning=FALSE}
+ElbowPlot(cbmc, ndims = 50)
+```
+
+聚类和t-SNE降维
+
+```{r,fig.align='center',fig.height=6,message=FALSE,warning=FALSE}
+cbmc <- FindNeighbors(cbmc, dims = 1:25)
+cbmc <- FindClusters(cbmc, resolution = 0.8)
+cbmc <- RunTSNE(cbmc, dims = 1:25, method = "FIt-SNE")
+
+# Find the markers that define each cluster, and use these to annotate the clusters, we use
+# max.cells.per.ident to speed up the process
+cbmc.rna.markers <- FindAllMarkers(cbmc, max.cells.per.ident = 100, min.diff.pct = 0.3, only.pos = TRUE)
+
+# Note, for simplicity we are merging two CD14+ Monocyte clusters (that differ in expression of
+# HLA-DR genes) and NK clusters (that differ in cell cycle stage)
+new.cluster.ids <- c("Memory CD4 T", "CD14+ Mono", "Naive CD4 T", "NK", "CD14+ Mono", "Mouse", "B", 
+    "CD8 T", "CD16+ Mono", "T/Mono doublets", "NK", "CD34+", "Multiplets", "Mouse", "Eryth", "Mk", 
+    "Mouse", "DC", "pDCs")
+names(new.cluster.ids) <- levels(cbmc)
+cbmc <- RenameIdents(cbmc, new.cluster.ids)
+```
+
+我们看看聚类结果：
+
+```{r,fig.align='center',fig.height=6,fig.width=6,message=FALSE}
+DimPlot(cbmc, label = TRUE) + NoLegend()
+```
+
+
+
+### 蛋白表达数据处理
+
+Seurat3的assay实现多个组学或者模态的数据的存储和获取。
+代码里的注释来自Seurat官网。
+
+```{r,message=FALSE,warning=FALSE}
+# Now we can repeat the preprocessing (normalization and scaling) steps that we typically run
+# with RNA, but modifying the 'assay' argument.  For CITE-seq data, we do not recommend typical
+# LogNormalization. Instead, we use a centered log-ratio (CLR) normalization, computed
+# independently for each feature.  This is a slightly improved procedure from the original
+# publication, and we will release more advanced versions of CITE-seq normalizations soon.
+cbmc <- NormalizeData(cbmc, assay = "ADT", normalization.method = "CLR")
+cbmc <- ScaleData(cbmc, assay = "ADT")
+```
+
+在RNA表达谱的降维Embedding中同时展示展示蛋白表达水平和基因表达水平：
+
+散点图：横纵轴为降维的坐标：
+
+```{r,fig.align='center',fig.width=6,fig.height=8,message=FALSE}
+# in this plot, protein (ADT) levels are on top, and RNA levels are on the bottom
+FeaturePlot(cbmc, 
+            features = c("adt_CD3", "adt_CD11c", 
+                         "adt_CD8", "adt_CD16", 
+                         "CD3E", "ITGAX", "CD8A", "FCGR3A"),
+            min.cutoff = "q05", 
+            max.cutoff = "q95", 
+            ncol = 2)
+```
+
+Ridge Plot:
+
+```{r,fig.align='center',fig.width=8,fig.height=8,message=FALSE}
+RidgePlot(cbmc, features = c("adt_CD3", "adt_CD8", "CD3E","CD8A"),ncol = 2)
+```
+
+散点图：横纵轴为表达量；这个类似于FACS
+
+```{r,fig.align='center',fig.width=8,fig.height=8,message=FALSE}
+# Draw ADT scatter plots (like biaxial plots for FACS). Note that you can even 'gate' cells if
+# desired by using HoverLocator and FeatureLocator
+FeatureScatter(cbmc, feature1 = "adt_CD19", feature2 = "adt_CD3")
+```
+
+我们也可以看看蛋白表达和基因表达的关系：
+
+```{r,fig.align='center',fig.width=8,fig.height=8,message=FALSE}
+# view relationship between protein and RNA
+FeatureScatter(cbmc, feature1 = "adt_CD3", feature2 = "CD3E")
+```
+
+我们可以看看T细胞：
+
+```{r,fig.align='center',fig.width=8,fig.height=8,message=FALSE}
+# Let's plot CD4 vs CD8 levels in T cells
+tcells <- subset(cbmc, idents = c("Naive CD4 T", "Memory CD4 T", "CD8 T"))
+FeatureScatter(tcells, feature1 = "adt_CD4", feature2 = "adt_CD8")
+```
+
+选没有标准化的原始数据我们看看，坐标轴的间距太大，会有misleading
+
+```{r,fig.align='center',fig.width=8,fig.height=8,message=FALSE}
+# # Let's look at the raw (non-normalized) ADT counts. You can see the values are quite high,
+# particularly in comparison to RNA values. This is due to the significantly higher protein copy
+# number in cells, which significantly reduces 'drop-out' in ADT data
+FeatureScatter(tcells, feature1 = "adt_CD4", feature2 = "adt_CD8", slot = "counts")
+```
+
+这里还是可以观察到dropouts现象的，据原作者说：
+> If you look a bit more closely, you’ll see that our CD8 T cell cluster is enriched for CD8 T cells, but still contains many CD4+ CD8- T cells. This is because Naive CD4 and CD8 T cells are quite similar transcriptomically, and the RNA dropout levels for CD4 and CD8 are quite high. This demonstrates the challenge of defining subtle immune cell differences from scRNA-seq data alone.
+
+画热图，Seurat3 加了 downsample的功能。
+
+```{r,message=FALSE,warning=FALSE}
+# Downsample the clusters to a maximum of 300 cells each (makes the heatmap easier to see for small clusters)
+cbmc.small <- subset(cbmc, downsample = 300)
+# Find protein markers for all clusters, and draw a heatmap
+adt.markers <- rownames(cbmc.small[["ADT"]]@counts)
+
+```
+
+我们可以看看Seurat热图的默认配色（三个冒号可以看更为底层的函数）, 个人觉得并不好看。
+
+```{r,fig.align='center',fig.height=6}
+# using code from RColorBrewer to demo the palette
+n = 200
+par(mfrow=c(3,1))
+image(
+  1:n, 1, as.matrix(1:n),
+  col = Seurat:::PurpleAndYellow(k=n),
+  xlab = "PurpleAndYellow n", ylab = "", xaxt = "n", yaxt = "n", bty = "n"
+)
+image(
+  1:n, 1, as.matrix(1:n),
+  col = colorRampPalette(c("navy", "white", "firebrick3"))(n),
+  xlab = "NavyWhite3Firebrick3 n", ylab = "", xaxt = "n", yaxt = "n", bty = "n"
+)
+image(
+  1:n, 1, as.matrix(1:n),
+  col = colorRampPalette(RColorBrewer::brewer.pal(11,"RdBu"))(n),
+  xlab = "RdBu n", ylab = "", xaxt = "n", yaxt = "n", bty = "n"
+)
+```
+
+
+
+把默认配色换掉,见
+```{r,fig.align='center',fig.height=6}
+mypal <- rev(colorRampPalette(RColorBrewer::brewer.pal(11,"RdBu"))(256))
+#mypal2 <- colorRampPalette(c("navy", "white", "firebrick3"))(256)
+DoHeatmap(cbmc.small, 
+          features = unique(adt.markers), 
+          assay = "ADT", 
+          angle = 90,size = 3)+
+  scale_fill_gradientn(colors  = mypal)
+```
+
+去除细胞杂质，
+```{r,message=FALSE,warning=FALSE}
+# You can see that our unknown cells co-express both myeloid and lymphoid markers (true at the
+# RNA level as well). They are likely cell clumps (multiplets) that should be discarded. We'll
+# remove the mouse cells now as well
+cbmc <- subset(cbmc, idents = c("Multiplets", "Mouse"), invert = TRUE)
+```
+
+### 直接根据蛋白质表达水平进行聚类
+
+```{r,message=FALSE,warning=FALSE}
+# Because we're going to be working with the ADT data extensively, we're going to switch the
+# default assay to the 'CITE' assay.  This will cause all functions to use ADT data by default,
+# rather than requiring us to specify it each time
+DefaultAssay(cbmc) <- "ADT"
+cbmc <- RunPCA(cbmc, features = rownames(cbmc), reduction.name = "pca_adt", reduction.key = "pca_adt_", 
+    verbose = FALSE)
+```
+
+再来看PCA(其实这里算是degenrate到线性组合了)
+
+```{r,fig.align='center',fig.height=6}
+DimPlot(cbmc, reduction = "pca_adt")
+```
+
+```{r,message=FALSE,warning=FALSE}
+# Since we only have 10 markers, instead of doing PCA, we'll just use a standard euclidean
+# distance matrix here.  Also, this provides a good opportunity to demonstrate how to do
+# visualization and clustering using a custom distance matrix in Seurat
+adt.data <- GetAssayData(cbmc, slot = "data")
+adt.dist <- dist(t(adt.data))
+
+# Before we recluster the data on ADT levels, we'll stash the RNA cluster IDs for later
+cbmc[["rnaClusterID"]] <- Idents(cbmc)
+
+# Now, we rerun tSNE using our distance matrix defined only on ADT (protein) levels.
+cbmc[["tsne_adt"]] <- RunTSNE(adt.dist, assay = "ADT", reduction.key = "adtTSNE_")
+cbmc[["adt_snn"]] <- FindNeighbors(adt.dist)$snn
+cbmc <- FindClusters(cbmc, resolution = 0.2, graph.name = "adt_snn")
+
+# We can compare the RNA and protein clustering, and use this to annotate the protein clustering
+# (we could also of course use FindMarkers)
+clustering.table <- table(Idents(cbmc), cbmc$rnaClusterID)
+clustering.table
+```
+
+下面这个embeding 还是根据ADT来的（不过只要marker连续，只有10个也没有关系？）
+```{r,fig.align='center',fig.height=6}
+new.cluster.ids <- c("CD4 T", "CD14+ Mono", "NK", "B", "CD8 T", "NK", "CD34+", "T/Mono doublets", 
+    "CD16+ Mono", "pDCs", "B")
+names(new.cluster.ids) <- levels(cbmc)
+cbmc <- RenameIdents(cbmc, new.cluster.ids)
+
+tsne_rnaClusters <- DimPlot(cbmc, reduction = "tsne_adt", group.by = "rnaClusterID") + NoLegend()
+tsne_rnaClusters <- tsne_rnaClusters + ggtitle("Clustering based on scRNA-seq") + theme(plot.title = element_text(hjust = 0.5))
+tsne_rnaClusters <- LabelClusters(plot = tsne_rnaClusters, id = "rnaClusterID", size = 4)
+
+tsne_adtClusters <- DimPlot(cbmc, reduction = "tsne_adt", pt.size = 0.5) + NoLegend()
+tsne_adtClusters <- tsne_adtClusters + ggtitle("Clustering based on ADT signal") + theme(plot.title = element_text(hjust = 0.5))
+tsne_adtClusters <- LabelClusters(plot = tsne_adtClusters, id = "ident", size = 4)
+
+# Note: for this comparison, both the RNA and protein clustering are visualized on a tSNE
+# generated using the ADT distance matrix.
+wrap_plots(list(tsne_rnaClusters, tsne_adtClusters), ncol = 2)
+```
+对于该结果，作者是这么解释的：
+
+> The ADT-based clustering yields similar results, but with a few differences
++ Clustering is improved for CD4/CD8 T cell populations, based on the robust ADT data for + CD4, CD8, CD14, and CD45RA
++ However, some clusters for which the ADT data does not contain good distinguishing protein markers (i.e. Mk/Ery/DC) lose separation You can verify this using FindMarkers at the RNA level, as well
+
+### 更多
+
+pbmc 10k的细胞也提供了CITE-seq的多模态数据，具体细节，请看Seurat官方[教程](https://satijalab.org/seurat/v3.1/multimodal_vignette.html)。
+
