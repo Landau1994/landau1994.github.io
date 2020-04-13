@@ -10,6 +10,8 @@ categories:
   - implementation
 tags:
   - R
+  - sc-seq
+  - scRNA-seq
 date: 2020.04.12
 keywords:
   description:
