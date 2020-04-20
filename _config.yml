@@ -94,6 +94,7 @@ tag_map:
    Shell: Shell
    hexo: hexo
    NodeJS: NodeJS
+   art: art
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
