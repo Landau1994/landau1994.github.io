@@ -17,6 +17,7 @@ photos:
 ---
 
 *A Hard Rain's A-Gonna Fall*是美国国宝级歌手，诗人，诺贝尔文学奖得主Bob Dylan的名曲之一，虽然原唱说不上多么好听，但是歌词很有意境，分享如下：
+
 > A Hard Rain's A-Gonna Fall
 > 
 > Bob Dylan
