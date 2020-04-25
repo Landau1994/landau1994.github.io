@@ -1,0 +1,53 @@
+---
+title: Calculate pi in R quikstart 
+author:
+avatar: /images/faceicon.png
+authorLink: 'https://github.com/Landau1994'
+authorAbout: 'https://github.com/Landau1994'
+authorDesc: A PhD student in bioinformatics
+mathjax: true
+categories:
+  - implementation
+tags:
+  - R
+date:
+keywords:
+  description:
+photos:
+output:
+  md_document:
+    variant: markdown_github
+---
+
+R中也可以用`Rmpfr`包实现多精度的计算。例如，我们可以用如下代码实现AGM算法计算Pi到小数点后256位。
+
+```{r message=FALSE,warning=FALSE}
+library(Rmpfr)
+piMpfr <- function(prec=256, itermax = 100, verbose=TRUE) {
+  m2 <- mpfr(2, prec) # '2' as mpfr number
+  ## -> all derived numbers are mpfr (with precision 'prec')
+  p <- m2 + sqrt(m2) # 2 + sqrt(2) = 3.414..
+  y <- sqrt(sqrt(m2)) # 2^ {1/4}
+  x <- (y+1/y) / m2
+  it <- 0L
+  repeat {
+    p.old <- p
+    it <- it+1L
+    p <- p * (1+x) / (1+y)
+    if(verbose) cat(sprintf("it=%2d, pi^ = %s, |.-.|/|.|=%e\n",
+                            it, formatMpfr(p, min(50, prec/log2(10))), 1-p.old/p))
+    if (abs(p-p.old) <= m2^(-prec))
+      break
+    if(it > itermax) {
+      warning("not converged in", it, "iterations") ; break
+    }
+    ## else
+    s <- sqrt(x)
+    y <- (y*s + 1/s) / (1+y)
+    x <- (s+1/s)/2
+  }
+  p
+}
+piMpfr(prec = 256)
+```
+

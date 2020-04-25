@@ -33,11 +33,15 @@ Chap2: Markov Chains: First steps
     > for all $x_0,\dots,x_{n-1},i,j\in\mathcal{S},n\ge0$ The set $\mathcal{S}$ is the state space of the Markov chain. 、
 
 3. $X_n=i$ 称为在时刻n到达状态i。
+   
 4. 时间齐性马尔可夫链：
    $$ P(X_{n+1}=j|X_{n}=i)=P(X_1=j|X_0=i) \tag{2.2}$$
+
 5. transition matrix:
    	1. n步转移矩阵计算（矩阵乘法）
    	2. 若干例子：
    		1) 收敛于一个各行相等的矩阵；
    		2) 不收敛，进入跳跃的状态；
    		3) 收敛于一个各行不相等的矩阵
+
+第五部分从直观上为下一章铺路。
