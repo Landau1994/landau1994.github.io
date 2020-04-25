@@ -27,7 +27,7 @@ output:
 
 使用作者已经构建好的数据进行分析。
 
-```{r warning=FALSE,message=FALSE,cache=TRUE}
+```{r warning=FALSE,message=FALSE}
 library(Seurat)
 library(SeuratData)
 library(ggplot2)
