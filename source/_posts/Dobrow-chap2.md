@@ -18,6 +18,9 @@ photos:
 ---
 对于 `Introduction to stochastic processes with R`一书的笔记
 
+> Let us finish the article and the whole book with a good example of dependent trials, which approximately can be considered as a simple chain.
+>                                            –Andrei Andreyevich Markov
+
 Chap2: Markov Chains: First steps
 
 本章讲马尔可夫链

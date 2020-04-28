@@ -1,0 +1,32 @@
+---
+title: Learnreticulate_1_CallingPythonFromR
+author: 夏目沉吟
+avatar: /images/faceicon.png
+authorLink: 'https://github.com/Landau1994'
+authorAbout: 'https://github.com/Landau1994'
+authorDesc: A PhD student in bioinformatics
+mathjax: true
+categories:
+  - implementation
+tags:
+  - R
+  - python
+date:
+keywords:
+  description: 
+photos:
+output:
+  md_document:
+    variant: gfm
+---
+
+本文的目的旨在介绍R与python的交互；
+
+```{r warning=FALSE,message=FALSE}
+library(reticulate)
+os <- import("os")
+os$listdir(".")
+
+use_condaenv()
+```
+

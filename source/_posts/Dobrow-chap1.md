@@ -13,10 +13,13 @@ tags:
     - stochastic Process
     - note
 keywords:
-description: This is a note of the book `Introduction to stochastic processes with R`
+description: Introduction and Review
 photos:
 ---
-This is a note of the book `Introduction to stochastic processes with R`
+This is a note of the textbook `Introduction to stochastic processes with R`
+
+> We demand rigidly defined areas of doubt and uncertainty!
+>      –Douglas Adams, The Hitchhiker’s Guide to the Galaxy
 
 ### Introduction and preview
 

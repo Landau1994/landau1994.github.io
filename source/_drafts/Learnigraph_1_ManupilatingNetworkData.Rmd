@@ -1,0 +1,25 @@
+---
+title: Learnigraph_1_ManipulatingNetworkData
+author:
+avatar: /images/faceicon.png
+authorLink: 'https://github.com/Landau1994'
+authorAbout: 'https://github.com/Landau1994'
+authorDesc: A PhD student in bioinformatics
+mathjax: true
+categories:
+  - implementation
+tags:
+  - R
+  - Network
+date:
+keywords:
+  description:
+photos:
+output:
+  md_document:
+    variant: gfw
+---
+
+本系列介绍如何使用R进行网络数据分析，主要是基于`igraph`包。
+
+
