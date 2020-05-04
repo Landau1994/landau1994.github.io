@@ -28,7 +28,7 @@ output:
 无向图的邻接矩阵是一个0-1矩阵：
 
 
-```{r message=FALSE,echo=FALSE,fig.align="center",fig.height=6,}
+```{r message=FALSE,warning=FALSE,fig.align="center",fig.height=6,}
 library(igraph)
 library(ggplot2)
 library(ggnetwork)

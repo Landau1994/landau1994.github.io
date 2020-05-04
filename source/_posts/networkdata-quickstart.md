@@ -23,6 +23,39 @@ Huber)
 
 无向图的邻接矩阵是一个0-1矩阵：
 
+```r
+library(igraph)
+library(ggplot2)
+library(ggnetwork)
+library(network)
+edges1 <- matrix(c(1,3,2,3,3,4,4,5,4,6),byrow = TRUE,ncol = 2)
+
+### generate adjacency matrix
+edges1 <- as.data.frame(edges1)
+mat <- matrix(data = 0,nrow = 6,ncol = 6)
+for(ii in 1:6){
+  mat[edges1[ii,1],edges1[ii,2]] <- 1
+  mat[edges1[ii,2],edges1[ii,1]] <- 1
+}
+
+### Prepare data to plot
+dat_long <- reshape2::melt(mat)
+dat_long$value <- as.factor(dat_long$value)
+colnames(dat_long) <- c("V1","V2","value")
+### plot
+gg <- ggplot(dat_long)+
+  geom_tile(aes(V1,V2,fill=value), color="#7f7f7f")+
+  scale_fill_manual(values=c("white", "black"))+
+  coord_equal()+
+  labs(x=NULL, y=NULL)+
+  scale_x_continuous(breaks = 1:6)+
+  scale_y_reverse(breaks=1:6)+
+  theme_bw()+
+  theme(panel.grid=element_blank())+
+  theme(panel.border=element_blank())
+gg
+```
+
 <img src="/figure/posts/networkdata_quickstart_files/figure-gfm/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 
 从邻接矩阵得到Graph:
