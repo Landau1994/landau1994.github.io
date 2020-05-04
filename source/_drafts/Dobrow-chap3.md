@@ -196,5 +196,97 @@ Ex 3.9-3.10 如何计算的案例；
 
 转置，看出与特征值的关联。
 
-Ex 3.11 数值案例。
+Ex 3.10 理论案例： random walk in regular graph.。
 
+### 3.3 Can you find the way to state $a$
+
+#### 3.3.1 状态可到达与状态互通
+
+> Say that state $j$ is accessible from state i, if $P_{ij}^n > 0$. That is,there is positive probability of reaching $j$ from $i$ in a finite number of steps. State $i$ and $j$ communicate if $i$ is accessible from $j$ and $j$ is accessible from $i$
+
+eg 3.11 本例讲述了用 Transition graphs 展示 Communication classes
+
+#### 3.3.2 不可约
+
+> Irreducibility
+> A Markov chain is called irreducible if it has exactly one cmmunication class. That is, all states communicate with each other
+
+Ex 3.12 一个不可约链的例子；
+
+#### 3.3.3 Recurrence and Transience
+
+> Given a Markov chain $X_0,X_1,\dots$, let $T_j=\min\{n>0:X_n=j\}$be the first passage time to state $j$. If $X_n\ne j,\forall n>0$, see$T_j=\infty$. Let
+> $$ f_j = P(T_j < \infty | X_0=j)$$
+> be the probability started in $j$ eventually returns to $j$.
+> 
+> State $j$ is said to be recurrent if the Markov chain started in $j$ eventually revists $j$. That is $f_j=1$
+> 
+> State $j$ is said to be transient if there is positive probability that the Markov chain started in j never returns to $j$. That is $f_j < 1$
+
+如何根据状态转移矩阵判定，某一个状态是Recurrent或Transient States。用示性函数，
+
+$E(\sum_{n=0}^{\infty}I_n)=\sum_{n=0}^{\infty}E(I_n)=\sum_{n=0}^{\infty}P(X_n=j|X_0=i)=\sum_{n=0}^{\infty}P_{ij}^{n}$
+
+由此可以推出另外一个判定条件；
+
+> Recurrence, Transience
+> 
+> (i) State $j$ is recurrent if and only if
+> $$ \sum_{n=0}^{\infty}P_{ij}^n=\infty $$
+> 
+> (ii) State j is transient if and only if
+> 
+> $$\sum_{n=0}^{\infty}P_{ij}^n<\infty$$
+
+> Recuurence and Transience are Class Properties
+> 
+> Theorem 3.3 The states of a communication class are either all recurrent or all transient.
+> Corollary 3.4 For a finite irreducible Markov chain, all states are recuurent.
+
+Ex 3.13 接下来的例子是简单的一维随机游走；这个例子可以推广到高维。
+
+#### 3.3.4 Canonical Decomposition
+
+Closed Communication Class
+
+> Lemma 3.5 A communication class is closed if it consists of all recurrent states. A finite communication class is closed only if it consits of all recurrent states.
+
+反证法即可证得；最后便可以得到，我们想定义的；
+
+> The state space S of a finite Markov chain can be partitioned into transient and reccurent states as $S=T \cup R_1 \cup \cdots R_m$, where T is the set of all transient states and $R_i$ are closed communiction classes of recurrent states. This is called the canonical decomposition.
+
+注：由等价类的定义可以保障这么重排状态转移矩阵，是与原矩阵等价的。
+
+> Given a canonical decomposition, the state space can be reordered so that the Markov transition matrix has the block matrix form
+
+$$
+	\boldsymbol{P}=
+	\left(
+	\begin{array}{c|c}
+	\boldsymbol{Q} & \ast & \ast & \cdots & \ast \\ \hline 
+	\boldsymbol{O} & \boldsymbol{P_1} & \boldsymbol{O} &\cdots & \boldsymbol{O}\\
+  \boldsymbol{O} & \boldsymbol{O} & \boldsymbol{P_2} &\cdots & \boldsymbol{O} \\
+  \vdots & \vdots & \vdots &\ddots & \vdots \\
+  \boldsymbol{O} & \boldsymbol{O} & \boldsymbol{O} &\cdots & \boldsymbol{P_m}
+	\end{array}
+	\right)
+$$
+
+其中$\boldsymbol{O}=(p_{ij}=0),\boldsymbol{Q}=(p_{ij})_{i,j \in T},\boldsymbol{P_l}=(p_{ij})_{i,j \in R_l},l=1,2,\cdots,m$
+
+Ex3.14 具体 case;
+
+更进一步有：
+
+$$
+	\lim_{n\rightarrow\infty} \boldsymbol{P}^n=
+	\left(
+	\begin{array}{c|c}
+	\boldsymbol{O} & \ast & \ast & \cdots & \ast \\ \hline 
+	\boldsymbol{O} & \lim_{n\rightarrow\infty}\boldsymbol{P_1}^n & \boldsymbol{O} &\cdots & \boldsymbol{O}\\
+  \boldsymbol{O} & \boldsymbol{O} & \lim_{n\rightarrow\infty}\boldsymbol{P_2}^n &\cdots & \boldsymbol{O} \\
+  \vdots & \vdots & \vdots &\ddots & \vdots \\
+  \boldsymbol{O} & \boldsymbol{O} & \boldsymbol{O} &\cdots & \lim_{n\rightarrow\infty}\boldsymbol{P_m}^n
+	\end{array}
+	\right)
+$$

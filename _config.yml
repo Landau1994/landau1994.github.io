@@ -71,6 +71,7 @@ tag_map:
    Probability: Probability
    Modeling: Modeling
    Graph: Graph
+   Network: Network
    Causal Inference: Causal Inference
    Bayesian: Bayesian
    biology: biology
