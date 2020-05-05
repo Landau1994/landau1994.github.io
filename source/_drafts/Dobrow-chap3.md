@@ -290,3 +290,57 @@ $$
 	\end{array}
 	\right)
 $$
+
+### 3.4 Irreducible Markov Chains
+
+#### 3.4.1 定理
+
+假设地震台通过统计数据得到了一个不同级别的地震的状态概率矩阵，政府和大众关心的问题是，从上一次地震到即将发生的下一次地震，大概需要多少年？
+
+一个显然的直觉上的感觉是，根据地震的强度而定。不同强度不同。
+
+可以用马尔可夫链作为上述问题的数学模型。
+
+回顾停时的定义$T_j = \min\{n>0:X_n=j\}$，有如下定理：
+
+> **Theorem 3.6 Limit Theorem for Finite Irreducible Markov Chains**. Assume that X_0,X_1,\dots, is a finite irreducible Markov Chain. For each state j. let $\mu_j=E(T_j|X_0=j)$ be the expected return time to j. Then, $\mu_j$ is finite, and there exisits a unique, positve stationary distribution $\boldsymbol{\pi}$ such that 
+> $$ \pi_j =\frac{1}{\mu_j} , \forall j$$
+> Furthermore, $\forall i$
+> $$ \pi_j = \lim_{n\rightarrow\infty}\frac{1}{n}\sum_{m=0}^{n-1}P^m_{ij} $$
+
+
+Ex 3.15 地震的 recurrence的例子；
+
+Ex 3.16 Frog jumping 算例；
+
+#### 3.4.2 First-Step Analysis
+
+Ex 3.17 一个计算Expected return time的例子；
+
+### 3.5 Periodicity
+
+如果该马尔可夫链没有平稳分布，该如何研究？
+
+具体的案例可以看第一章最后的那几个算例。
+
+答案是引入周期的概念。
+
+> **Lemma 3.7** The states of a communication class all have the same period
+
+根据这条引理，有
+
+> A Markov chain is called perioidic if is irreducible and all states have period greater than 1. A Markov chain is called aperiodic if it is irreducible and all states have period equal 1.
+
+### 3.6 Ergoidc Markov Chains
+
+A Markov chain is called ergodic if it is irreducible, aperiodic, and all states have finite expected return times.
+
+> **Fundamental Limit Theorem for Ergodic Markov Chains**
+> **Therem 3.8** Let $X_0,X_1,\cdots$ be an ergodic Markov chain. There exists a unique, positive, stationary distribution $\boldsymbol{\pi}$,which is the limiting distribution of the chain. That is, 
+> $$\pi_j = \lim_{n\rightarrow\infty}P^n_{ij},\forall i,j$$
+
+Ex 3.19（Modified Ehrenfrest Model）; 
+
+Ex 3.20 算例;
+
+Ex 3.21 PageRank; (damping factor,p=0.85)
