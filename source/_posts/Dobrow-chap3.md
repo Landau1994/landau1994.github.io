@@ -10,11 +10,13 @@ categories:
   - math
 tags:
   - note
-date: 2020-04-25 20:55:53
-keywords:
+  - stochastic Process
 description: Markov Chains for the Long term
+date: 2020-05-06 22:15:53
+keywords:
 photos:
 ---
+
 
 This is a note of the textbook `Introduction to stochastic processes with R`
 
@@ -291,6 +293,9 @@ $$
 	\right)
 $$
 
+---
+edit: 2020-05-05
+
 ### 3.4 Irreducible Markov Chains
 
 #### 3.4.1 定理
@@ -331,7 +336,7 @@ Ex 3.17 一个计算Expected return time的例子；
 
 > A Markov chain is called perioidic if is irreducible and all states have period greater than 1. A Markov chain is called aperiodic if it is irreducible and all states have period equal 1.
 
-### 3.6 Ergoidc Markov Chains
+### 3.6 Ergoidc Markov Chains 
 
 A Markov chain is called ergodic if it is irreducible, aperiodic, and all states have finite expected return times.
 
@@ -344,3 +349,106 @@ Ex 3.19（Modified Ehrenfrest Model）;
 Ex 3.20 算例;
 
 Ex 3.21 PageRank; (damping factor,p=0.85)
+
+---
+edit: 2020-05-06
+
+### 3.7 Time reversibility
+
+#### 3.7.1 Definition
+
+The property of time reversibility can be explained intuitively as follows. If you were to take a movie of Markov chain moving forward in time and then run the movie backwards, you could not tell the difference between the two.
+
+换成数学上的语言就是，如果假设马尔可夫链处于稳态，这时存在：
+
+$$ P(X_0=i,X_1=j)=P(X_0=j,X_1=i) $$
+
+由全概率公式可知；
+
+> **Time Reversibility**
+> 
+> An irreducible Markov chain with transition matrix P and stationary distribution $\boldsymbol{\pi}$, if
+> $$ \pi_iP_{ij}=\pi_jP_{ji},\forall i,j $$
+
+
+Ex 3.23; 
+
+Ex 3.24；Simple random walk on a graph is time 
+
+
+
+#### 3.7.2 Reversible Markov Chains and Radom walk
+
+Every reversible Markov chain can be considered as a random walk on a weighted graph
+
+Ex 3.25 算例；
+
+#### 3.7.3 The key benifit of reversibility
+
+> **Proposition 3.9** Let $\boldsymbol{P}$ be the transition matrix of a Markov chain. If $\boldsymbol{x}$ is a probability distribution which satisfies
+> $$ x_iP_{ij}=x_jP_{ji},\forall i,j $$
+> then $\boldsymbol{x}$ is the stationary distribution, and the markov chain is reversible.
+
+Ex 3.26 **Birth-and-death chain**
+
+Case: random walk with a partialy relecting boundary.
+
+### 3.8 Absorbing Chains
+
+#### 3.8.1 定义
+
+> **Absorbing State, Absorbing Chain**
+> 
+> State $i$ is an absorbing state if $P_{ii}=1$. A Markov chain is called an absorbing chain if it has at leat one absorbing state.
+
+根据这个定义，一个吸收的马尔可夫链的canoical decompostion可以写为：
+$$
+  \boldsymbol{P} = \lim_{n\rightarrow\infty} \boldsymbol{P}^n=
+	\left(
+	\begin{array}{c|c}
+	\boldsymbol{Q} & \boldsymbol{R} \\
+  \hline
+  \boldsymbol{O} & \boldsymbol{I}
+	\end{array}
+	\right)
+$$
+
+Ex 3.31
+
+#### 3.8.2 Expected Number of Visits to Transient States
+
+> **Theorem 3.11** Consider an absorbing Markov chain with t transient states. Let $\boldsymbol{F}$ be a $t\times t$ matrix indexed by transient states. where $F_{ij}$ is the expected number of visits to $j$ given that the chain starts in $i$, Then, 
+> $$F=(I-Q)^{-1}$$
+
+#### 3.8.3 Expected Time to Absorption
+
+> **Absorbing Markov Chains**
+> For an absorbing Markov chain with all states either transient or absorbing. Let $F=(I-Q)^{-1}$
+> 1. (Absorption probability) The probability that from transient state $i$ the chain is absorbed in state $j$ is $(FR)_{ij}$
+> 2. (Absorption time) The expected number of steps from transient state $i$ until the chain is absorbed in some absorbing state is $(F1)_i$  
+
+#### 3.8.4 Expected Hitting Time for Irreducible chain
+
+#### 3.8.5 Patterns in Sequences
+
+#### 3.9 Regenration and strong Markov property
+
+#### 3.10 Proofs of limiting Theorem
+
+剩下的都是常规内容。不再赘述。
+
+总的来说，这一章的章节组织很有条理，对初学者友好。而且选的例子很有启发性。
+
+---
+题外话：
+
+有个值得思考的问题，这种偏向应用的数学内容的教材，如何平衡论述的逻辑，理论以及思考的深度，以及应用的广度，以及对于读者的吸引性和实用性，都是很需要功底的。但是这方面做的好的教材真的太少了。
+
+理想的大学教师，是学术成就和教学成就都很出色，但是这毕竟是少数。
+
+有一对儿相互矛盾的命题：
+
++ 大学生应该提高自学能力，不要指望老师手把手的教？
++ 国家给了大学老师工资，大学生也付了学费，如果都靠自学的话，要大学干什么？
+
+依笔者看来，大学提供的是一套适合学习和研究的硬件设施，一张平静的书桌，一群志同道合的良师益友。这些环境和人，是任何其它机构或者网课代替不了的。
