@@ -10,6 +10,7 @@ categories:
   - implementation
 tags:
   - R
+  - scRNA-seq
 date:
 keywords:
   description: 
@@ -23,14 +24,18 @@ output:
 
 本篇研究最基础的PBMC3k。其实这里只有2700个外周血的细胞。注意到，由于取样是外周血，没有干细胞的存在，所以可以认为样品处于稳态。这个教程就是讲稳态下的单细胞测序分析是如何进行的。Seurat的官方教程的缺点之一就是没有涉及动态过程的单细胞分析如何进行。
 
-### 1. 导入数据
+如无特殊说明，本系列的代码均可以在自己的笔记本电脑上运行；
 
-使用作者已经构建好的数据进行分析。
+### 1. 构建Seurat object
+
+使用作者已经构建好的数据进行构建。关于Seurat更详细的文档可见[satijalab的wiki](https://github.com/satijalab/seurat/wiki)
 
 ```{r warning=FALSE,message=FALSE}
 library(Seurat)
 library(SeuratData)
 library(ggplot2)
+library(igraph)
+library(tidyverse)
 library(patchwork)
 ### AvailableData() check avaliable data: we choose cbmc
 ### InstallData('pbmc3k')
@@ -55,7 +60,692 @@ library(pbmc3k.SeuratData)
 # 
 # ## End(Not run)
 
+### how Create Seurat object work?
+### by run `Seurat::CreateSeuratObject` you can get the source function
+# ## Not run:
+# Seurat::CreateSeuratObject
+# function (counts, project = "SeuratProject", assay = "RNA", 
+#     min.cells = 0, min.features = 0, names.field = 1, names.delim = "_", 
+#     meta.data = NULL) 
+# {
+#     if (!is.null(x = meta.data)) {
+#         if (is.null(x = rownames(x = meta.data))) {
+#             stop("Row names not set in metadata. Please ensure that rownames of metadata match column names of data matrix")
+#         }
+#         if (length(x = setdiff(x = rownames(x = meta.data), y = colnames(x = counts)))) {
+#             warning("Some cells in meta.data not present in provided counts matrix.")
+#             meta.data <- meta.data[intersect(x = rownames(x = meta.data), 
+#                 y = colnames(x = counts)), ]
+#         }
+#         if (is.data.frame(x = meta.data)) {
+#             new.meta.data <- data.frame(row.names = colnames(x = counts))
+#             for (ii in 1:ncol(x = meta.data)) {
+#                 new.meta.data[rownames(x = meta.data), colnames(x = meta.data)[ii]] <- meta.data[, 
+#                   ii, drop = FALSE]
+#             }
+#             meta.data <- new.meta.data
+#         }
+#     }
+#     assay.data <- CreateAssayObject(counts = counts, min.cells = min.cells, 
+#         min.features = min.features)
+#     Key(object = assay.data) <- paste0(tolower(x = assay), "_")
+#     assay.list <- list(assay.data)
+#     names(x = assay.list) <- assay
+#     init.meta.data <- data.frame(row.names = colnames(x = assay.list[[assay]]))
+#     idents <- factor(x = unlist(x = lapply(X = colnames(x = assay.data), 
+#         FUN = ExtractField, field = names.field, delim = names.delim)))
+#     if (any(is.na(x = idents))) {
+#         warning("Input parameters result in NA values for initial cell identities. Setting all initial idents to the project name")
+#     }
+#     ident.levels <- length(x = unique(x = idents))
+#     if (ident.levels > 100 || ident.levels == 0 || ident.levels == 
+#         length(x = idents)) {
+#         idents <- rep.int(x = factor(x = project), times = ncol(x = assay.data))
+#     }
+#     names(x = idents) <- colnames(x = assay.data)
+#     object <- new(Class = "Seurat", assays = assay.list, 
+#         meta.data = init.meta.data, active.assay = assay, active.ident = idents, 
+#         project.name = project, version = packageVersion(pkg = "Seurat"))
+#     object[["orig.ident"]] <- idents
+#     n.calc <- CalcN(object = assay.data)
+#     if (!is.null(x = n.calc)) {
+#         names(x = n.calc) <- paste(names(x = n.calc), assay, 
+#             sep = "_")
+#         object[[names(x = n.calc)]] <- n.calc
+#     }
+#     if (!is.null(x = meta.data)) {
+#         object <- AddMetaData(object = object, metadata = meta.data)
+#     }
+#     return(object)
+# }
+# 
+# Seurat:: CreateAssayObject
+# function (counts, data, min.cells = 0, min.features = 0) 
+# {
+#     if (missing(x = counts) && missing(x = data)) {
+#         stop("Must provide either 'counts' or 'data'")
+#     }
+#     else if (!missing(x = counts) && !missing(x = data)) {
+#         stop("Either 'counts' or 'data' must be missing; both cannot be provided")
+#     }
+#     else if (!missing(x = counts)) {
+#         if (anyDuplicated(rownames(x = counts))) {
+#             warning("Non-unique features (rownames) present in the input matrix, making unique", 
+#                 call. = FALSE, immediate. = TRUE)
+#             rownames(x = counts) <- make.unique(names = rownames(x = counts))
+#         }
+#         if (anyDuplicated(colnames(x = counts))) {
+#             warning("Non-unique cell names (colnames) present in the input matrix, making unique", 
+#                 call. = FALSE, immediate. = TRUE)
+#             colnames(x = counts) <- make.unique(names = colnames(x = counts))
+#         }
+#         if (is.null(x = colnames(x = counts))) {
+#             stop("No cell names (colnames) names present in the input matrix")
+#         }
+#         if (any(rownames(x = counts) == "")) {
+#             stop("Feature names of counts matrix cannot be empty", 
+#                 call. = FALSE)
+#         }
+#         if (nrow(x = counts) > 0 && is.null(x = rownames(x = counts))) {
+#             stop("No feature names (rownames) names present in the input matrix")
+#         }
+#         if (!inherits(x = counts, what = "dgCMatrix")) {
+#             counts <- as(object = as.matrix(x = counts), Class = "dgCMatrix")
+#         }
+#         if (min.features > 0) {
+#             nfeatures <- Matrix::colSums(x = counts > 0)
+#             counts <- counts[, which(x = nfeatures >= min.features)]
+#         }
+#         if (min.cells > 0) {
+#             num.cells <- Matrix::rowSums(x = counts > 0)
+#             counts <- counts[which(x = num.cells >= min.cells), 
+#                 ]
+#         }
+#         data <- counts
+#     }
+#     else if (!missing(x = data)) {
+#         if (anyDuplicated(rownames(x = data))) {
+#             warning("Non-unique features (rownames) present in the input matrix, making unique", 
+#                 call. = FALSE, immediate. = TRUE)
+#             rownames(x = data) <- make.unique(names = rownames(x = data))
+#         }
+#         if (anyDuplicated(colnames(x = data))) {
+#             warning("Non-unique cell names (colnames) present in the input matrix, making unique", 
+#                 call. = FALSE, immediate. = TRUE)
+#             colnames(x = data) <- make.unique(names = colnames(x = data))
+#         }
+#         if (is.null(x = colnames(x = data))) {
+#             stop("No cell names (colnames) names present in the input matrix")
+#         }
+#         if (any(rownames(x = data) == "")) {
+#             stop("Feature names of data matrix cannot be empty", 
+#                 call. = FALSE)
+#         }
+#         if (nrow(x = data) > 0 && is.null(x = rownames(x = data))) {
+#             stop("No feature names (rownames) names present in the input matrix")
+#         }
+#         if (min.cells != 0 | min.features != 0) {
+#             warning("No filtering performed if passing to data rather than counts", 
+#                 call. = FALSE, immediate. = TRUE)
+#         }
+#         counts <- new(Class = "matrix")
+#     }
+#     if (!is.vector(x = rownames(x = counts))) {
+#         rownames(x = counts) <- as.vector(x = rownames(x = counts))
+#     }
+#     if (!is.vector(x = colnames(x = counts))) {
+#         colnames(x = counts) <- as.vector(x = colnames(x = counts))
+#     }
+#     if (!is.vector(x = rownames(x = data))) {
+#         rownames(x = data) <- as.vector(x = rownames(x = data))
+#     }
+#     if (!is.vector(x = colnames(x = data))) {
+#         colnames(x = data) <- as.vector(x = colnames(x = data))
+#     }
+#     if (any(grepl(pattern = "_", x = rownames(x = counts))) || 
+#         any(grepl(pattern = "_", x = rownames(x = data)))) {
+#         warning("Feature names cannot have underscores ('_'), replacing with dashes ('-')", 
+#             call. = FALSE, immediate. = TRUE)
+#         rownames(x = counts) <- gsub(pattern = "_", replacement = "-", 
+#             x = rownames(x = counts))
+#         rownames(x = data) <- gsub(pattern = "_", replacement = "-", 
+#             x = rownames(x = data))
+#     }
+#     if (any(grepl(pattern = "|", x = rownames(x = counts), 
+#         fixed = TRUE)) || any(grepl(pattern = "|", x = rownames(x = data), 
+#         fixed = TRUE))) {
+#         warning("Feature names cannot have pipe characters ('|'), replacing with dashes ('-')", 
+#             call. = FALSE, immediate. = TRUE)
+#         rownames(x = counts) <- gsub(pattern = "|", replacement = "-", 
+#             x = rownames(x = counts), fixed = TRUE)
+#         rownames(x = data) <- gsub(pattern = "|", replacement = "-", 
+#             x = rownames(x = data), fixed = TRUE)
+#     }
+#     init.meta.features <- data.frame(row.names = rownames(x = data))
+#     assay <- new(Class = "Assay", counts = counts, data = data, 
+#         scale.data = new(Class = "matrix"), meta.features = init.meta.features)
+#     return(assay)
+# }
+
+###update object to avoid warning.
 data("pbmc3k")
-pbmc3k <- UpdateSeuratObject(pbmc3k)
-pbmc3k
+pbmc <- UpdateSeuratObject(pbmc3k)
+rm(pbmc3k)
+pbmc
 ```
+
+### 2. 基本预处理 
+
+作者在原教程说：
+> The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat. These represent the selection and filtration of cells based on QC metrics, data normalization and scaling, and the detection of highly variable features.
+
+#### 2.1 细胞质控
+
+三种基本的QC metrics
+    
+> 1. The number of unique genes detected in each cell.
+>     + Low-quality cells or empty droplets will often have very few genes
+>     + Cell doublets or multiplets may exhibit an aberrantly high gene count
+> 2. Similarly, the total number of molecules detected within a cell (correlates strongly with unique genes)
+> 3. The percentage of reads that map to the mitochondrial genome
+>     + Low-quality / dying cells often exhibit extensive mitochondrial contamination
+>     + We calculate mitochondrial QC metrics with the `PercentageFeatureSet` function, which calculates the percentage of counts originating from a set of features
+>     + We use the set of all genes starting with `MT-` as a set of mitochondrial genes
+
+注意，人的线粒体基因是“MT-”开头，而小鼠的线粒体基因是“mt-”开头
+
+```{r,message=FALSE,warning=FALSE}
+# The [[ operator can add columns to object metadata. This is a great place to stash QC stats
+
+### how does PercentageFeatureSet work
+# PercentageFeatureSet
+# function (object, pattern = NULL, features = NULL, col.name = NULL, 
+#     assay = NULL) 
+# {
+#     assay <- assay %||% DefaultAssay(object = object)
+#     if (!is.null(x = features) && !is.null(x = pattern)) {
+#         warning("Both pattern and features provided. Pattern is being ignored.")
+#     }
+#     features <- features %||% grep(pattern = pattern, x = rownames(x = object[[assay]]), 
+#         value = TRUE)
+#     percent.featureset <- colSums(x = GetAssayData(object = object, 
+#         assay = assay, slot = "counts")[features, , drop = FALSE])/object[[paste0("nCount_", 
+#         assay)]] * 100
+#     if (!is.null(x = col.name)) {
+#         object <- AddMetaData(object = object, metadata = percent.featureset, 
+#             col.name = col.name)
+#         return(object)
+#     }
+#     return(percent.featureset)
+# }
+
+pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
+# Show QC metrics for the first 5 cells
+head(pbmc@meta.data, 5)
+```
+
+由于我们用的是作者给了metadata的数据，里面已经出现了细胞类型的注释，见`seurat_annotation`这一项；
+
+QC metric的可视化：
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12}
+# Visualize QC metrics as a violin plot
+VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12}
+# FeatureScatter is typically used to visualize feature-feature relationships, but can be used
+# for anything calculated by the object, i.e. columns in object metadata, PC scores etc.
+
+plot1 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
+```
+
+最终选择的质控标准为：
+
+> + We filter cells that have unique feature counts over 2,500 or less than 200
+> + We filter cells that have >5% mitochondrial counts
+
+```{r}
+pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+```
+
+#### 2.2 标准化
+
+> After removing unwanted cells from the dataset, the next step is to normalize the data. By default, we employ a global-scaling normalization method “LogNormalize” that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Normalized values are stored in pbmc[["RNA"]]@data.
+
+```{r}
+pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
+#### 2.3 特征选择
+
+哪些基因能反应不同细胞之间的异质性？是那些表达差异大的基因；
+
+注意` FindVariableFeatures`是S3 generic，泛型函数。
+如何查看一个泛型函数的源代码呢，我们先用`methods`函数匹配该范型函数的名字：
+
+```{r}
+methods(FindVariableFeatures)
+```
+
+星号表明我们不能直接通过运行函数名字来查看其源代码，但是我们可以通过运行 **getAnywhere**函数来获取这个函数，
+
+```{r}
+getAnywhere(FindVariableFeatures.Seurat)
+```
+
+我们可以发现，默认的**FindVariableFeatures.Seurat**method调用了**FindVariableFeatures.Assay**：
+```{r}
+getAnywhere(FindVariableFeatures.Assay)
+```
+
+千层饼的最后一层；
+
+```{r}
+getAnywhere(FindVariableFeatures.default)
+```
+
+忽略这些技术细节，进行特征选择；
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12}
+
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
+
+# Identify the 10 most highly variable genes
+top10 <- head(VariableFeatures(pbmc), 10)
+
+# plot variable features with and without labels
+plot1 <- VariableFeaturePlot(pbmc)
+plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot1 + plot2
+```
+
+#### 2.4 Scaling the data
+
+这步的目的是为了后续的PCA：
+
+> Next, we apply a linear transformation (‘scaling’) that is a standard pre-processing step prior to dimensional reduction techniques like PCA. The **ScaleData** function:
+> + Shifts the expression of each gene, so that the mean expression across cells is 0
+> + Scales the expression of each gene, so that the variance across cells is 1
+>    + This step gives equal weight in downstream analyses, so that highly-expressed genes do not dominate
+> + The results of this are stored in **pbmc[["RNA"]]@scale.data**
+
+回归掉percent.mt对于PCA的影响。这步是一步限速步骤；
+```{r,message=FALSE,warning=FALSE}
+all.genes <- rownames(pbmc)
+pbmc <- ScaleData(pbmc, features = all.genes,vars.to.regress = "percent.mt")
+```
+
+有一个问题后面的marker基因一定是HVG吗？
+
+#### 2.5 线性降维(PCA)
+
+> Next we perform PCA on the scaled data. By default, only the previously determined variable features are used as input, but can be defined using features argument if you wish to choose a different subset.
+
+```{r,message=FALSE,warning=FALSE}
+pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+# Examine and visualize PCA results a few different ways
+print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
+```
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12}
+VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
+```
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6}
+DimPlot(pbmc, reduction = "pca")
+```
+
+> In particular **DimHeatmap** allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and features are ordered according to their PCA scores. Setting cells to a number plots the ‘extreme’ cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated feature sets.
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6}
+### 	Plot an equal number of genes with both + and - scores.
+mypal <- rev(colorRampPalette(RColorBrewer::brewer.pal(11,"RdBu"))(256))
+DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE,fast = F)+scale_fill_gradientn(colors  = mypal)
+```
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12,fig.height=12}
+DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
+```
+
+#### 2.6 Determine the ‘dimensionality’ of the dataset
+
+> To overcome the extensive technical noise in any single feature for scRNA-seq data, Seurat clusters cells based on their PCA scores, with each PC essentially representing a ‘metafeature’ that combines information across a correlated feature set. The top principal components therefore represent a robust compression of the dataset. However, how many componenets should we choose to include? 10? 20? 100?
+
+两种统计方法，`JackStraw`和`ElbowPlot`，前者比较耗时，不再展示了，用后者
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6,fig.height=6}
+ElbowPlot(pbmc)
+```
+
+作者给出了更进一步的解释
+
+> Identifying the true dimensionality of a dataset – can be challenging/uncertain for the user. We therefore suggest these three approaches to consider. The first is more supervised, exploring PCs to determine relevant sources of heterogeneity, and could be used in conjunction with GSEA for example. The second implements a statistical test based on a random null model, but is time-consuming for large datasets, and may not return a clear PC cutoff. The third is a heuristic that is commonly used, and can be calculated instantly. In this example, all three approaches yielded similar results, but we might have been justified in choosing anything between PC 7-12 as a cutoff.
+
+> We chose 10 here, but encourage users to consider the following:
+
+> + Dendritic cell and NK aficionados may recognize that genes strongly associated with PCs 12 and 13 define rare immune subsets (i.e. MZB1 is a marker for plasmacytoid DCs). However, these groups are so rare, they are difficult to distinguish from background noise for a dataset of this size without prior knowledge.
+> + We encourage users to repeat downstream analyses with a different number of PCs (10, 15, or even 50!). As you will observe, the results often do not differ dramatically.
+> + We advise users to err on the higher side when choosing this parameter. For example, performing downstream analyses with only 5 PCs does signifcanltly and adversely affect results.
+
+
+### 3. 后续分析
+
+#### 3.1 聚类
+
+**FindNeighbors**构建构建SNN-graph, 而**FindClusters**用来实现Louvain algorithm，进行图聚类；
+
+```{r}
+methods(FindNeighbors)
+```
+
+
+```{r}
+getAnywhere(FindNeighbors.Seurat)
+```
+
+
+```{r,message=FALSE,warning=FALSE}
+pbmc <- FindNeighbors(pbmc, dims = 1:10)
+pbmc <- FindClusters(pbmc, resolution = 0.5)
+```
+
+#### 3.2 Run UMAP/tsne
+run tsne
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6,fig.height=6}
+pbmc <- RunTSNE(pbmc,dims = 1:10)
+DimPlot(pbmc,label = T, reduction = "tsne")
+```
+
+draw snn graph on tsne-embeding
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6,fig.height=6}
+
+test <- pbmc[["RNA_snn"]]
+
+
+net <- graph.adjacency(adjmatrix = as.matrix(x = test), 
+                  mode = "undirected", weighted = TRUE, 
+                  diag = FALSE)
+plot.igraph(x = net, 
+            layout = as.matrix(x = Embeddings(object = pbmc[["tsne"]])),
+            edge.width = E(graph = net)$weight, vertex.label = NA, 
+                  vertex.size = 0)
+```
+
+run umap
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6,fig.height=6}
+# If you haven't installed UMAP, you can do so via reticulate::py_install(packages =
+# 'umap-learn')
+pbmc <- RunUMAP(pbmc,umap.method = "umap-learn", dims = 1:10)
+# note that you can set `label = TRUE` or use the LabelClusters function to help label
+# individual clusters
+DimPlot(pbmc,label = T, reduction = "umap")
+```
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6,fig.height=6}
+
+test <- pbmc[["RNA_snn"]]
+
+net <- graph.adjacency(adjmatrix = as.matrix(x = test), 
+                  mode = "undirected", weighted = TRUE, 
+                  diag = FALSE)
+plot.igraph(x = net, 
+            layout = as.matrix(x = Embeddings(object = pbmc[["umap"]])),
+            edge.width = E(graph = net)$weight, vertex.label = NA, 
+                  vertex.size = 0)
+```
+
+
+#### 3.3 Finding differentially expressed features (cluster biomarkers)
+
+之前分群结果做差异表达；
+
+> Seurat can help you find markers that define clusters via differential expression. By default, it identifes positive and negative markers of a single cluster (specified in **ident.1**), compared to all other cells. **FindAllMarkers** automates this process for all clusters, but you can also test groups of clusters vs. each other, or against all cells.
+
+> The **min.pct** argument requires a feature to be detected at a minimum percentage in either of the two groups of cells, and the thresh.test argument requires a feature to be differentially expressed (on average) by some amount between the two groups. You can set both of these to 0, but with a dramatic increase in time - since this will test a large number of features that are unlikely to be highly discriminatory. As another option to speed up these computations, **max.cells.per.ident** can be set. This will downsample each identity class to have no more cells than whatever this is set to. While there is generally going to be a loss in power, the speed increases can be significiant and the most highly differentially expressed features will likely still rise to the top.
+
+```{r,message=FALSE,warning=FALSE}
+# find markers for every cluster compared to all remaining cells, report only the positive ones
+pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+pbmc.markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_logFC)
+```
+
+可视化：
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12}
+VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
+```
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12}
+# you can plot raw counts as well
+VlnPlot(pbmc, features = c("MS4A1", "CD79A"), slot = "counts", log = TRUE)
+```
+
+使用**FeatureScatter**获得和流式图一样的效果； 
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6,fig.height=6}
+FeatureScatter(object = pbmc,
+               feature1 = "MS4A1",
+               feature2 = "CD79A")+
+  ggtitle(label = NULL)
+```
+
+用**FeaturePlot**在Embeding上展示表达量；
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12,fig.height=12}
+FeaturePlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP", 
+    "CD8A"))
+```
+
+气泡图**DotPlot**
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6}
+DotPlot(object = pbmc,
+        features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP",  "CD8A"))+
+  coord_flip()
+```
+
+**RidgePlot**
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12,fig.height=12}
+RidgePlot(object = pbmc,
+          features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP",  "CD8A"))
+```
+
+
+热图**DoHeatmap**
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=12,fig.height=12}
+top10 <- pbmc.markers %>% 
+  group_by(cluster) %>% top_n(n = 10, wt = avg_logFC)
+
+DoHeatmap(pbmc, features = top10$gene) + 
+  scale_fill_gradientn(colors  = mypal)
+```
+
+#### 3.4 Assigning cell type identity to clusters
+
+```{r,message=FALSE,warning=FALSE,fig.align='center',fig.width=6,fig.height=6}
+new.cluster.ids <- c("Naive CD4 T","CD14+ Mono", "Memory CD4 T",  "B", "CD8 T", "FCGR3A+ Mono", "NK", "DC", "Platelet")
+names(new.cluster.ids) <- levels(pbmc)
+pbmc <- RenameIdents(pbmc, new.cluster.ids)
+DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+```
+
+
+### 4. Seurat object 详解
+
+这一部分来自wiki
+
+#### 4.1 The Seurat object 
+
+一个Seurat对象有如下的`slots`:
+
+| Slot | Function |
+| ---- | -------- |
+| `assays` | A list of assays within this object |
+| `meta.data` | Cell-level meta data |
+| `active.assay` | Name of active, or default, assay |
+| `active.ident` | Identity classes for the current object |
+| `graphs` | A list of nearest neighbor graphs |
+| `reductions` | A list of DimReduc objects |
+| `project.name` | User-defined project name (optional) |
+| `tools` | Empty list. Tool developers can store any internal data from their methods here |
+| `misc` | Empty slot. User can store additional information here |
+| `version` | Seurat version used when creating the object |
+
+这个对象把单细胞数据的所有的基本信息都包含进去了，可以用基本的一些函数去获取这些信息。例如，我们想要知道这个数据对应多少细胞，多少基因，可以用`dim`;`ncol`;`nrow`;细胞或者feature的名字，可以用`rownames`;`colnames`; 我们也可以通过`names`知道里面存储的如原始表达矩阵，或者降维后对象的名字。
+
+```{r}
+names(x = pbmc)
+rna <- pbmc[['RNA']]
+```
+
+对于Seurat对象，有一系列的函数可以对其进行操作。这些函数可以称为其所属的**methods**。多说一句，Seurat采取的是S3对象的面向对象的数据结构。
+
+可以使用如下命令访问与Seurat对象相关的操作。
+
+```{r}
+utils::methods(class = 'Seurat')
+```
+
+#### 4.2 Assay
+
+> The `Assay` class stores single cell data. 
+
+> For typical scRNA-seq experiments, a Seurat object will have a single Assay ("RNA"). This assay will also store multiple 'transformations' of the data, including raw counts (@counts slot), normalized data (@data slot), and scaled data for dimensional reduction (@scale.data slot).
+
+> For more complex experiments, an object could contain multiple assays. These could include multi-modal data types (CITE-seq antibody-derived tags, ADTs), or imputed/batch-corrected measurements. Each of those assays has the option to store the same data transformations as well.
+
+一个**Assay** 所含有的Slots
+
+| Slot | Function |
+| ---- | -------- |
+| `counts` | Stores unnormalized data such as raw counts or TPMs |
+| `data` | Normalized data matrix |
+| `scale.data` | Scaled data matrix |
+| `key` | A character string to facilitate looking up features from a specific `Assay` |
+| `var.features` | A vector of features identified as variable |
+| `meta.features` | Feature-level meta data |
+
+**Assay**对象也可以使用以下方法
+
+Summary information about `Assay` objects can be had quickly and easily using standard R functions. Object shape/dimensions can be found using the `dim`, `ncol`, and `nrow` functions; cell and feature names can be found using the `colnames` and `rownames` functions, respectively, or the `dimnames` function.
+
+更多的方法见
+
+```{r}
+utils::methods(class = 'Assay')
+```
+
+Data Access
+
+```{r}
+# GetAssayData allows pulling from a specific slot rather than just data
+GetAssayData(object = rna, slot = 'scale.data')[1:3, 1:3]
+```
+
+
+```{r}
+head(x = HVFInfo(object = rna,selection.method = "vst"))
+```
+
+The key
+
+```r
+# Key both accesses and sets the key slot for an Assay object
+> Key(object = rna)
+"rna_"
+> Key(object = rna) <- 'myRNA_'
+> Key(object = rna)
+"myRNA_"
+# Pull a feature from the RNA assay on the Seurat level
+> head(x = FetchData(object = pbmc, vars.fetch = 'rna_MS4A1'))
+               rna_MS4A1
+AAACATACAACCAC  0.000000
+AAACATTGAGCTAC  2.583047
+AAACATTGATCAGC  0.000000
+AAACCGTGCTTCCG  0.000000
+AAACCGTGTATGCG  0.000000
+AAACGCACTGGTAC  0.000000
+```
+The `DimReduc` object represents a dimensional reduction taken upon the Seurat object.
+
+#### 4.3 The `DimReduc` object 
+
+The `DimReduc` object represents a dimensional reduction taken upon the Seurat object.
+
+| Slot | Function |
+| ---- | -------- |
+| `cell.embeddings` | A matrix with cell embeddings |
+| `feature.loadings` | A matrix with feature loadings |
+| `feature.loadings.projected` | A matrix with projected feature loadings |
+| `assay.used` | Assay used to calculate this dimensional reduction |
+| `stdev` | Standard deviation for the dimensional reduction |
+| `key` | A character string to facilitate looking up features from a specific `DimReduc` |
+| `jackstraw` | Results from the `JackStraw` function |
+| `misc` | ... |
+
+和之前的很类似
+
+```r
+pca <- pbmc[["pca"]]
+# The following examples use the PCA dimensional reduction from the PBMC 3k dataset
+> pca
+A dimensional reduction object with key PC
+ Number of dimensions: 20
+ Projected dimensional reduction calculated: FALSE
+ Jackstraw run: FALSE
+# nrow and ncol provide the number of features and cells, respectively
+# dim provides both nrow and ncol at the same time
+> dim(x = pca)
+[1] 1838 2638
+# length provides the number of dimensions calculated
+> length(x = pca)
+[1] 20
+# In addtion to rownames and colnames, one can use dimnames
+# which provides a two-length list with both rownames and colnames
+> head(x = rownames(x = rna))
+[1] "TNFRSF4"  "CPSF3L"   "ATAD3C"   "C1orf86"  "RER1"     "TNFRSF25"
+> head(x = colnames(x = rna))
+[1] "AAACATACAACCAC" "AAACATTGAGCTAC" "AAACATTGATCAGC" "AAACCGTGCTTCCG"
+[5] "AAACCGTGTATGCG" "AAACGCACTGGTAC"
+```
+
+Access data
+
+```r
+# The key can be used to pull cell embeddings for specific dimensions from the Seurat level
+> Key(object = pca)
+"PC"
+> head(x = FetchData(object = pbmc, vars.fetch = 'PC1'))
+                      PC1
+AAACATACAACCAC   5.569384
+AAACATTGAGCTAC   7.216456
+AAACATTGATCAGC   2.706629
+AAACCGTGCTTCCG -10.134042
+AAACCGTGTATGCG  -1.099311
+AAACGCACTGGTAC   1.455335
+# DefaultAssay gets the name of the Assay object used to calculate the DimReduc
+> DefaultAssay(object = pca)
+[1] "RNA"
+# Stdev gets the vector of standard deviations for each dimension embedded.
+Stdev(object = pca)
+ [1] 5.666584 4.326466 3.952192 3.638124 2.191529 1.996551 1.877891 1.798251
+ [9] 1.766873 1.753684 1.731568 1.720525 1.718079 1.715879 1.707009 1.702660
+[17] 1.697318 1.692549 1.686149 1.683967
+```
+在其上可以执行的**method**有
+```{r}
+utils::methods(class = "DimReduc")
+```
+
+#### 4.4 面向对象的更多细节；
+
+关于面向对象，以及S3对象的教程，更多可见：
+
+1. [R深入|面向对象——泛型函数](https://zhuanlan.zhihu.com/p/31160374)
+2. [OO field guide](http://adv-r.had.co.nz/OO-essentials.html)
+3. [R语言面向对象编程](https://dataxujing.github.io/R_oop/)
