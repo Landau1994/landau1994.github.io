@@ -1,0 +1,685 @@
+---
+title: LearnSeurat_Control_Stimulate
+author: Landau1994
+avatar: /images/faceicon.png
+authorLink: 'https://github.com/Landau1994'
+authorAbout: 'https://github.com/Landau1994'
+authorDesc: A PhD student in bioinformatics
+mathjax: true
+categories:
+  - implementation
+tags:
+  - R
+  - scRNA-seq
+date: 2020-06-20 20:00:09
+keywords:
+  description:
+photos:
+output:
+  md_document:
+    variant: gfm
+---
+
+### 0 说明
+
+这篇教程根据Seurat的[Interaction Tips ](https://satijalab.org/seurat/v3.1/interaction_vignette.html)
+以及[Tutorial: Integrating stimulated vs. control PBMC datasets to learn cell-type specific responses](https://satijalab.org/seurat/v3.1/immune_alignment.html)，改编。
+
+自定义函数的源码见笔者的仓库https://github.com/Landau1994/mySeuratUtils。
+
+### 1 pbmc3k
+
+#### 1.1 加载包和自定义函数
+
+```{r message=FALSE}
+library(Seurat)
+library(SeuratData)
+library(ggplot2)
+library(cowplot)
+library(tidyverse)
+library(patchwork)
+library(ComplexHeatmap)
+library(RColorBrewer)
+###if not installed
+###InstallData("ifnb")
+library(ifnb.SeuratData)
+library(pbmc3k.SeuratData)
+source("mySeuratUtils.R")
+```
+
+
+
+
+
+#### 1.2 载入数据，抽样，产生重复
+
+```{r,message=FALSE}
+data("pbmc3k.final")
+pbmc <- UpdateSeuratObject(pbmc3k.final)
+rm(pbmc3k.final)
+# pretend that cells were originally assigned to one of two replicates (we assign randomly here)
+# if your cells do belong to multiple replicates, and you want to add this info to the Seurat
+# object create a data frame with this information (similar to replicate.info below)
+set.seed(42)
+pbmc$sample <- sample(c("rep1","rep2","rep3"), size = ncol(pbmc), replace = TRUE)
+# How do I create a UMAP plot where cells are colored by replicate?  First, store the current
+# identities in a new column of meta.data called CellType
+pbmc$cell.type <- Idents(pbmc)
+colnames(pbmc[[]])
+```
+
+#### 1.3 UMAP
+
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=8,fig.height=6}
+plots <- DimPlot(pbmc,group.by = c("sample"))+
+  DimPlot(pbmc,label = T)
+
+plots & theme(legend.position = "top") & 
+  guides(color = guide_legend(nrow = 4, byrow = TRUE, 
+                              override.aes = list(size = 1.5)))
+
+
+```
+
+#### 1.4 统计细胞信息
+
+```{r}
+# How does cluster membership vary by replicate?
+table(Idents(pbmc), pbmc$sample)
+#prop.table(table(Idents(pbmc), pbmc$replicate), margin = 2)
+```
+
+我们也可以用堆叠条形图进行可视化：
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=8,fig.height=6}
+MyCellPercent(object = pbmc,
+              Idents.use = "cell.type",
+              Idents.order = levels(pbmc))
+```
+
+可以看出来，这三个随机划分产生的重复的细胞类型比例差异不大。
+
+#### 1.5 DoHeatMap
+
+**Seurat**自带的函数`DoHeatMap()`可以画所有细胞的感兴趣的基因表达的热图，不过值得注意的是，这个热图函数，默认的参数用的是Seurat对象里的`scale.data`slot的表达量，
+
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=12,fig.height=6}
+
+tmp.feature <- unlist(TopFeatures(pbmc[["pca"]], balanced = TRUE))
+rdbu <- colorRampPalette(RColorBrewer::brewer.pal(11,"RdBu"))
+mypal <- rev(rdbu(256))
+p1 <- DoHeatmap(object = pbmc,
+                features = tmp.feature,
+                slot = "scale.data",
+                disp.min = -2.5,
+                disp.max = 2.5,
+                group.by = c("ident"),
+                label = F)+
+  scale_fill_gradientn(colors  = mypal)
+p2 <- DoHeatmap(object = pbmc,
+                features = tmp.feature,
+                slot = "scale.data",
+                disp.min = -2.5,
+                disp.max = 2.5,
+                group.by = c("sample"),
+                label = F)+
+  scale_fill_gradientn(colors  = mypal)
+p1+p2
+```
+
+#### 1.6 myScHeatmap
+
+或者，我们可以用自定义的函数，看不同细胞类型中，不同重复的细胞会不会有异质性：
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ht <- myScHeatmap(object = pbmc,
+                  features = tmp.feature,
+                  assay = "RNA",
+                  slot = "scale.data",
+                  cells = NULL,
+                  base.sample = NULL,
+                  idents.subset = NULL,
+                  sample.subset = NULL,
+                  show_rownames = T,
+                  show_columnnames = F,
+                  cluster_rows = T,
+                  cluster_columns = F,
+                  show_row_dend = T,
+                  idents.order = levels(pbmc),
+                  color.plot = mypal,
+                  scale.min = -2.5,
+                  scale.max = 2.5,
+                  raster = TRUE,
+                  raster.device = "CairoPNG")
+draw(ht)
+```
+几乎与原图一致。
+
+我们也可以用`DoHeatmap`的基因顺序：
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ht <- myScHeatmap(object = pbmc,
+                  features = levels(p1$data$Feature),
+                  assay = "RNA",
+                  slot = "scale.data",
+                  cells = NULL,
+                  base.sample = NULL,
+                  idents.subset = NULL,
+                  sample.subset = NULL,
+                  show_rownames = T,
+                  show_columnnames = F,
+                  cluster_rows = F,
+                  cluster_columns = F,
+                  show_row_dend = T,
+                  idents.order = levels(pbmc),
+                  color.plot = mypal,
+                  scale.min = -2.5,
+                  scale.max = 2.5,
+                  raster = TRUE,
+                  raster.device = "CairoPNG")
+draw(ht)
+```
+这就很一致了。
+
+
+我们发现同一细胞类型，不同重复之间的整体表达谱还是比较相近的,我们可以看看和rep1相比，会不会有差异。
+我们的策略是计算z-socre，是通过计算基准样本的不同细胞的基因的平均表达量和方差，然后用其他样本的单细胞的基因表达计算来得到的。
+
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ht <- myScHeatmap(object = pbmc,
+                  features = tmp.feature,
+                  assay = "RNA",
+                  slot = "data",
+                  cells = NULL,
+                  base.sample = "rep1",
+                  idents.subset = NULL,
+                  show_rownames = T,
+                  show_columnnames = F,
+                  cluster_rows = T,
+                  cluster_columns = F,
+                  show_row_dend = T,
+                  sample.subset = NULL,
+                  idents.order = levels(pbmc),
+                  color.plot = mypal,
+                  scale.min = -2.5,
+                  scale.max = 2.5,
+                  raster = TRUE,
+                  raster.device = "CairoPNG")
+draw(ht)
+```
+
+
+
+#### 1.7 Pseudobulk
+
+也可以通过把不同样本的，Seurat自带的函数
+
+```{r}
+# How can I calculate the average expression of all cells within a cluster?
+cluster.averages <- AverageExpression(pbmc,slot = "data")
+head(cluster.averages[["RNA"]][, 1:5])
+```
+
+或者将结果保存为Seurat
+
+```{r}
+# Return this information as a Seurat object (enables downstream plotting and analysis) First,
+# replace spaces with underscores '_' so ggplot2 doesn't fail
+orig.levels <- levels(pbmc)
+Idents(pbmc) <- gsub(pattern = " ", replacement = "_", x = Idents(pbmc))
+orig.levels <- gsub(pattern = " ", replacement = "_", x = orig.levels)
+levels(pbmc) <- orig.levels
+pbmc$cell.type <- Idents(pbmc)
+cluster.averages <- AverageExpression(pbmc, return.seurat = TRUE)
+cluster.averages
+```
+
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+# You can also plot heatmaps of these 'in silico' bulk datasets to visualize agreement between
+# replicates
+DoHeatmap(cluster.averages,
+          assay = "RNA",
+          slot = "scale.data",
+          features = tmp.feature, 
+          size = 3,label = F,
+          draw.lines = FALSE)+
+  scale_fill_gradientn(colors  = mypal)
+```
+
+我们也可以通过Seurat的函数来看不同重复的表达情况。
+如果查看`AverageExpression()`，他这里的平均表达用的是`mean(expm1(x))`
+
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+cluster.averages <- AverageExpression(pbmc,
+                  assays = "RNA",
+                  slot = "data",
+                  use.scale = F,
+                  add.ident = c("sample"),
+                  return.seurat = T,verbose = F)
+p <- DoHeatmap(cluster.averages,
+               assay = "RNA",
+               slot = "scale.data",
+          features = tmp.feature,
+          disp.min = -2.5, 
+          disp.max = 2.5,
+          size = 3,label = F,
+          draw.lines = FALSE)+
+  scale_fill_gradientn(colors  = mypal)
+p
+ggsave(filename = "")
+```
+Seurat的默认的`DoHeatmap`也能表示出这几个重复的情况，但是，并没有标注我们需要的样本信息，我们可以用自定义的函数`myPseudoBulkHeatmap()`来实现我们的需求：
+
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ht <- myPseudoBulkHeatmap(
+  object=pbmc, 
+  features = levels(p$data$Feature), 
+  cells = NULL,
+  slot = "data", 
+  assay = "RNA",
+  seed = 42,
+  pseudo.rep = 1,
+  idents.order=levels(pbmc),
+  sample.order=c("rep1","rep2","rep3"),
+  idents.subset = NULL,
+  sample.subset = NULL,
+  scale.min=-2.5,
+  scale.max=2.5, 
+  useExp.mean = T,
+  show_rownames=T,
+  show_columnnames=F,
+  cluster_rows = T,
+  cluster_columns = F,
+  color.plot=mypal,
+  raster = F,
+  raster.device= NULL,
+  return.data=T
+)
+draw(ht$ht)
+```
+
+我们也可以选择不对行进行聚类，直接用原来的Seurat里给的基因顺序进行分析：
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ht <- myPseudoBulkHeatmap(
+  object=pbmc, 
+  features = levels(p$data$Feature), 
+  cells = NULL,
+  slot = "data", 
+  assay = "RNA",
+  seed = 42,
+  pseudo.rep = 1,
+  idents.order=levels(pbmc),
+  sample.order=c("rep1","rep2","rep3"),
+  idents.subset = NULL,
+  sample.subset = NULL,
+  scale.min=-2.5,
+  scale.max=2.5, 
+  useExp.mean = T,
+  show_rownames=T,
+  show_columnnames=F,
+  cluster_rows = F,
+  cluster_columns = F,
+  color.plot=mypal,
+  raster = F,
+  raster.device= NULL,
+  return.data=T
+)
+draw(ht$ht)
+```
+
+也可以直接用`mean()`来计算pseudobulk的平均表达量
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ht <- myPseudoBulkHeatmap(
+  object=pbmc, 
+  features = levels(p$data$Feature), 
+  cells = NULL,
+  slot = "data", 
+  assay = "RNA",
+  seed = 42,
+  pseudo.rep = 1,
+  idents.order=levels(pbmc),
+  sample.order=c("rep1","rep2","rep3"),
+  idents.subset = NULL,
+  sample.subset = NULL,
+  scale.min=-2.5,
+  scale.max=2.5, 
+  useExp.mean = F,
+  show_rownames=T,
+  show_columnnames=F,
+  cluster_rows = F,
+  cluster_columns = F,
+  color.plot=mypal,
+  raster = F,
+  raster.device= NULL,
+  return.data=T
+)
+draw(ht$ht)
+```
+
+原来的信息并没有丢失。
+
+此外，我们也可以更进一步的划分每个细胞类型的每个样本，产生pseudoReplicate，来展示我们的数据：
+
+```{r,warning=FALSE,message=FALSE,fig.align="center",fig.width=6,fig.height=6}
+ht <- myPseudoBulkHeatmap(
+  object=pbmc, 
+  features = levels(p$data$Feature), 
+  cells = NULL,
+  slot = "data", 
+  assay = "RNA",
+  seed = 42,
+  pseudo.rep = 3,
+  idents.order=levels(pbmc),
+  sample.order=c("rep1","rep2","rep3"),
+  idents.subset = NULL,
+  sample.subset = NULL,
+  scale.min=-2.5,
+  scale.max=2.5, 
+  useExp.mean = F,
+  show_rownames=T,
+  show_columnnames=F,
+  cluster_rows = F,
+  cluster_columns = F,
+  color.plot=mypal,
+  raster = F,
+  raster.device= NULL,
+  return.data=T
+)
+draw(ht$ht)
+```
+
+
+最后，我们可以将rep1作为参考样本来进行Scale;
+
+```{r}
+ht <- myPseudoBulkHeatmap(
+  object=pbmc, 
+  features = levels(p$data$Feature), 
+  cells = NULL,
+  slot = "data", 
+  assay = "RNA",
+  seed = 42,
+  pseudo.rep = 1,
+  base.sample = "rep1",
+  idents.order=levels(pbmc),
+  sample.order=c("rep1","rep2","rep3"),
+  idents.subset = NULL,
+  sample.subset = NULL,
+  scale.min=-2.5,
+  scale.max=2.5, 
+  useExp.mean = F,
+  show_rownames=T,
+  show_columnnames=F,
+  cluster_rows = F,
+  cluster_columns = F,
+  color.plot=mypal,
+  raster = F,
+  raster.device= NULL,
+  return.data=T
+)
+draw(ht$ht)
+```
+
+
+我们可以看出，通过随机划分得到的重复之间的异质性其实挺低的。
+
+
+
+补充：**Seurat**使用的**ggplot2**实现的`DoHeatmap()`，源代码过于繁琐,可扩展性一般，我们自定义的`myScHeatmap()`，基于**ComplexHeatmap**来实现，功能与其类似，但是可扩展性强。
+
+
+### 2 ifnb
+
+接下来，我们来用Seurat提供的ifnb数据，看看，真实的不同条件的样本是什么样的。
+对应教程见[Tutorial: Integrating stimulated vs. control PBMC datasets to learn cell-type specific responses](https://satijalab.org/seurat/v3.1/immune_alignment.html)
+
+#### 2.1 加载数据
+
+```{r,message=FALSE,warning=FALSE}
+data("ifnb")
+ifnb.list <- SplitObject(ifnb, split.by = "stim")
+
+ifnb.list <- lapply(X = ifnb.list, FUN = function(x) {
+    x <- NormalizeData(x)
+    x <- FindVariableFeatures(x, selection.method = "vst", nfeatures = 2000)
+})
+immune.anchors <- FindIntegrationAnchors(object.list = ifnb.list, dims = 1:20)
+immune.combined <- IntegrateData(anchorset = immune.anchors, dims = 1:20)
+DefaultAssay(immune.combined) <- "integrated"
+
+# Run the standard workflow for visualization and clustering
+immune.combined <- ScaleData(immune.combined, verbose = FALSE)
+immune.combined <- RunPCA(immune.combined, npcs = 30, verbose = FALSE)
+# t-SNE and Clustering
+immune.combined <- RunUMAP(immune.combined, reduction = "pca", dims = 1:20)
+immune.combined <- FindNeighbors(immune.combined, reduction = "pca", dims = 1:20)
+immune.combined <- FindClusters(immune.combined, resolution = 0.5)
+saveRDS(immune.combined,"immune.combined.Rds")
+```
+
+#### 2.2 可视化
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=12,fig.height=6}
+# Visualization
+p1 <- DimPlot(immune.combined, reduction = "umap", group.by = "stim")
+p2 <- DimPlot(immune.combined, reduction = "umap", label = TRUE)
+plot_grid(p1, p2)
+```
+
+```{r,fig.align="center",fig.width=8,fig.height=6}
+MyCellPercent(object = immune.combined,
+              Idents.use = "cell.type",
+              Idents.order = levels(immune.combined),
+              color = ggsci::pal_d3(palette = c("category20"))(13))
+```
+
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=12,fig.height=6}
+DimPlot(immune.combined, reduction = "umap", split.by = "stim")
+```
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=12,fig.height=6}
+DefaultAssay(immune.combined) <- "RNA"
+# nk.markers <- FindConservedMarkers(immune.combined, ident.1 = 6, grouping.var = "stim", verbose = FALSE)
+# head(nk.markers)
+FeaturePlot(immune.combined, features = c("CD3D", "SELL", "CREM", "CD8A", "GNLY", "CD79A", "FCGR3A", 
+    "CCL2", "PPBP"), min.cutoff = "q9")
+```
+
+#### 2.3 注释细胞类型：
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=6,fig.height=6}
+Idents(immune.combined) <- "seurat_clusters"
+
+immune.combined <- RenameIdents(immune.combined, `0` = "CD14 Mono", `1` = "CD4 Naive T", `2` = "CD4 Memory T", 
+    `3` = "CD16 Mono", `4` = "B", `5` = "CD8 T", `6` = "NK", `7` = "T activated", `8` = "DC", `9` = "B Activated", 
+    `10` = "Mk", `11` = "pDC", `12` = "Eryth")
+
+tmp.cell.order <- levels(immune.combined)
+immune.combined$cell.type <- factor(Idents(immune.combined),
+                                    levels = tmp.cell.order)
+plots <- DimPlot(immune.combined, 
+                 group.by = c("sample", "cell.type"))
+plots & theme(legend.position = "top") & guides(color = guide_legend(nrow = 4, byrow = TRUE, 
+    override.aes = list(size = 2.5)))
+ggsave(filename = "ifndata_DimPlot.pdf",width = 12,height = 8)
+```
+
+DotPlot
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=6,fig.height=6}
+Idents(immune.combined) <- factor(Idents(immune.combined), levels = c("pDC", "Eryth", "Mk", "DC", 
+    "CD14 Mono", "CD16 Mono", "B Activated", "B", "CD8 T", "NK", "T activated", "CD4 Naive T", "CD4 Memory T"))
+markers.to.plot <- c("CD3D", "CREM", "HSPH1", "SELL", "GIMAP5", "CACYBP", "GNLY", "NKG7", "CCL5", 
+    "CD8A", "MS4A1", "CD79A", "MIR155HG", "NME1", "FCGR3A", "VMO1", "CCL2", "S100A9", "HLA-DQA1", 
+    "GPR183", "PPBP", "GNG11", "HBA2", "HBB", "TSPAN13", "IL3RA", "IGJ")
+DotPlot(immune.combined, features = rev(markers.to.plot), cols = c("blue", "red"), dot.scale = 8, 
+    split.by = "stim") + RotatedAxis()
+ggsave(filename = "ifndata_DotPlot.pdf",width = 8,height = 6)
+```
+
+#### 2.4 同一细胞类型，不同条件的差异表达
+
+```{r}
+colnames(immune.combined[[]])
+immune.combined$celltype.stim <- paste(Idents(immune.combined), immune.combined$stim, sep = "_")
+immune.combined$cell.type <- Idents(immune.combined)
+immune.combined$sample <- immune.combined$stim
+Idents(immune.combined) <- "celltype.stim"
+b.interferon.response <- FindMarkers(immune.combined, ident.1 = "B_STIM", ident.2 = "B_CTRL", verbose = FALSE)
+head(b.interferon.response, n = 5)
+```
+
+Seurat的可视化方式：
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=6,fig.height=12}
+DefaultAssay(immune.combined)
+features <- rownames(b.interferon.response)[1:3]
+plots <- VlnPlot(immune.combined, features = features, split.by = "stim", group.by = "cell.type", 
+    pt.size = 0, combine = FALSE)
+wrap_plots(plots = plots, ncol = 1)
+ggsave(filename = "ifndata_VlnPlot.pdf",width = 12,height = 9)
+```
+
+我们来看看我们的热图的表现何如
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=8,fig.height=8}
+features <- rownames(b.interferon.response)[1:20]
+Idents(immune.combined) <- "cell.type"
+
+ht <- myScHeatmap(object = immune.combined,
+            features = features,
+            cells = NULL,
+            assay = "RNA",
+            slot = "data",
+            base.sample = "CTRL",
+            idents.subset = NULL,
+            sample.subset = NULL,
+            idents.order = rev(levels(immune.combined)),
+            scale.min = -2.5,
+            scale.max = 2.5,
+            show_rownames = T,
+            show_columnnames = F,
+            show_row_dend = T,
+            cluster_rows = T,
+            cluster_columns = F,
+            color.plot = mypal)
+pdf(file = "ifndata_scHeatmap.pdf",width = 8,height = 8)
+draw(ht)
+dev.off()
+
+```
+或者看原始表达情况：
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=8,fig.height=8}
+ht <- myScHeatmap(object = immune.combined,
+            features = features,
+            cells = NULL,
+            assay = "RNA",
+            slot = "data",
+            base.sample = NULL,
+            idents.subset = NULL,
+            sample.subset = NULL,
+            idents.order = rev(levels(immune.combined)),
+            scale.min = -2.5,
+            scale.max = 2.5,
+            show_rownames = T,
+            show_columnnames = F,
+            show_row_dend = T,
+            cluster_rows = T,
+            cluster_columns = F,
+            color.plot = mypal)
+draw(ht)
+```
+或者，我们看平均表达情况：
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=8,fig.height=8}
+ht <- myPseudoBulkHeatmap(object = immune.combined,
+            features = features,
+            cells = NULL,
+            assay = "RNA",
+            slot = "data",
+            base.sample = NULL,
+            idents.subset = NULL,
+            sample.subset = NULL,
+            idents.order = rev(levels(immune.combined)),
+            sample.order = c("CTRL","STIM"),
+            pseudo.rep = 3,
+            useExp.mean = T,
+            scale.min = -2.5,
+            scale.max = 2.5,
+            show_rownames = T,
+            show_columnnames = F,
+            show_row_dend = T,
+            cluster_rows = T,
+            cluster_columns = F,
+            color.plot = mypal,
+            raster = F)
+draw(ht$ht)
+```
+
+
+### 附录: 配色表
+
+基本颜色：
+
+```{r,message=FALSE,warning=FALSE,fig.align="center",fig.width=12,fig.height=9}
+#### code provided by
+####http://bc.bojanorama.pl/2013/04/r-color-reference-sheet/
+m <- matrix(1:660, 60, 11)
+kol <- colors()[m]
+#op <- par(mar=c(.1, .1, 2, .1))
+image(1:11, 1:60, t(m), col=kol, axes=FALSE, ann=FALSE)
+txtcol <- ifelse( apply(col2rgb(kol), 2, mean) < 70, "white", "black")
+text( as.numeric(col(m)), as.numeric(row(m)), kol, cex=.8, col=txtcol)
+mtext("grDevices::colors", 3, cex=2)
+```
+
+
+调色版
+
+```{r,message=FALSE,warning=FALSE,fig.width=8,fig.height=6}
+RColorBrewer::display.brewer.all()
+mtext("RColorBrewer", 3, cex=2)
+```
+
+渐变色
+
+```{r,message=FALSE,warning=FALSE,fig.width=8,fig.height=6}
+library(RColorBrewer)
+library(colorRamps)
+library(viridis)
+### manu
+rdylbu <- colorRampPalette(rev(brewer.pal(n = 11, name ="RdYlBu")))
+rdbu <- colorRampPalette(rev(brewer.pal(n = 11, name ="RdBu")))
+navy <- colorRampPalette(c("navy", "white", "firebrick3"))
+jet.colors <-
+  colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan",
+                     "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+cold <- colorRampPalette(c('#f7fcf0','#41b6c4','#253494','#081d58','#081d58'))
+warm <- colorRampPalette(c('#ffffb2','#fecc5c','#e31a1c','#800026','#800026'))
+warmcold <- colorRampPalette(c(rev(cold(21)), warm(20)))
+
+
+### add manu with package function
+
+N <- 100 # ramp length
+funnames <- rev(c("manu::rdylbu","manu::rdbu","manu::navy","manu::jet.colors","manu::warmcold",
+              "viridis::viridis",
+              "grDevices::rainbow", "grDevices::heat.colors",
+              "grDevices::terrain.colors", "grDevices::topo.colors",
+              "grDevices::cm.colors", 
+              "colorRamps::blue2red",
+              "colorRamps::blue2green", "colorRamps::green2red",
+              "colorRamps::blue2yellow", "colorRamps::cyan2yellow",
+              "colorRamps::magenta2green", "colorRamps::matlab.like",
+              "colorRamps::matlab.like2", "colorRamps::primary.colors",
+              "colorRamps::ygobb"))
+spl <- strsplit(funnames, "::")
+pkgs <- sapply(spl, "[", 1)
+funs <- sapply(spl, "[", 2)
+kolmat <- sapply(funs, do.call, list(N))
+mat <- matrix( seq(1, length(kolmat)), nrow(kolmat), ncol(kolmat))
+
+
+image(seq(1, nrow(mat)), seq(1, ncol(mat)), mat, col=kolmat,
+      axes=FALSE, ann=FALSE)
+text( nrow(mat)/2, seq(1, ncol(mat)), funnames)
+mtext("Color Ramps function", 3, cex=2)
+```
+
