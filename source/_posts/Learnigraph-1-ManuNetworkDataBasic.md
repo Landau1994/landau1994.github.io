@@ -11,7 +11,7 @@ categories:
 tags:
   - Graph
   - Network
-date:
+date: 2020-04-20 
 keywords: 
 description: Networkdata manipulation and Baisc visualization
 photos:

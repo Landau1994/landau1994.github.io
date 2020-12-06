@@ -10,7 +10,7 @@ categories:
   - implementation
 tags:
   - R
-date:
+date: 2020-04-20 
 keywords:
   description: show how to combine pheatmap and test Rmd
 photos:
