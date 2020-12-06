@@ -7,7 +7,7 @@ authorAbout: 'https://github.com/Landau1994'
 authorDesc: A PhD student in bioinformatics
 mathjax: true
 categories:
-  - genomics
+  - reference
 tags:
   - note
 date: 2020-12-06 11:07:29
