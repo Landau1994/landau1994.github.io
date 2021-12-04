@@ -20,7 +20,7 @@ photos:
 
 # Learn_python_001 Top K problem
 
-### :question: The problem
+### &#x1F7E7;&#x2753; The problem
 
 Top K question:
 
@@ -44,7 +44,7 @@ Top K question:
 链接：https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明
 
-### :page_facing_up: code
+### &#x1F4C4; code
 
 有三种解法，解法二，三，是符合题目要求的两种（因为题目也考察了排序算法）。详解见https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/solution/jian-zhi-offer-40-zui-xiao-de-k-ge-shu-j-9yze/
 
@@ -87,7 +87,7 @@ class Solution3:
             return arr[:k]     
         return quick_sort(0, len(arr) - 1)
 ```
-### :straight_ruler: 测试
+### &#x1F4cF; 测试
 
 我们用如下代码测试：
 
