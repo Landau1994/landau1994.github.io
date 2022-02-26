@@ -23,6 +23,6 @@
     "highlight.js": "^10.7.3",
     "kind-of": "^6.0.3",
     "minimist": "^1.2.5",
-    "prismjs": "^1.25.0"
+    "prismjs": "^1.27.0"
   }
 }
