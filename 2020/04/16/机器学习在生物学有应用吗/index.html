@@ -1,0 +1,506 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
+<head>
+    <!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0;url=https://landau1994.github.io/warn.html">
+<![endif]-->
+<meta charset="utf-8">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<link rel="dns-prefetch" href="https://landau1994.github.io">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+<link rel="prefetch" href="https://landau1994.github.io">
+<link rel="prefetch" href="//www.google-analytics.com">
+
+
+<link rel="prerender" href="https://landau1994.github.io">
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<meta http-equiv="mobile-agent" content="format=html5; url=https://landau1994.github.io">
+<meta name="author" content="Longteng Wang">
+
+<link rel="stylesheet" href="/css/JSimple.css">
+
+
+<link rel="shortcut icon" href="/images/favicon.png">
+
+
+<title>机器学习在生物学有应用吗 - Coding for Life Sciences</title>
+
+<meta name="keywords" content="Biology, Data Science,AI,Informatics,Modeling;">
+
+<meta name="description " content="关注从数据和模型中获取生物知识的博客">
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+    </script>
+
+
+    
+
+    
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container {
+  overflow: auto hidden;
+}
+
+mjx-container + br {
+  display: none;
+}
+</style></head>
+<body>
+<div id="nav">
+    <nav class="nav-menu">
+        <a class="site-name current" href="/" title="CLS">CLS</a>
+        <a class="site-index current" href="/"><i class="fa fa-home"></i><span>首页</span></a>
+        <a href="/archives" title="归档"><i class="fa fa-archives"></i><span>归档</span></a>
+        <a href="/tags" title="标签"><i class="fa fa-tags"></i><span>标签</span></a>
+        <!-- custom single page of menus -->
+        
+        
+        <a href="/help" title="帮助">
+            <i class="fa fa-question-circle"></i>
+            <span>帮助</span>
+        </a>
+        
+    </nav>
+</div>
+
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-sns-qr" href="javascript:"><i class="fa fa-telegram"></i></a>
+</div>
+
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+            <div id="cover">
+    <div class="cover-img"></div>
+    <div class="cover-info">
+        
+        <h1 class="cover-siteName">Coding for Life Science</h1>
+        <h3 class="cover-siteTitle">Coding for Life Science</h3>
+        <p class="cover-siteDesc">关注从数据和模型中获取生物知识的博客</p>
+        <div class="cover-sns">
+            
+    &nbsp;&nbsp;<div class="btn btn-telegram">
+        <a href="" target="_blank" title="telegram" ref="friend">
+            <i class="fa fa-telegram"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-instagram">
+        <a href="" target="_blank" title="instagram" ref="friend">
+            <i class="fa fa-instagram"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-twitter">
+        <a href="https://twitter.com/Landau1994" target="_blank" title="twitter" ref="friend">
+            <i class="fa fa-twitter"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-github">
+        <a href="https://github.com/Landau1994" target="_blank" title="github" ref="friend">
+            <i class="fa fa-github"></i>
+        </a>
+    </div>
+
+
+        </div>
+    </div>
+</div>
+
+            <div class="page-title">
+    <ul>
+        <li><a href="/">最近</a></li>
+        
+            
+                <li class="">
+                    <a href="/categories/genomics" data-name="基因组学">基因组学</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/implementation" data-name="编程实践">编程实践</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/reference" data-name="文献阅读">文献阅读</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/math" data-name="数学学习">数学学习</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/others" data-name="其他">其他</a>
+                </li>
+            
+        
+        <li class="page-search">
+    <form id="search" class="search-form">
+        <input type="text"
+               readonly="readonly"
+               id="local-search-input-tip"
+               placeholder="读物检索~" />
+        <button type="button" disabled="disabled" class="search-form-submit"><i class="fa fa-search"></i></button>
+    </form>
+</li>
+
+    </ul>
+</div>
+<div class="main-inner">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="https://github.com/Landau1994"
+                   target="_blank">
+                    <img width="48" src="/images/faceicon.png" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="https://github.com/Landau1994"
+                       target="_blank">夏目沉吟</a>
+                    <span title="最后编辑于&nbsp;2020-04-16">2020-04-16</span>
+                </p>
+                <p>A PhD student in bioinformatics</p>
+            </div>
+            <h2 class="post-title">机器学习在生物学有应用吗</h2>
+            <div class="post-meta">
+                本文共计6879个字 |
+                您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <p>说明：转自站长<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41428117/answer/1156065522">知乎回答</a>。</p>
+<p>当然有应用，而且是很广泛的应用，周志华老师的<a href="《机器学习》" title="周志华">《机器学习》</a>中的第1章的绪论的1.6节应用现状中这样写到：</p>
+<blockquote>
+<p>机器学习还为许多交叉学科提供了重要的技术支撑。例如，“生物信息学”试图利用信息技术来研究生命现象和规律，而基因组计划的实施和基因药物的美好前景让人们为之心潮澎湃。生物信息学研究涉及从“生命现象”到“规律发现”的整个过程，其间必然包括数据获取、数据管理、数据分析、仿真实验等环节，而“数据分析”恰是机器学习技术的舞台，各种机器学习技术已经在这个舞台上大放异彩。</p>
+</blockquote>
+<p>在本回答中，我们将结合具体的案例，分三部分论述机器学习（包含深度学习）在生物研究的应用。第一部分，我们先对机器学习在生命科学领域的研究做一个全景的介绍。第二部分，我们再结合具体案例如何应用机器学习推动相关生物研究，以及相关生物研究中出现的问题如何催生新的机器学习算法。第三部分我们将进行回顾和反思，探讨未来的机器学习将如何更好的推动生物研究。</p>
+<p>在正式讨论之前，我们借用周志华老师的《机器学习》一书来对机器学习下一个描述性的定义：</p>
+<blockquote>
+<p>机器学习正是这样一门学科，它致力于研究如何通过计算的手段，利用经 验来玫善系统自身的性能在计算机系统中，"经验"通常以"数据"形式存 在，因此机器学习所研究的主要内容，是关于在计算机上从数据中产生"模 型" (model) 的算法，即"学习算法" (learning algorithm). 有了学习算法，我们把经验数据提供给它，它就能基于这些数据产生模型;在面对新的情况时(例如看到一个没剖开的西瓜)，模型会给我们提供相应的判断(例如好瓜) .如果说 计算机科学是研究关于"算法"的学问，那么类似的，可以说机器学习是研究 关于"学习算法"的学问.</p>
+</blockquote>
+<p>在下面的论述中，我们将从概况以及具体的生物场景看到这个定义还是很合理的。</p>
+<p>本回答假定读者已经了解过一些机器学习和生物的概念。</p>
+<h3 id="一.-机器学习在生物研究中的应用概览">一. 机器学习在生物研究中的应用概览</h3>
+<h4 id="基本流程">1. 基本流程</h4>
+<p>一般来说，在生物研究中，一项应用机器学习中的算法的研究可以分为如下五步流程： 1. 设计实验，收集数据 2. 数据清洗 3. 特征选择 4. 模型构建 5. 模型评估</p>
+<p>如下面的流程图，来自<a target="_blank" rel="noopener" href="https://www.embopress.org/doi/10.15252/msb.20156651" title="Deep learning for computational biology">Deep learning for computational biology</a>所示</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/288cd49c-6d39-414d-991c-cd62172f19d6.png"></p>
+<h4 id="有监督学习与无监督学习">2. 有监督学习与无监督学习</h4>
+<p>模型构建的方法，按照研究的问题可以分为，有监督和无监督的。 有监督学习是指<strong>一类针对有标签的数据来预测无标签数据的标签的算法</strong>，如果我们把连续数值变量也视为标签的话，那么回归也是有监督学习。而无监督学习是指<strong>一类针对无标签的数据进行规律发现的算法</strong>。除此之外，也有半监督学习，即在</p>
+<p>一个典型的有监督的问题是分类问题，一个典型的无监督问题是聚类问题。在这个回答我们将介绍这两类问题的具体的场景。下图来自综述<a href="">Deep learning for computational biology</a></p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/a8545fe7-dfa9-4fd3-8516-8f8ad51ded9a.png"></p>
+<h4 id="三类基本数据">3. 三类基本数据</h4>
+<p>大多数生物研究主要对序列数据，矩阵或者张量数据，成像数据这三类基本的数据上进行机器学习算法的应用。</p>
+<h5 id="序列数据">3.1 序列数据</h5>
+<p>最基本的生物数据之一，通常为DNA序列，RNA序列，蛋白质序列。 在人类基因组计划早期的问题是，如何快速进行基因组注释，该问题可以表示如下,图片来自<a target="_blank" rel="noopener" href="https://www.nature.com/articles/nrg3920" title="Machine learning applications in genetics and genomics">Machine learning applications in genetics and genomics</a>：</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/a401af41-2bf4-43f3-bdaf-e453ed95e82b.png"></p>
+<p>基因组注释是一个有监督或者半监督的问题，因为一段序列是不是基因可以通过EST(表达序列标签)来判定，其他特征可以通过一些生化或者分子实验来标定，所以我们可以得到数据标签。</p>
+<p>此外，序列数据更为常见的是要分析一些分子演化的问题，例如最近大家关注的新冠病毒的分子演化。这方面的案例和相关讨论可见：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/386740743" title="剑桥大学研究称新冠病毒分三个变种，A 类病毒为「爆发根源」，更多发现于美国和澳洲，这一结论靠谱吗？">剑桥大学研究称新冠病毒分三个变种，A 类病毒为「爆发根源」，更多发现于美国和澳洲，这一结论靠谱吗？</a></p>
+<p>这是一个无监督的问题，例如，我们其实并不知道新冠病毒可以分为几个变种，我们需要在数据中看出它能分成几类，然后再通过其他证据证明这种分类是合理的。</p>
+<h5 id="矩阵数据">3.2 矩阵数据</h5>
+<p>芯片技术和后续的高通量测序技术带来了很多种矩阵数据,这类矩阵通常是对某类型生物特征（基因，蛋白，表观修饰，染色质互作）的丰度汇总而成的。最典型矩阵数据是基因表达谱，基因表达谱矩阵可以通过RNA-seq数据进行比对后的转录本定量产生，基本流程和常见分析策略如下（图片来自<a target="_blank" rel="noopener" href="https://linkinghub.elsevier.com/retrieve/pii/S0168-9525(18)30124-0" title="Enter the Matrix: Factorization Uncovers Knowledge from Omics">Enter the Matrix: Factorization Uncovers Knowledge from Omics</a>)：</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/bdd2cf7f-00d1-4735-90a9-45206a6d4f00.png"></p>
+<p>这类数据的分析通常是无监督或者半监督的，我们通常想通过矩阵数据去发现一些可用于诊断的分子marker。</p>
+<h5 id="成像数据">3.3 成像数据</h5>
+<p>从数据存储的本质上讲，成像数据还是矩阵数据（不过考虑到多通道图像的存在，称为张量数据更为贴切），但是内涵上是不同的，成像数据表达更多的是生物体内部空间位置（还有形状或者结构）的信息。例如，一张蛋白亚细胞定位的图像，可以反映某标记的感兴趣的蛋白质位于细胞中的什么位置，如果我们有很多这样的图片，明智的方法是先标记一部分数据，训练一个卷积神经网络，然后再对剩下的图片进行预测，如下图所示，：</p>
+<figure>
+<img src="https://imgkr.cn-bj.ufileos.com/2b1dca0a-9369-4ea0-8712-bd0a650e751e.png" alt="图片来自综述2"><figcaption>图片来自综述<a href="">2</a></figcaption>
+</figure>
+<h4 id="关于深度学习及其在生物研究中的应用">4. 关于深度学习及其在生物研究中的应用</h4>
+<p>深度学习到底是什么呢，按照Yann LeCun, Yoshua Bengio，Geoffrey Hinton三位专家合写的<a target="_blank" rel="noopener" href="https://www.nature.com/articles/nature14539" title="Deep Learning">综述</a>的定义： &gt; Deep-learning methods are representation-learning methods with multiple levels of representation, obtained by composing simple but non-linear modules that each transform the representation at one level (starting with the raw input) into a representation at a higher, slightly more abstract level. With the composition of enough such transformations, very complex functions can be learned For.</p>
+<p>拙译为：深度学习方法是一种基于多种层级进行表示的表示学习方法。其表示能力是通过组合简单的非线性的模块实现的。每一个小模块都可以把第一层的原始数据转换为更稍微抽像的特征。通过足够多的这样的转换进行组合，可以学习到非常复杂的函数(功能)。</p>
+<p>目前，在基因组学的不同层级，均有深度学习的应用案例：</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/2436e54e-084f-4598-8c33-3fd44573caa2.png"></p>
+<p>图片来自<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41588-018-0295-5" title="A primer on deep learning in genomics">A primer on deep learning in genomics</a>,想了解更多，请阅读这篇文章。</p>
+<h4 id="常见不同机器算法的实现软件">5. 常见不同机器算法的实现软件</h4>
+<p>针对不同的学习算法，在R中的可用的机器学习包如下，图片来自<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/abs/pii/S1360138514002192" title="Machine learning for Big Data analytics in plants">Machine learning for Big Data analytics in plants</a>:</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/4bb8fef8-d541-478f-8031-bc56bd1ce489.png"></p>
+<p>python上的常用相关软件包如下.图片来自<a target="_blank" rel="noopener" href="https://towardsdatascience.com/best-python-libraries-for-machine-learning-and-deep-learning-b0bd40c7e8c" title="Best Python Libraries for Machine Learning and Deep Learning">Best Python Libraries for Machine Learning and Deep Learning</a>：</p>
+<figure>
+<img src="https://imgkr.cn-bj.ufileos.com/0b60d14c-3193-40f4-9d3d-da31e4511e61.png" alt="Best Python Libraries for Machine Learning and Deep Learning"><figcaption>Best Python Libraries for Machine Learning and Deep Learning</figcaption>
+</figure>
+<h3 id="二.-机器学习在生物研究中的应用案例">二. 机器学习在生物研究中的应用案例</h3>
+<h4 id="基于机器学习的差异表达网络分析">1. 基于机器学习的差异表达网络分析</h4>
+<p>生物学家很感兴趣的一个问题是，不同条件下哪些基因表达会发生变化，这样他们可以深入研究其中的分子机制，进而找到一些可以找到一些增强或者减弱他们想要研究表型的靶点。</p>
+<p>常见的思路是做假定基因表达服从一个分布，然后根据这个假设构建统计量，计算统计显著性，设置cutoff来筛选发生差异表达的基因。</p>
+<p>但是这样做可能存在问题，例如cutoff为 <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.439ex" xmlns="http://www.w3.org/2000/svg" width="8.178ex" height="1.946ex" role="img" focusable="false" viewBox="0 -666 3614.6 860" xmlns:xlink="http://www.w3.org/1999/xlink"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><use xlink:href="#MJX-TEX-I-1D45D"></use></g><g data-mml-node="mo" transform="translate(780.8, 0)"><use xlink:href="#MJX-TEX-N-3C"></use></g><g data-mml-node="mn" transform="translate(1836.6, 0)"><use xlink:href="#MJX-TEX-N-30"></use><use xlink:href="#MJX-TEX-N-2E" transform="translate(500, 0)"></use><use xlink:href="#MJX-TEX-N-30" transform="translate(778, 0)"></use><use xlink:href="#MJX-TEX-N-35" transform="translate(1278, 0)"></use></g></g></g></svg></mjx-container></span>,那些被判定为统计不显著的基因就真的和表型相关的差异表达基因吗？有无更好的替代方法？</p>
+<p>文献<a target="_blank" rel="noopener" href="http://www.plantcell.org/content/26/2/520/tab-figures-data" title="Machine Learning–Based Differential Network Analysis: A Study of Stress-Responsive Transcriptomes in Arabidopsis">Machine Learning–Based Differential Network Analysis: A Study of Stress-Responsive Transcriptomes in Arabidopsis</a>提供了一种思路。假定我们对于模式植物拟南芥响应各种胁迫条件感兴趣，我们可以用基于机器学习的策略对于之前的差异表达方法做出改进，分为如下步骤：</p>
+<p>1）数据收集，清洗以及正负样本构建： 收集不同胁迫条件下的基因表达谱(基因芯片数据），进行预处理和标准化，收集之前报导过的和相关的基因作为正样本，将表达谱中不发生变化的基因作为负样本，剩下的基因的表达谱作为无标签样本；</p>
+<p>2）特征提取： 通过共表达网络的策略从表达谱中提取特征。在构建共表达网络的之后，采用随机森林的方法把未标签的样本中的“noninformative” genes（不表达，持续表达，与胁迫无关的基因)过滤掉了，减少了共表达网络构建的无用信息。计算每个基因在共表达网络中的PageRank等统计量，作为特征；</p>
+<p>3）模型构建： 根据2）中计算的特征，从分好的正负样本中，再次随机森林构建模型；</p>
+<p>4）模型评估 和limma等方法比较；</p>
+<p>5）模型预测，并进行验证 将训练好的模型应用于无标记的基因上，预测出和新的胁迫相关的基因，并通过TDNA插入实验验证。</p>
+<p>上述步骤可以概括如下， <img src="https://imgkr.cn-bj.ufileos.com/d6922ac4-dcca-4705-ad3c-9092da5c7813.png"></p>
+<p>图片来自<a href="">Machine learning for Big Data analytics in plants</a></p>
+<h4 id="干细胞分化路径重构与流形学习">2. 干细胞分化路径重构与流形学习</h4>
+<p>案例1是有监督学习的例子，我们接下来看无监督学习的案例。</p>
+<p>生物学有一个很著名的模型叫做waddington landscape，该模型描述了干细胞在分化过程可以类比于一个有质量的小球自发沿着山坡从山顶滚下山谷的过程，不同的山底表示了细胞的终末分化状态，而不同的分支点的存在则是细胞命运决定的节点。这个运动的过程中，细胞的基因表达会发生变化，如果我们假定基因表达“相近”的细胞在路径上也挨得很近，那么在基因表达的高维数据中应该嵌入了低维的分化路径，则我们能通过流形学习的技术从基因表达数据中重构出分化的路径，如下图所示，</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/80ff5e2b-bc24-4584-8e75-d7c71107e5d4.png"></p>
+<p>图片来自<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S2452310017301877" title="Manifold learning-based methods for analyzing single-cell RNA-sequencing data">Manifold learning-based methods for analyzing single-cell RNA-sequencing data</a></p>
+<p>具体来说，流形学习是如何进行的呢？可以结合如下的案例进行理解。现在有两个变量组成的一个数据集，我们将其画在直角坐标系中，可以看出样本点中存在一个螺旋的趋势，也就是说这个二维数据集中似乎嵌入了一个一维流形。如何通过计算的方式将其找出来呢。直觉告诉我们，必须先计算每两个样本点之间距离。我们在样本点之间的距离之后呢，会发现这个距离里样本点的局部邻近关系和整体邻近关系混淆在了一起，这个时候，我们可以使用叫做核函数的技巧，将距离转换为邻近关系。得到局部的距离之后呢，我们把相邻的点连起来，这样便可以最终得到那个样本点中包含的螺旋的一维流形了。</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/a55bbb0c-41f6-4fc2-bc73-f80aaa4e2f9b.png"></p>
+<p>图片来自<a href="">Manifold learning-based methods for analyzing single-cell RNA-sequencing data</a></p>
+<p>附注：粗浅的来说，所谓流形就是一个局部看起来像是欧几里得空间的拓扑空间。每个属于这个n维流形的点的邻域都可以与一个n维欧氏空间建立一一映射的关系。（更为严谨的定义请看拓扑学教材）。流形学习一般是用来学习高维数据内部的低维结构。最基础流形学习算法是PCA。</p>
+<p>以最近发表的一种同时实现生物高维数据可视化和路径推断的算法<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41587-019-0336-3" title="Visualizing structure and transitions in high-dimensional biological data">PHATE</a>为例，该算法的流程如下，（图片来自原文献）：</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/2ed9f281-dd11-4ff2-a524-1c6c1218d4d6.png"></p>
+<p>该算法的基本流程和其他的流形学习方法大致类似，但是他们的创新之处是引入了随机游走，计算扩散概率，以及最终讲欧式距离转化为信息距离来进行embeding。</p>
+<p>篇幅所限，我们不会在这里谈很多该算法的计算细节，感兴趣的读者可看知乎上中文的介绍：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/102456357" title="Nat. Biotechnol | PHATE：高维生物数据的可视化方法">Nat. Biotechnol | PHATE：高维生物数据的可视化方法</a>，或者直接阅读原始文献。</p>
+<h4 id="冷冻电镜中的图像处理">3.冷冻电镜中的图像处理</h4>
+<p>这部分，笔者不是专家，只是为了拓展视野在里记录。</p>
+<p>基础知识推荐大家看下coursera上面的加州理工的冷冻电镜的课程，尤其是Tomography那一节。 关于冷冻电镜的背景大家请看 <a target="_blank" rel="noopener" href="https://daily.zhihu.com/story/4303110" title="为什么冷冻电镜 (Cryo-EM) 去年突然火了？是有什么技术突破吗？">为什么冷冻电镜 (Cryo-EM) 去年突然火了？是有什么技术突破吗？</a> 以及<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20555975" title="什么是2015年最受科学界关注的新技术？">什么是2015年最受科学界关注的新技术？</a> 当然还有nature的<a target="_blank" rel="noopener" href="https://www.nature.com/news/the-revolution-will-not-be-crystallized-a-new-method-sweeps-through-structural-biology-1.18335" title="The revolution will not be crystallized: a new method sweeps through structural biology">新闻稿</a></p>
+<p>根据nature这篇新闻稿，冷冻电镜取得突破性进展主要要归功于两个人：Richard Henderson和Sjors Scheres还有他们所在的实验室：UK Medical Research Council Laboratory of Molecular Biology (LMB)。Richard Henderson和他的同事 Nigel Unwin 在1975年的一片文章（Molecular structure determination by electron microscopy of unstained crystalline specimens）中为冷冻电镜技术做出了奠基性的贡献。而新发展的直接电子探测器使得对大分子的高速动态成像成为可能。新技术带来的大数据使得Sjors Scheres有了在<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/abs/pii/S0022283605001932?via%3Dihub" title="Maximum-likelihood Multi-reference Refinement for Electron Microscopy Images">方法学</a>和<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S1047847712002481" title="RELION: Implementation of a Bayesian approach to cryo-EM structure determination">软件</a>上的突破。</p>
+<p>那么，冷冻电镜带来的结构生物学的革命是如何实现的？答案是借用到机器学习的思想与方法的，如下面这张图所示：</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/c046c016-c2bd-4c8f-ab90-e7db1021b824.png"></p>
+<p>（来自<a target="_blank" rel="noopener" href="http://www.sciencedirect.com/science/article/pii/S096800041400187X" title="How cryo-EM is revolutionizing structural biology">How cryo-EM is revolutionizing structural biology</a>)</p>
+<p>第一步，将要解析的蛋白分离纯化制样之后，用高速动态成像的记录蛋白的各种构象; 第二步，处理图像数据，把取向相同的小颗粒re-align，借用贝叶斯的思想；从而将粗颗粒的模型精细化; 第三步，如果是混样的情况，也可以利用分类或者聚类的方法，将混样中存在的不同结构的蛋白构像解析出来。</p>
+<p>第二步的基于贝叶斯的re-align和精细化可以概括如下：</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/84bb8588-fb72-4f61-83f2-0c9b3758e6b0.png"></p>
+<p>（图片来自<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0022283611012290?via%3Dihub" title="A Bayesian View on Cryo-EM Structure Determination">A Bayesian View on Cryo-EM Structure Determination</a>）</p>
+<p>策略为通过傅里叶变换的方法用计算机重构出粗略的结构模型然后把这个粗略的结构模型与成千上万的成像数据比对，得到每个图像之间的相对位置。通过作者改进的机器学习中常用的贝叶斯方法，将粗略的结构模型调整为新的一个更精确的结构，如此迭代以精炼我们的模型，文章提到对于核糖体的结构的解析他们迭代了25次。这整个的过程就是所谓的取“平均”了，不过是基于机器学习的方法，结合先验的知识来取得“平均”和进行光滑，取得精细结构。</p>
+<p>这部分不是很懂，写的不好，欢迎成像和图像处理方面的专家指正。</p>
+<h3 id="三.-回顾反思">三. 回顾反思</h3>
+<p>在上述论述中，我们介绍的机器学习在生物研究应用案例都只在问这样一类型问题：”某一生物现象是什么？“，不过对于人类社会发展而言更有直接意义的问题是，”认识这一生物现象可能的模式之后我们该怎么办“，问这类问题的人一般都是医生或者药企的科学家。当然，目前也有这方面的成熟流程可以参考:</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/248d4059-519b-49f0-a7e7-e790b2e68403.png"></p>
+<p>（图片来自<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41573-019-0024-5" title="Applications of machine learning in drug discovery and development">Applications of machine learning in drug discovery and development</a></p>
+<p>最近也有科学家用深度学习的方法，发现了新的抗生素：</p>
+<p><img src="https://imgkr.cn-bj.ufileos.com/8cff3e43-91bd-4d9d-801b-f0db91db8e3e.png"></p>
+<p>感兴趣的读者可以看这篇文献。</p>
+<p>此外，个人理解，机器学习就是一种智能的数据挖掘技术，它依据先验的知识建立预测模型来识别大数据中的有用信息。所以只要有大数据和前期积累的先验知识，就有机器学习方法用武之地。</p>
+<p>说几句与题目无关的话，个人感觉其实这个题目也可以回答学生物的人多学点基础的数学和物理知识有用吗？我觉得是有用的，比如你想搞清楚冷冻电镜成像的原理，你必须懂点物理知识（干涉衍射之类的）还得懂点数学物理方法（如傅里叶变换与它的逆）。当然想要进行机器学习，当然得有统计学和数据的可视化方法的数学基础和计算机编程基础（Python或者R）了。学科之间其实是可以互通有无的，然而这点常常被目光短浅的一些人忽略了，希望关注这个问题的人可以能多从这个角度来学习，思考问题，解决问题。</p>
+<h3 id="附日志">附：日志</h3>
+<ul>
+<li>2016.3 创建回答</li>
+<li>2016.4.14 用周志华老师《机器学习》补充前言</li>
+<li>2020.4.12 原回答因「违反知乎社区管理规定」被删除。</li>
+<li>2020.4.13-15 按照知乎社区管理规定做出修订。重新提交。</li>
+<li>2020.04.16 修改排版错误</li>
+</ul>
+<svg style="display: none" id="MJX-SVG-global-cache"><defs><path id="MJX-TEX-I-1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path><path id="MJX-TEX-N-3C" d="M694 -11T694 -19T688 -33T678 -40Q671 -40 524 29T234 166L90 235Q83 240 83 250Q83 261 91 266Q664 540 678 540Q681 540 687 534T694 519T687 505Q686 504 417 376L151 250L417 124Q686 -4 687 -5Q694 -11 694 -19Z"></path><path id="MJX-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-TEX-N-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path id="MJX-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></defs></svg>
+            
+                
+
+            
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/note/">note</a>
+            
+            <a href="/tags/machine-learning/">machine learning</a>
+            
+        </div>
+        
+    </article>
+    
+        <p style="text-align: center">本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+    
+
+</div>
+
+<script src="/js/busuanzi.pure.mini.js"></script>
+
+
+
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <footer class="footer">
+    <div class="footer-inner" style="text-align: center">
+        <p>
+            <a href="/about"  title="关于">关于</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <!-- 自定义链接 -->
+            <a href="/help" title="帮助" >帮助</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/links" title="友链">友链</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/sitemap.xml" title="地图">地图</a>
+        </p>
+        <p>
+            本站已建立&nbsp<a href="/timeline" id="siteBuildingTime"></a>&nbsp天，<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="licence">采用知识共享署名-相同方式共享 4.0 国际许可协议创作</a><br/>
+            ©2017-<span id="cpYear"></span> 基于&nbsp<a href="http://hexo.io" target="_blank" rel="nofollow">Hexo</a>
+            ，主题采用&nbsp&nbsp<a href="https://github.com/tangkunyin/hexo-theme-jsimple" target="_blank" rel="bookmark">JSimple</a>
+            ，作者&nbsp<a href="https://landau1994.github.io" target="_blank" rel="friend">landau1994</a>
+            ，Hosted by <a href="https://pages.github.com/" target="_blank" rel="nofollow">GitHub Pages</a>
+        </p>
+    </div>
+</footer>
+
+<script src="/js/SimpleCore.js"></script>
+
+
+</div>
+<!-- search pop -->
+<div class="popup search-popup local-search-popup">
+    <div class="local-search-header clearfix">
+        <span class="search-icon">
+            <i class="fa fa-search"></i>
+        </span>
+        <span class="popup-btn-close">
+            <i class="fa fa-times-circle"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+            <input id="local-search-input"
+                   spellcheck="false"
+                   type="text"
+                   autocomplete="off"
+                   placeholder="请输入查询关键词"/>
+        </div>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+<div class="fixed-btn">
+    <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
+</div>
+<script>
+    $(function () {
+        var jsi_config = {
+            buildingTime: '08/01/2018',
+            current: $('.post-tags').length > 0 ? 'post' : 'archive',
+            snsQRCode: '/images/sns-qrcode.png',
+            donateImg: '/images/donate-qr.png',
+            localSearch: { dbPath: '' },
+            readMode: 'day'
+        };
+        
+            jsi_config.localSearch = {
+                dbPath: '/search.json',
+                trigger: 'auto',
+                topN: '1',
+                unescape: 'false'
+            }
+        
+        SimpleCore.init(jsi_config);
+        
+    });
+</script>
+</body>
+</html>

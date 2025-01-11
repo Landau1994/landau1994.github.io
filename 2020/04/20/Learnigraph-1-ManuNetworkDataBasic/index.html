@@ -1,0 +1,842 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
+<head>
+    <!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0;url=https://landau1994.github.io/warn.html">
+<![endif]-->
+<meta charset="utf-8">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<link rel="dns-prefetch" href="https://landau1994.github.io">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+<link rel="prefetch" href="https://landau1994.github.io">
+<link rel="prefetch" href="//www.google-analytics.com">
+
+
+<link rel="prerender" href="https://landau1994.github.io">
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<meta http-equiv="mobile-agent" content="format=html5; url=https://landau1994.github.io">
+<meta name="author" content="Longteng Wang">
+
+<link rel="stylesheet" href="/css/JSimple.css">
+
+
+<link rel="shortcut icon" href="/images/favicon.png">
+
+
+<title>learn-igraph-basic - Coding for Life Sciences</title>
+
+<meta name="keywords" content="Biology, Data Science,AI,Informatics,Modeling;">
+
+<meta name="description " content="Networkdata manipulation and Baisc visualization">
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+    </script>
+
+
+    
+
+    
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container {
+  overflow: auto hidden;
+}
+
+mjx-container + br {
+  display: none;
+}
+</style></head>
+<body>
+<div id="nav">
+    <nav class="nav-menu">
+        <a class="site-name current" href="/" title="CLS">CLS</a>
+        <a class="site-index current" href="/"><i class="fa fa-home"></i><span>首页</span></a>
+        <a href="/archives" title="归档"><i class="fa fa-archives"></i><span>归档</span></a>
+        <a href="/tags" title="标签"><i class="fa fa-tags"></i><span>标签</span></a>
+        <!-- custom single page of menus -->
+        
+        
+        <a href="/help" title="帮助">
+            <i class="fa fa-question-circle"></i>
+            <span>帮助</span>
+        </a>
+        
+    </nav>
+</div>
+
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-sns-qr" href="javascript:"><i class="fa fa-telegram"></i></a>
+</div>
+
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+            <div id="cover">
+    <div class="cover-img"></div>
+    <div class="cover-info">
+        
+        <h1 class="cover-siteName">Coding for Life Science</h1>
+        <h3 class="cover-siteTitle">Coding for Life Science</h3>
+        <p class="cover-siteDesc">关注从数据和模型中获取生物知识的博客</p>
+        <div class="cover-sns">
+            
+    &nbsp;&nbsp;<div class="btn btn-telegram">
+        <a href="" target="_blank" title="telegram" ref="friend">
+            <i class="fa fa-telegram"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-instagram">
+        <a href="" target="_blank" title="instagram" ref="friend">
+            <i class="fa fa-instagram"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-twitter">
+        <a href="https://twitter.com/Landau1994" target="_blank" title="twitter" ref="friend">
+            <i class="fa fa-twitter"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-github">
+        <a href="https://github.com/Landau1994" target="_blank" title="github" ref="friend">
+            <i class="fa fa-github"></i>
+        </a>
+    </div>
+
+
+        </div>
+    </div>
+</div>
+
+            <div class="page-title">
+    <ul>
+        <li><a href="/">最近</a></li>
+        
+            
+                <li class="">
+                    <a href="/categories/genomics" data-name="基因组学">基因组学</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/implementation" data-name="编程实践">编程实践</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/reference" data-name="文献阅读">文献阅读</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/math" data-name="数学学习">数学学习</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/others" data-name="其他">其他</a>
+                </li>
+            
+        
+        <li class="page-search">
+    <form id="search" class="search-form">
+        <input type="text"
+               readonly="readonly"
+               id="local-search-input-tip"
+               placeholder="读物检索~" />
+        <button type="button" disabled="disabled" class="search-form-submit"><i class="fa fa-search"></i></button>
+    </form>
+</li>
+
+    </ul>
+</div>
+<div class="main-inner">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="https://github.com/Landau1994"
+                   target="_blank">
+                    <img width="48" src="/images/faceicon.png" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="https://github.com/Landau1994"
+                       target="_blank">Landau1994</a>
+                    <span title="最后编辑于&nbsp;2020-04-20">2020-04-20</span>
+                </p>
+                <p>A PhD student in bioinformatics</p>
+            </div>
+            <h2 class="post-title">Learn-igraph-Basic</h2>
+            <div class="post-meta">
+                本文共计15069个字 |
+                您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <p><em>Learn-igraph</em>系列是对<a target="_blank" rel="noopener" href="https://link.springer.com/book/10.1007/978-1-4939-0983-4">Statistical Analysis of Network Data with R</a>一书的学习笔记，介绍如何使用R进行网络数据分析，网络数据的处理主要是基于<code>igraph</code>包，可视化用的是<code>ggnet</code></p>
+<h3 id="基本概念">0. 基本概念</h3>
+<p>一些需要知道的基本概念；</p>
+<ul>
+<li><p>Network;</p></li>
+<li><p>Graph;</p></li>
+<li><p>Order of a graph;</p></li>
+<li><p>Size of a graph;</p></li>
+<li><p>directed graph;</p></li>
+<li><p>undirected graph;</p></li>
+<li><p>subgraph;</p></li>
+</ul>
+<h3 id="创建igraph-class">1. 创建igraph class</h3>
+<h4 id="无向图">1.1 无向图</h4>
+<p>igraph包处理网络图的数据结构为igraph class, 最基础的创建方式如下：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(igraph)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(ggraph)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(ggnetwork)</a>
+<a class="sourceLine" id="cb1-4" title="4">g &lt;-<span class="st"> </span><span class="kw">graph.formula</span>(<span class="dv">1-2</span>,<span class="dv">1-3</span>,<span class="dv">2-3</span>,<span class="dv">2-4</span>,<span class="dv">3-5</span>,<span class="dv">4-5</span>,<span class="dv">4-6</span>,<span class="dv">4-7</span>,<span class="dv">5-6</span>,<span class="dv">6-7</span>)</a>
+<a class="sourceLine" id="cb1-5" title="5">l &lt;-<span class="st"> </span><span class="kw">layout.auto</span>(g)</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">plot</span>(g, <span class="dt">layout=</span>l, <span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-1-1.png" style="display: block; margin: auto;"></p>
+<p>该网络的基本信息可以通过如下方式获得：</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">V</span>(g)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">###+ 7/7 vertices, named, from 27d8280:</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co">###[1] 1 2 3 4 5 6 7</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">E</span>(g)</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">###+ 10/10 edges from 27d8280 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">###[1] 1--2 1--3 2--3 2--4 3--5 4--5 4--6 4--7 5--6 6--7</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">###str(g)</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">get.adjedgelist</span>(g)</a>
+<a class="sourceLine" id="cb2-9" title="9"></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co"># $`1`</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co"># + 2/10 edges from f3f6e64 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#   [1] 1--2 1--3</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co"># </span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co"># $`2`</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co"># + 3/10 edges from f3f6e64 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#   [1] 1--2 2--3 2--4</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co"># </span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co"># $`3`</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co"># + 3/10 edges from f3f6e64 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#   [1] 1--3 2--3 3--5</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co"># </span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co"># $`4`</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co"># + 4/10 edges from f3f6e64 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#   [1] 2--4 4--5 4--6 4--7</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co"># </span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="co"># $`5`</span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="co"># + 3/10 edges from f3f6e64 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="co">#   [1] 3--5 4--5 5--6</span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co"># </span></a>
+<a class="sourceLine" id="cb2-30" title="30"><span class="co"># $`6`</span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="co"># + 3/10 edges from f3f6e64 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-32" title="32"><span class="co">#   [1] 4--6 5--6 6--7</span></a>
+<a class="sourceLine" id="cb2-33" title="33"><span class="co"># </span></a>
+<a class="sourceLine" id="cb2-34" title="34"><span class="co"># $`7`</span></a>
+<a class="sourceLine" id="cb2-35" title="35"><span class="co"># + 2/10 edges from f3f6e64 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-36" title="36"><span class="co">#   [1] 4--7 6--7</span></a>
+<a class="sourceLine" id="cb2-37" title="37"></a>
+<a class="sourceLine" id="cb2-38" title="38"><span class="kw">get.edgelist</span>(g)</a>
+<a class="sourceLine" id="cb2-39" title="39"><span class="co"># [,1] [,2]</span></a>
+<a class="sourceLine" id="cb2-40" title="40"><span class="co"># [1,] "1"  "2" </span></a>
+<a class="sourceLine" id="cb2-41" title="41"><span class="co"># [2,] "1"  "3" </span></a>
+<a class="sourceLine" id="cb2-42" title="42"><span class="co"># [3,] "2"  "3" </span></a>
+<a class="sourceLine" id="cb2-43" title="43"><span class="co"># [4,] "2"  "4" </span></a>
+<a class="sourceLine" id="cb2-44" title="44"><span class="co"># [5,] "3"  "5" </span></a>
+<a class="sourceLine" id="cb2-45" title="45"><span class="co"># [6,] "4"  "5" </span></a>
+<a class="sourceLine" id="cb2-46" title="46"><span class="co"># [7,] "4"  "6" </span></a>
+<a class="sourceLine" id="cb2-47" title="47"><span class="co"># [8,] "4"  "7" </span></a>
+<a class="sourceLine" id="cb2-48" title="48"><span class="co"># [9,] "5"  "6" </span></a>
+<a class="sourceLine" id="cb2-49" title="49"><span class="co"># [10,] "6"  "7" </span></a>
+<a class="sourceLine" id="cb2-50" title="50"><span class="kw">print</span>(g, <span class="dt">e=</span><span class="ot">TRUE</span>, <span class="dt">v=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-51" title="51"><span class="co"># IGRAPH f673c51 UN-- 7 10 -- </span></a>
+<a class="sourceLine" id="cb2-52" title="52"><span class="co">#   + attr: name (v/c)</span></a>
+<a class="sourceLine" id="cb2-53" title="53"><span class="co"># + edges from f673c51 (vertex names):</span></a>
+<a class="sourceLine" id="cb2-54" title="54"><span class="co">#   [1] 1--2 1--3 2--3 2--4 3--5 4--5 4--6 4--7 5--6 6--7</span></a>
+<a class="sourceLine" id="cb2-55" title="55"><span class="kw">get.adjacency</span>(g)</a>
+<a class="sourceLine" id="cb2-56" title="56"><span class="co"># 7 x 7 sparse Matrix of class "dgCMatrix"</span></a>
+<a class="sourceLine" id="cb2-57" title="57"><span class="co"># 1 2 3 4 5 6 7</span></a>
+<a class="sourceLine" id="cb2-58" title="58"><span class="co"># 1 . 1 1 . . . .</span></a>
+<a class="sourceLine" id="cb2-59" title="59"><span class="co"># 2 1 . 1 1 . . .</span></a>
+<a class="sourceLine" id="cb2-60" title="60"><span class="co"># 3 1 1 . . 1 . .</span></a>
+<a class="sourceLine" id="cb2-61" title="61"><span class="co"># 4 . 1 . . 1 1 1</span></a>
+<a class="sourceLine" id="cb2-62" title="62"><span class="co"># 5 . . 1 1 . 1 .</span></a>
+<a class="sourceLine" id="cb2-63" title="63"><span class="co"># 6 . . . 1 1 . 1</span></a>
+<a class="sourceLine" id="cb2-64" title="64"><span class="co"># 7 . . . 1 . 1 .</span></a></code></pre></div>
+<h4 id="有向图">1.2 有向图</h4>
+<p>同样的方法，也可以用来创建有向图；</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">dg &lt;-<span class="st"> </span><span class="kw">graph.formula</span>(<span class="dv">1</span><span class="op">-+</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">-+</span><span class="dv">3</span>,<span class="dv">2</span><span class="op">++</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">plot</span>(g, <span class="dt">vertex.size=</span><span class="dv">10</span>,<span class="dt">layout=</span>l, <span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">plot</span>(dg,<span class="dt">vertex.size=</span><span class="dv">10</span>,<span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<h4 id="从邻接矩阵导入图">1.3 从邻接矩阵导入图；</h4>
+<p>我们选择一个神奇的数据Arecibo_message[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Arecibo_message" class="uri">https://en.wikipedia.org/wiki/Arecibo_message</a>], 来说明,有时候,信息所对应的矩阵，可能就是一张图片，而不是一个图。</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">###python command comes from</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">###https://codegolf.stackexchange.com/questions/182924/output-the-arecibo-message</span></a>
+<a class="sourceLine" id="cb5-3" title="3">mat &lt;-<span class="st"> </span>reticulate<span class="op">::</span><span class="kw">py_eval</span>(<span class="st">"''.join(bin(i)[3:]for i in b'`UP@JB`IDQKJjjd`@@@@@L@@Ah@@CP@@J`@@_@@@@@LNLLP@FPtXpu}}}|@@@@`@@`@@@A@@A~@@~@@@CCCcDA@DMCGM____@@@@HF@H@L@@PX@_`pO`A`@HA@HHF@`LLB@FHX@@s@@Xa`CC@`HD@``L@b@XAD@PDDA@PD@C@F@X@ck@A@P@BCx@DKi[@gI</span><span class="ch">\x7f\\</span><span class="st">NC</span><span class="ch">\\</span><span class="st">@TGY@hOrAPXDFp@@@@@</span><span class="ch">\\</span><span class="st">D@@zbjipAU@@B`@Gp@@</span><span class="ch">\x7f</span><span class="st">x@G@</span><span class="ch">\\</span><span class="st">@X@LAh@lFXCLHhJHQHdPBJH@DHP@H@`@Dh@OOix')[1:]"</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4">mat &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(mat,<span class="dt">split =</span> <span class="st">""</span>)))</a>
+<a class="sourceLine" id="cb5-5" title="5">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> mat,<span class="dt">nrow =</span> <span class="dv">23</span>,<span class="dt">ncol =</span> <span class="dv">73</span>)</a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7">expand.matrix &lt;-<span class="st"> </span><span class="cf">function</span>(A){</a>
+<a class="sourceLine" id="cb5-8" title="8">  m &lt;-<span class="st"> </span><span class="kw">nrow</span>(A)</a>
+<a class="sourceLine" id="cb5-9" title="9">  n &lt;-<span class="st"> </span><span class="kw">ncol</span>(A)</a>
+<a class="sourceLine" id="cb5-10" title="10">  B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow =</span> m, <span class="dt">ncol =</span> m)</a>
+<a class="sourceLine" id="cb5-11" title="11">  C &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="dt">nrow =</span> n, <span class="dt">ncol =</span> n)</a>
+<a class="sourceLine" id="cb5-12" title="12">  <span class="kw">cbind</span>(<span class="kw">rbind</span>(B,<span class="kw">t</span>(A)),<span class="kw">rbind</span>(A,C))</a>
+<a class="sourceLine" id="cb5-13" title="13">}</a>
+<a class="sourceLine" id="cb5-14" title="14">g1 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(<span class="kw">expand.matrix</span>(mat),<span class="dt">mode =</span> <span class="st">"undirected"</span>)</a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="kw">plot</span>(g1,<span class="dt">vertex.size=</span><span class="dv">10</span>,<span class="dt">edge.width=</span><span class="dv">2</span>,<span class="dt">layout=</span>layout.circle,<span class="dt">vertex.color=</span><span class="st">"coral"</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;"></p>
+<p>如果直接可视化这个图，我们什么也看不出来，然而，如果我们用将原数据视为栅格数据，那么，我们能看出这个数据的内涵是很丰富的</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">dat_long &lt;-<span class="st"> </span>reshape2<span class="op">::</span><span class="kw">melt</span>(mat)</a>
+<a class="sourceLine" id="cb6-2" title="2">dat_long<span class="op">$</span>value &lt;-<span class="st"> </span><span class="kw">as.factor</span>(dat_long<span class="op">$</span>value)</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw">colnames</span>(dat_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"V1"</span>,<span class="st">"V2"</span>,<span class="st">"value"</span>)</a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">### plot</span></a>
+<a class="sourceLine" id="cb6-5" title="5">gg &lt;-<span class="st"> </span><span class="kw">ggplot</span>(dat_long)<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(V1,V2,<span class="dt">fill=</span>value), <span class="dt">color=</span><span class="st">"#7f7f7f"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">"black"</span>, <span class="st">"white"</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw">coord_equal</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="ot">NULL</span>, <span class="dt">y=</span><span class="ot">NULL</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw">scale_y_reverse</span>(<span class="dt">breaks=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid=</span><span class="kw">element_blank</span>())<span class="op">+</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.border=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb6-15" title="15">        <span class="dt">axis.ticks=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb6-16" title="16">        <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb6-17" title="17">        <span class="dt">legend.position =</span> <span class="st">"none"</span>)</a>
+<a class="sourceLine" id="cb6-18" title="18">gg</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;"></p>
+<h4 id="从data.frame中创建图">1.4 从data.frame中创建图</h4>
+<p>需要两个输入，一个是边的信息，一个是节点的信息</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">## A simple example with a couple of actors</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="co">## The typical case is that these tables are read in from files....</span></a>
+<a class="sourceLine" id="cb7-3" title="3">actors &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name=</span><span class="kw">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Cecil"</span>, <span class="st">"David"</span>,</a>
+<a class="sourceLine" id="cb7-4" title="4">                            <span class="st">"Esmeralda"</span>),</a>
+<a class="sourceLine" id="cb7-5" title="5">                     <span class="dt">age=</span><span class="kw">c</span>(<span class="dv">48</span>,<span class="dv">33</span>,<span class="dv">45</span>,<span class="dv">34</span>,<span class="dv">21</span>),</a>
+<a class="sourceLine" id="cb7-6" title="6">                     <span class="dt">gender=</span><span class="kw">c</span>(<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>))</a>
+<a class="sourceLine" id="cb7-7" title="7">relations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">from=</span><span class="kw">c</span>(<span class="st">"Bob"</span>, <span class="st">"Cecil"</span>, <span class="st">"Cecil"</span>, <span class="st">"David"</span>,</a>
+<a class="sourceLine" id="cb7-8" title="8">                               <span class="st">"David"</span>, <span class="st">"Esmeralda"</span>),</a>
+<a class="sourceLine" id="cb7-9" title="9">                        <span class="dt">to=</span><span class="kw">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Alice"</span>, <span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Alice"</span>),</a>
+<a class="sourceLine" id="cb7-10" title="10">                        <span class="dt">same.dept=</span><span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb7-11" title="11">                        <span class="dt">friendship=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">advice=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb7-12" title="12">g &lt;-<span class="st"> </span><span class="kw">graph_from_data_frame</span>(relations, <span class="dt">directed=</span><span class="ot">TRUE</span>, <span class="dt">vertices=</span>actors)</a>
+<a class="sourceLine" id="cb7-13" title="13"></a>
+<a class="sourceLine" id="cb7-14" title="14"></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">## The opposite operation</span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="kw">as_data_frame</span>(g, <span class="dt">what=</span><span class="st">"vertices"</span>)</a></code></pre></div>
+<pre><code>##                name age gender
+## Alice         Alice  48      F
+## Bob             Bob  33      M
+## Cecil         Cecil  45      F
+## David         David  34      M
+## Esmeralda Esmeralda  21      F</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">as_data_frame</span>(g, <span class="dt">what=</span><span class="st">"edges"</span>)</a></code></pre></div>
+<pre><code>##        from    to same.dept friendship advice
+## 1       Bob Alice     FALSE          4      4
+## 2     Cecil   Bob     FALSE          5      5
+## 3     Cecil Alice      TRUE          5      5
+## 4     David Alice     FALSE          2      4
+## 5     David   Bob     FALSE          1      2
+## 6 Esmeralda Alice      TRUE          1      3</code></pre>
+<p>可视化，</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">plot</span>(g,<span class="dt">vertex.size=</span><span class="dv">10</span>,<span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;"></p>
+<h4 id="用预定义的函数生成">1.5 用预定义的函数生成</h4>
+<p><code>igraph</code>里有很多带make的函数，是可以生成图的</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># ls.str and lsf.str return an object of class "ls_str", basically the character vector of matching names (functions only for lsf.str), similarly to ls, with a print() method that calls str() on each object.</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co">###head(lsf.str("package:igraph"))</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">grep</span>(<span class="dt">pattern =</span> <span class="st">"^make"</span>,<span class="dt">x=</span><span class="kw">ls</span>(<span class="st">"package:igraph"</span>),<span class="dt">value =</span> T)</a></code></pre></div>
+<pre><code>##  [1] "make_"                     "make_bipartite_graph"     
+##  [3] "make_chordal_ring"         "make_clusters"            
+##  [5] "make_de_bruijn_graph"      "make_directed_graph"      
+##  [7] "make_ego_graph"            "make_empty_graph"         
+##  [9] "make_full_bipartite_graph" "make_full_citation_graph" 
+## [11] "make_full_graph"           "make_graph"               
+## [13] "make_kautz_graph"          "make_lattice"             
+## [15] "make_line_graph"           "make_ring"                
+## [17] "make_star"                 "make_tree"                
+## [19] "make_undirected_graph"</code></pre>
+<p>我们展示其中的一些图：</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">g1 &lt;-<span class="st"> </span><span class="kw">make_tree</span>(<span class="dv">10</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2">g2 &lt;-<span class="st"> </span><span class="kw">make_bipartite_graph</span>( <span class="kw">rep</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">length=</span><span class="dv">10</span>), <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb14-3" title="3">g3 &lt;-<span class="st"> </span><span class="kw">make_star</span>(<span class="dv">10</span>, <span class="dt">mode =</span> <span class="st">"out"</span>)</a>
+<a class="sourceLine" id="cb14-4" title="4">g4 &lt;-<span class="st"> </span><span class="kw">make_star</span>(<span class="dv">10</span>, <span class="dt">mode =</span> <span class="st">"in"</span>)</a>
+<a class="sourceLine" id="cb14-5" title="5">op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">plot</span>(g1,<span class="dt">vertex.size=</span><span class="dv">20</span>,<span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="kw">plot</span>(g2,<span class="dt">vertex.size=</span><span class="dv">20</span>,<span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="kw">plot</span>(g3,<span class="dt">vertex.size=</span><span class="dv">20</span>,<span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="kw">plot</span>(g4,<span class="dt">vertex.size=</span><span class="dv">20</span>,<span class="dt">vertex.color=</span><span class="st">"skyblue"</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">par</span>(op)</a></code></pre></div>
+<h3 id="基本操作">2. 基本操作</h3>
+<p>诱导子图</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">g &lt;-<span class="st"> </span><span class="kw">graph.formula</span>(<span class="dv">1-2</span>,<span class="dv">1-3</span>,<span class="dv">2-3</span>,<span class="dv">2-4</span>,<span class="dv">3-5</span>,<span class="dv">4-5</span>,<span class="dv">4-6</span>,<span class="dv">4-7</span>,<span class="dv">5-6</span>,<span class="dv">6-7</span>)</a>
+<a class="sourceLine" id="cb16-2" title="2">h &lt;-<span class="st"> </span><span class="kw">induced.subgraph</span>(g,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="kw">print</span>(h)</a></code></pre></div>
+<pre><code>## IGRAPH d91ee38 UN-- 5 6 -- 
+## + attr: name (v/c)
+## + edges from d91ee38 (vertex names):
+## [1] 1--2 1--3 2--3 2--4 3--5 4--5</code></pre>
+<p>Exclusion：</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">h &lt;-<span class="st"> </span>g <span class="op">-</span><span class="st"> </span><span class="kw">vertices</span>(<span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>))</a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw">print</span>(h)</a></code></pre></div>
+<pre><code>## IGRAPH d923ec9 UN-- 5 6 -- 
+## + attr: name (v/c)
+## + edges from d923ec9 (vertex names):
+## [1] 1--2 1--3 2--3 2--4 3--5 4--5</code></pre>
+<p>Inclusion:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">h &lt;-<span class="st"> </span>h <span class="op">+</span><span class="st"> </span><span class="kw">vertices</span>(<span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>))</a>
+<a class="sourceLine" id="cb20-2" title="2">g &lt;-<span class="st"> </span>h <span class="op">+</span><span class="st"> </span><span class="kw">edges</span>(<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">6</span>),<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>),<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">6</span>),<span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>))</a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="kw">print</span>(g)</a></code></pre></div>
+<pre><code>## IGRAPH d928f5d UN-- 7 10 -- 
+## + attr: name (v/c)
+## + edges from d928f5d (vertex names):
+##  [1] 1--2 1--3 2--3 2--4 3--5 4--5 4--6 4--7 5--6 6--7</code></pre>
+<p>union:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">h1 &lt;-<span class="st"> </span>h</a>
+<a class="sourceLine" id="cb22-2" title="2">h2 &lt;-<span class="st"> </span><span class="kw">graph.formula</span>(<span class="dv">4-6</span>,<span class="dv">4-7</span>,<span class="dv">5-6</span>,<span class="dv">6-7</span>)</a>
+<a class="sourceLine" id="cb22-3" title="3">g &lt;-<span class="st"> </span><span class="kw">graph.union</span>(h1,h2)</a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="kw">print</span>(g)</a></code></pre></div>
+<pre><code>## IGRAPH d92f82f UN-- 7 10 -- 
+## + attr: name (v/c)
+## + edges from d92f82f (vertex names):
+##  [1] 6--7 5--6 4--7 4--6 4--5 3--5 2--4 2--3 1--3 1--2</code></pre>
+<h3 id="查看添加修改-属性">3. 查看/添加/修改 属性</h3>
+<p>首先创建一个示例的图，</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">## A simple example with a couple of actors</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="co">## The typical case is that these tables are read in from files....</span></a>
+<a class="sourceLine" id="cb24-3" title="3">actors &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name=</span><span class="kw">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Cecil"</span>, <span class="st">"David"</span>,</a>
+<a class="sourceLine" id="cb24-4" title="4">                            <span class="st">"Esmeralda"</span>),</a>
+<a class="sourceLine" id="cb24-5" title="5">                     <span class="dt">age=</span><span class="kw">c</span>(<span class="dv">48</span>,<span class="dv">33</span>,<span class="dv">45</span>,<span class="dv">34</span>,<span class="dv">21</span>),</a>
+<a class="sourceLine" id="cb24-6" title="6">                     <span class="dt">gender=</span><span class="kw">c</span>(<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>))</a>
+<a class="sourceLine" id="cb24-7" title="7">relations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">from=</span><span class="kw">c</span>(<span class="st">"Bob"</span>, <span class="st">"Cecil"</span>, <span class="st">"Cecil"</span>, <span class="st">"David"</span>,</a>
+<a class="sourceLine" id="cb24-8" title="8">                               <span class="st">"David"</span>, <span class="st">"Esmeralda"</span>),</a>
+<a class="sourceLine" id="cb24-9" title="9">                        <span class="dt">to=</span><span class="kw">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Alice"</span>, <span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Alice"</span>),</a>
+<a class="sourceLine" id="cb24-10" title="10">                        <span class="dt">same.dept=</span><span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb24-11" title="11">                        <span class="dt">friendship=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">advice=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb24-12" title="12">g &lt;-<span class="st"> </span><span class="kw">graph_from_data_frame</span>(relations, <span class="dt">directed=</span><span class="ot">TRUE</span>, <span class="dt">vertices=</span>actors)</a></code></pre></div>
+<p>我们可以通过<code>$</code>运算符来查看，添加，修改属性</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co">###check edge attribute</span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="kw">names</span>(<span class="kw">edge_attr</span>(g))</a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="co">###[1] "same.dept"  "friendship" "advice" </span></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="co">###vertext</span></a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="kw">names</span>(<span class="kw">vertex_attr</span>(g))</a>
+<a class="sourceLine" id="cb25-6" title="6"><span class="co">###[1] "name"   "age"    "gender"</span></a>
+<a class="sourceLine" id="cb25-7" title="7"><span class="co">###Vertex</span></a>
+<a class="sourceLine" id="cb25-8" title="8"><span class="co"># list.vertex.attributes(g)</span></a>
+<a class="sourceLine" id="cb25-9" title="9"><span class="co"># list.edge.attributes(g)</span></a>
+<a class="sourceLine" id="cb25-10" title="10"><span class="kw">V</span>(g)<span class="op">$</span>name</a>
+<a class="sourceLine" id="cb25-11" title="11"><span class="co">###[1] "Alice"     "Bob"       "Cecil"     "David"     "Esmeralda"</span></a>
+<a class="sourceLine" id="cb25-12" title="12"><span class="kw">edge_attr</span>(g)<span class="op">$</span>same.dept</a>
+<a class="sourceLine" id="cb25-13" title="13"><span class="co">###[1] FALSE FALSE  TRUE FALSE FALSE  TRUE</span></a>
+<a class="sourceLine" id="cb25-14" title="14"><span class="kw">edge_attr</span>(g)<span class="op">$</span>friendship</a>
+<a class="sourceLine" id="cb25-15" title="15"><span class="co">###[1] 4 5 5 2 1 1</span></a></code></pre></div>
+<p>可视化如下：</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co">## A simple example with a couple of actors</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="co">## The typical case is that these tables are read in from files....</span></a>
+<a class="sourceLine" id="cb26-3" title="3">actors &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name=</span><span class="kw">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Cecil"</span>, <span class="st">"David"</span>,</a>
+<a class="sourceLine" id="cb26-4" title="4">                            <span class="st">"Esmeralda"</span>),</a>
+<a class="sourceLine" id="cb26-5" title="5">                     <span class="dt">age=</span><span class="kw">c</span>(<span class="dv">48</span>,<span class="dv">33</span>,<span class="dv">45</span>,<span class="dv">34</span>,<span class="dv">21</span>),</a>
+<a class="sourceLine" id="cb26-6" title="6">                     <span class="dt">gender=</span><span class="kw">c</span>(<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>))</a>
+<a class="sourceLine" id="cb26-7" title="7">relations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">from=</span><span class="kw">c</span>(<span class="st">"Bob"</span>, <span class="st">"Cecil"</span>, <span class="st">"Cecil"</span>, <span class="st">"David"</span>,</a>
+<a class="sourceLine" id="cb26-8" title="8">                               <span class="st">"David"</span>, <span class="st">"Esmeralda"</span>),</a>
+<a class="sourceLine" id="cb26-9" title="9">                        <span class="dt">to=</span><span class="kw">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Alice"</span>, <span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Alice"</span>),</a>
+<a class="sourceLine" id="cb26-10" title="10">                        <span class="dt">same.dept=</span><span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb26-11" title="11">                        <span class="dt">friendship=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">advice=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb26-12" title="12">g &lt;-<span class="st"> </span><span class="kw">graph_from_data_frame</span>(relations, <span class="dt">directed=</span><span class="ot">TRUE</span>, <span class="dt">vertices=</span>actors)</a>
+<a class="sourceLine" id="cb26-13" title="13"></a>
+<a class="sourceLine" id="cb26-14" title="14"><span class="kw">V</span>(g)<span class="op">$</span>gender &lt;-<span class="st"> </span>plyr<span class="op">::</span><span class="kw">revalue</span>(<span class="dt">x=</span><span class="kw">V</span>(g)<span class="op">$</span>gender,</a>
+<a class="sourceLine" id="cb26-15" title="15">                            <span class="dt">replace=</span><span class="kw">c</span>(<span class="st">"F"</span>=<span class="st">"Female"</span>,<span class="st">"M"</span>=<span class="st">"Male"</span>))</a>
+<a class="sourceLine" id="cb26-16" title="16"><span class="kw">V</span>(g)<span class="op">$</span>gender</a></code></pre></div>
+<pre><code>## [1] "Female" "Male"   "Female" "Male"   "Female"</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">g<span class="op">$</span>name &lt;-<span class="st"> "Toy Graph"</span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb28-3" title="3">tmp.df &lt;-<span class="st"> </span><span class="kw">layout.graphopt</span>(g)</a>
+<a class="sourceLine" id="cb28-4" title="4"><span class="kw">V</span>(g)<span class="op">$</span>color &lt;-<span class="st"> </span>plyr<span class="op">::</span><span class="kw">revalue</span>(<span class="dt">x=</span><span class="kw">V</span>(g)<span class="op">$</span>gender,</a>
+<a class="sourceLine" id="cb28-5" title="5">                            <span class="dt">replace=</span><span class="kw">c</span>(<span class="st">"Female"</span>=<span class="st">"skyblue"</span>,</a>
+<a class="sourceLine" id="cb28-6" title="6">                                      <span class="st">"Male"</span>=<span class="st">"coral"</span>))</a>
+<a class="sourceLine" id="cb28-7" title="7"><span class="kw">plot</span>(g,<span class="dt">layout=</span>tmp.df,<span class="dt">vertex.size=</span><span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb28-8" title="8">     <span class="dt">vertex.color=</span><span class="kw">V</span>(g)<span class="op">$</span>color,<span class="dt">main=</span><span class="st">"Toy Graph"</span>)</a>
+<a class="sourceLine" id="cb28-9" title="9"><span class="kw">legend</span>(<span class="st">'right'</span>,<span class="dt">legend=</span><span class="kw">unique</span>(<span class="kw">V</span>(g)<span class="op">$</span>gender),<span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">19</span>,<span class="dv">19</span>),<span class="dt">col =</span> <span class="kw">c</span>(<span class="st">"skyblue"</span>,<span class="st">"coral"</span>))</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-16-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb29-2" title="2">tmp.df &lt;-<span class="st"> </span><span class="kw">layout.graphopt</span>(g)</a>
+<a class="sourceLine" id="cb29-3" title="3">gg.net =<span class="st"> </span><span class="kw">ggnetwork</span>(g,</a>
+<a class="sourceLine" id="cb29-4" title="4">                   <span class="dt">arrow.gap =</span> <span class="fl">0.05</span>, </a>
+<a class="sourceLine" id="cb29-5" title="5">                   <span class="dt">layout =</span> tmp.df)</a>
+<a class="sourceLine" id="cb29-6" title="6"><span class="kw">ggplot</span>(gg.net, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">xend =</span> xend, <span class="dt">yend =</span> yend)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-7" title="7"><span class="st">    </span><span class="kw">geom_edges</span>(<span class="dt">color =</span> <span class="st">"black"</span>, </a>
+<a class="sourceLine" id="cb29-8" title="8">               <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">curvature =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb29-9" title="9">               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">6</span>, <span class="st">"pt"</span>), </a>
+<a class="sourceLine" id="cb29-10" title="10">                             <span class="dt">type =</span> <span class="st">"closed"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-11" title="11"><span class="st">    </span><span class="kw">geom_nodes</span>(<span class="kw">aes</span>(<span class="dt">color =</span> gender), <span class="dt">size =</span> <span class="dv">10</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-12" title="12"><span class="st">  </span><span class="kw">geom_nodetext</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name))<span class="op">+</span></a>
+<a class="sourceLine" id="cb29-13" title="13"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"skyblue"</span>,<span class="st">"coral"</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb29-14" title="14"><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">"Toy Graph"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb29-15" title="15"><span class="st">    </span><span class="kw">theme_blank</span>()</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-17-1.png" style="display: block; margin: auto;"></p>
+<h3 id="更多关于图的概念和术语">4. 更多关于图的概念和术语</h3>
+<h4 id="概念">4.1 概念</h4>
+<p>下述概念不搬运书里的定义；忘记就查书。后面的章节会再用到这些概念，进行图的可视化与统计分析。</p>
+<ul>
+<li><p>multi-graph</p></li>
+<li><p>simple-graph: 可以用<code>is.simple()</code>判定，可以用<code>simplify()</code>将<code>multi-graph</code>转换为<code>simple-graph</code>.</p></li>
+<li><p>neighbors</p></li>
+<li><p>degree: The degree of a vertex v defined as the number of edges incident on v;</p></li>
+<li><p>in-degree</p></li>
+<li><p>out-degree</p></li>
+<li><p>walk</p></li>
+<li><p>trails</p></li>
+<li><p>circuit &amp; cylce;</p></li>
+<li><p>reachable</p></li>
+<li><p>graph connected</p></li>
+<li><p>component of a graph</p></li>
+<li><p>strong connected</p></li>
+<li><p>weak connected</p></li>
+<li><p>distance/geodesic distance</p></li>
+<li><p>diameter</p></li>
+</ul>
+<h4 id="一些特殊的图">4.2 一些特殊的图</h4>
+<p>与第一节有重叠</p>
+<ul>
+<li><p>complet graph</p></li>
+<li><p>clique</p></li>
+<li><p>regular graph</p></li>
+<li><p>tree</p></li>
+<li><p>forest</p></li>
+<li><p>root</p></li>
+<li><p>ancestor</p></li>
+<li><p>descendant</p></li>
+<li><p>parents, children</p></li>
+<li><p>k-star</p></li>
+<li><p>dirrected acyclic graph(DAG)</p></li>
+<li><p>bipartite graph</p></li>
+</ul>
+<!-- end list -->
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">g.bip &lt;-<span class="st"> </span><span class="kw">graph.formula</span>(actor1<span class="op">:</span>actor2<span class="op">:</span>actor3,</a>
+<a class="sourceLine" id="cb30-2" title="2">                       movie1<span class="op">:</span>movie2,</a>
+<a class="sourceLine" id="cb30-3" title="3">                       actor1<span class="op">:</span>actor2 <span class="op">-</span><span class="st"> </span>movie1,</a>
+<a class="sourceLine" id="cb30-4" title="4">                       actor2<span class="op">:</span>actor3 <span class="op">-</span><span class="st"> </span>movie2)</a>
+<a class="sourceLine" id="cb30-5" title="5"></a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="kw">V</span>(<span class="dt">graph =</span> g.bip)<span class="op">$</span>type &lt;-<span class="st"> </span><span class="kw">grepl</span>(<span class="dt">pattern =</span> <span class="st">"^movie"</span>,<span class="kw">V</span>(<span class="dt">graph =</span> g.bip)<span class="op">$</span>name)</a>
+<a class="sourceLine" id="cb30-7" title="7"></a>
+<a class="sourceLine" id="cb30-8" title="8"><span class="kw">V</span>(g.bip)<span class="op">$</span>category &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">V</span>(<span class="dt">graph =</span> g.bip)<span class="op">$</span>type,<span class="st">"Movie"</span>,<span class="st">"Actor"</span>)</a>
+<a class="sourceLine" id="cb30-9" title="9"><span class="kw">V</span>(g.bip)<span class="op">$</span>category</a></code></pre></div>
+<pre><code>## [1] "Actor" "Actor" "Actor" "Movie" "Movie"</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">g &lt;-<span class="st"> </span>g.bip</a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="co">### using matrxi product to do layout rotate 3/2pi</span></a>
+<a class="sourceLine" id="cb32-4" title="4">tmp.df &lt;-<span class="st"> </span><span class="kw">layout.bipartite</span>(g) <span class="op">%*%</span><span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="dt">nrow =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb32-5" title="5"></a>
+<a class="sourceLine" id="cb32-6" title="6">gg.net =<span class="st"> </span><span class="kw">ggnetwork</span>(g,</a>
+<a class="sourceLine" id="cb32-7" title="7">                   <span class="dt">arrow.gap =</span> <span class="fl">0.05</span>, </a>
+<a class="sourceLine" id="cb32-8" title="8">                   <span class="dt">layout =</span> tmp.df)</a>
+<a class="sourceLine" id="cb32-9" title="9"><span class="kw">head</span>(gg.net)</a></code></pre></div>
+<pre><code>##   x   y   name  type category      xend      yend
+## 1 0 0.0 actor1 FALSE    Actor 0.9514929 0.2378732
+## 2 0 0.5 actor2 FALSE    Actor 0.9514929 0.2621268
+## 3 0 0.5 actor2 FALSE    Actor 0.9514929 0.7378732
+## 4 0 1.0 actor3 FALSE    Actor 0.9514929 0.7621268
+## 5 0 0.0 actor1 FALSE    Actor 0.0000000 0.0000000
+## 6 0 0.5 actor2 FALSE    Actor 0.0000000 0.5000000</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">ggplot</span>(gg.net, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">xend =</span> xend, <span class="dt">yend =</span> yend)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="st">    </span><span class="kw">geom_edges</span>(<span class="dt">color =</span> <span class="st">"black"</span>, </a>
+<a class="sourceLine" id="cb34-3" title="3">               <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">curvature =</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb34-4" title="4">               <span class="co"># ,arrow = arrow(length = unit(6, "pt"), </span></a>
+<a class="sourceLine" id="cb34-5" title="5">               <span class="co">#               type = "closed")</span></a>
+<a class="sourceLine" id="cb34-6" title="6">               ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-7" title="7"><span class="st">    </span><span class="kw">geom_nodes</span>(<span class="kw">aes</span>(<span class="dt">color =</span> category), <span class="dt">size =</span> <span class="dv">16</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-8" title="8"><span class="st">  </span><span class="kw">geom_nodetext</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name))<span class="op">+</span></a>
+<a class="sourceLine" id="cb34-9" title="9"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"skyblue"</span>,<span class="st">"coral"</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb34-10" title="10"><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">"bipartite graph example"</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb34-11" title="11"><span class="st">    </span><span class="kw">theme_blank</span>()</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-18-1.png" style="display: block; margin: auto;"></p>
+<p><code>igraph</code>自带的例子：</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="co"># Random bipartite graph</span></a>
+<a class="sourceLine" id="cb35-2" title="2">inc &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)), <span class="dv">10</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb35-3" title="3">g &lt;-<span class="st"> </span><span class="kw">graph_from_incidence_matrix</span>(inc)</a>
+<a class="sourceLine" id="cb35-4" title="4"><span class="kw">plot</span>(g, <span class="dt">layout =</span> layout_as_bipartite,<span class="dt">vertex.size=</span><span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb35-5" title="5">     <span class="dt">vertex.color=</span><span class="kw">c</span>(<span class="st">"skyblue"</span>,<span class="st">"coral"</span>)[<span class="kw">V</span>(g)<span class="op">$</span>type<span class="op">+</span><span class="dv">1</span>])</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-19-1.png" style="display: block; margin: auto;"></p>
+<h3 id="附录r配色">附录：R配色</h3>
+<p>基本颜色：</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="co">#### code provided by</span></a>
+<a class="sourceLine" id="cb36-2" title="2"><span class="co">####http://bc.bojanorama.pl/2013/04/r-color-reference-sheet/</span></a>
+<a class="sourceLine" id="cb36-3" title="3">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">660</span>, <span class="dv">60</span>, <span class="dv">11</span>)</a>
+<a class="sourceLine" id="cb36-4" title="4">kol &lt;-<span class="st"> </span><span class="kw">colors</span>()[m]</a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="co">#op &lt;- par(mar=c(.1, .1, 2, .1))</span></a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="kw">image</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">60</span>, <span class="kw">t</span>(m), <span class="dt">col=</span>kol, <span class="dt">axes=</span><span class="ot">FALSE</span>, <span class="dt">ann=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb36-7" title="7">txtcol &lt;-<span class="st"> </span><span class="kw">ifelse</span>( <span class="kw">apply</span>(<span class="kw">col2rgb</span>(kol), <span class="dv">2</span>, mean) <span class="op">&lt;</span><span class="st"> </span><span class="dv">70</span>, <span class="st">"white"</span>, <span class="st">"black"</span>)</a>
+<a class="sourceLine" id="cb36-8" title="8"><span class="kw">text</span>( <span class="kw">as.numeric</span>(<span class="kw">col</span>(m)), <span class="kw">as.numeric</span>(<span class="kw">row</span>(m)), kol, <span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">col=</span>txtcol)</a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="kw">mtext</span>(<span class="st">"grDevices::colors"</span>, <span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-20-1.png" style="display: block; margin: auto;"></p>
+<p>调色版</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">RColorBrewer<span class="op">::</span><span class="kw">display.brewer.all</span>()</a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="kw">mtext</span>(<span class="st">"RColorBrewer"</span>, <span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-21-1.png"><!-- --></p>
+<p>渐变色</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">library</span>(RColorBrewer)</a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="kw">library</span>(colorRamps)</a>
+<a class="sourceLine" id="cb38-3" title="3"><span class="kw">library</span>(viridis)</a>
+<a class="sourceLine" id="cb38-4" title="4"><span class="co">### manu</span></a>
+<a class="sourceLine" id="cb38-5" title="5">rdylbu &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">rev</span>(<span class="kw">brewer.pal</span>(<span class="dt">n =</span> <span class="dv">11</span>, <span class="dt">name =</span><span class="st">"RdYlBu"</span>)))</a>
+<a class="sourceLine" id="cb38-6" title="6">rdbu &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">rev</span>(<span class="kw">brewer.pal</span>(<span class="dt">n =</span> <span class="dv">11</span>, <span class="dt">name =</span><span class="st">"RdBu"</span>)))</a>
+<a class="sourceLine" id="cb38-7" title="7">navy &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">"navy"</span>, <span class="st">"white"</span>, <span class="st">"firebrick3"</span>))</a>
+<a class="sourceLine" id="cb38-8" title="8">jet.colors &lt;-</a>
+<a class="sourceLine" id="cb38-9" title="9"><span class="st">  </span><span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">"#00007F"</span>, <span class="st">"blue"</span>, <span class="st">"#007FFF"</span>, <span class="st">"cyan"</span>,</a>
+<a class="sourceLine" id="cb38-10" title="10">                     <span class="st">"#7FFF7F"</span>, <span class="st">"yellow"</span>, <span class="st">"#FF7F00"</span>, <span class="st">"red"</span>, <span class="st">"#7F0000"</span>))</a>
+<a class="sourceLine" id="cb38-11" title="11">cold &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">'#f7fcf0'</span>,<span class="st">'#41b6c4'</span>,<span class="st">'#253494'</span>,<span class="st">'#081d58'</span>,<span class="st">'#081d58'</span>))</a>
+<a class="sourceLine" id="cb38-12" title="12">warm &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">'#ffffb2'</span>,<span class="st">'#fecc5c'</span>,<span class="st">'#e31a1c'</span>,<span class="st">'#800026'</span>,<span class="st">'#800026'</span>))</a>
+<a class="sourceLine" id="cb38-13" title="13">warmcold &lt;-<span class="st"> </span><span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="kw">rev</span>(<span class="kw">cold</span>(<span class="dv">21</span>)), <span class="kw">warm</span>(<span class="dv">20</span>)))</a>
+<a class="sourceLine" id="cb38-14" title="14"></a>
+<a class="sourceLine" id="cb38-15" title="15"></a>
+<a class="sourceLine" id="cb38-16" title="16"><span class="co">### add manu with package function</span></a>
+<a class="sourceLine" id="cb38-17" title="17"></a>
+<a class="sourceLine" id="cb38-18" title="18">N &lt;-<span class="st"> </span><span class="dv">100</span> <span class="co"># ramp length</span></a>
+<a class="sourceLine" id="cb38-19" title="19">funnames &lt;-<span class="st"> </span><span class="kw">rev</span>(<span class="kw">c</span>(<span class="st">"manu::rdylbu"</span>,<span class="st">"manu::rdbu"</span>,<span class="st">"manu::navy"</span>,<span class="st">"manu::jet.colors"</span>,<span class="st">"manu::warmcold"</span>,</a>
+<a class="sourceLine" id="cb38-20" title="20">              <span class="st">"viridis::viridis"</span>,</a>
+<a class="sourceLine" id="cb38-21" title="21">              <span class="st">"grDevices::rainbow"</span>, <span class="st">"grDevices::heat.colors"</span>,</a>
+<a class="sourceLine" id="cb38-22" title="22">              <span class="st">"grDevices::terrain.colors"</span>, <span class="st">"grDevices::topo.colors"</span>,</a>
+<a class="sourceLine" id="cb38-23" title="23">              <span class="st">"grDevices::cm.colors"</span>, </a>
+<a class="sourceLine" id="cb38-24" title="24">              <span class="st">"colorRamps::blue2red"</span>,</a>
+<a class="sourceLine" id="cb38-25" title="25">              <span class="st">"colorRamps::blue2green"</span>, <span class="st">"colorRamps::green2red"</span>,</a>
+<a class="sourceLine" id="cb38-26" title="26">              <span class="st">"colorRamps::blue2yellow"</span>, <span class="st">"colorRamps::cyan2yellow"</span>,</a>
+<a class="sourceLine" id="cb38-27" title="27">              <span class="st">"colorRamps::magenta2green"</span>, <span class="st">"colorRamps::matlab.like"</span>,</a>
+<a class="sourceLine" id="cb38-28" title="28">              <span class="st">"colorRamps::matlab.like2"</span>, <span class="st">"colorRamps::primary.colors"</span>,</a>
+<a class="sourceLine" id="cb38-29" title="29">              <span class="st">"colorRamps::ygobb"</span>))</a>
+<a class="sourceLine" id="cb38-30" title="30">spl &lt;-<span class="st"> </span><span class="kw">strsplit</span>(funnames, <span class="st">"::"</span>)</a>
+<a class="sourceLine" id="cb38-31" title="31">pkgs &lt;-<span class="st"> </span><span class="kw">sapply</span>(spl, <span class="st">"["</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb38-32" title="32">funs &lt;-<span class="st"> </span><span class="kw">sapply</span>(spl, <span class="st">"["</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb38-33" title="33">kolmat &lt;-<span class="st"> </span><span class="kw">sapply</span>(funs, do.call, <span class="kw">list</span>(N))</a>
+<a class="sourceLine" id="cb38-34" title="34">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>( <span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">length</span>(kolmat)), <span class="kw">nrow</span>(kolmat), <span class="kw">ncol</span>(kolmat))</a>
+<a class="sourceLine" id="cb38-35" title="35"></a>
+<a class="sourceLine" id="cb38-36" title="36"></a>
+<a class="sourceLine" id="cb38-37" title="37"><span class="kw">image</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(mat)), <span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">ncol</span>(mat)), mat, <span class="dt">col=</span>kolmat,</a>
+<a class="sourceLine" id="cb38-38" title="38">      <span class="dt">axes=</span><span class="ot">FALSE</span>, <span class="dt">ann=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb38-39" title="39"><span class="kw">text</span>( <span class="kw">nrow</span>(mat)<span class="op">/</span><span class="dv">2</span>, <span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">ncol</span>(mat)), funnames)</a>
+<a class="sourceLine" id="cb38-40" title="40"><span class="kw">mtext</span>(<span class="st">"Color Ramps function"</span>, <span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="/figure/posts/Learnigraph-1-ManuNetworkDataBasic_files/figure-gfm/unnamed-chunk-22-1.png"><!-- --></p>
+<svg style="display: none" id="MJX-SVG-global-cache"><defs></defs></svg>
+            
+                
+
+            
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/Graph/">Graph</a>
+            
+            <a href="/tags/Network/">Network</a>
+            
+        </div>
+        
+    </article>
+    
+        <p style="text-align: center">本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+    
+
+</div>
+
+<script src="/js/busuanzi.pure.mini.js"></script>
+
+
+
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <footer class="footer">
+    <div class="footer-inner" style="text-align: center">
+        <p>
+            <a href="/about"  title="关于">关于</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <!-- 自定义链接 -->
+            <a href="/help" title="帮助" >帮助</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/links" title="友链">友链</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/sitemap.xml" title="地图">地图</a>
+        </p>
+        <p>
+            本站已建立&nbsp<a href="/timeline" id="siteBuildingTime"></a>&nbsp天，<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="licence">采用知识共享署名-相同方式共享 4.0 国际许可协议创作</a><br/>
+            ©2017-<span id="cpYear"></span> 基于&nbsp<a href="http://hexo.io" target="_blank" rel="nofollow">Hexo</a>
+            ，主题采用&nbsp&nbsp<a href="https://github.com/tangkunyin/hexo-theme-jsimple" target="_blank" rel="bookmark">JSimple</a>
+            ，作者&nbsp<a href="https://landau1994.github.io" target="_blank" rel="friend">landau1994</a>
+            ，Hosted by <a href="https://pages.github.com/" target="_blank" rel="nofollow">GitHub Pages</a>
+        </p>
+    </div>
+</footer>
+
+<script src="/js/SimpleCore.js"></script>
+
+
+</div>
+<!-- search pop -->
+<div class="popup search-popup local-search-popup">
+    <div class="local-search-header clearfix">
+        <span class="search-icon">
+            <i class="fa fa-search"></i>
+        </span>
+        <span class="popup-btn-close">
+            <i class="fa fa-times-circle"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+            <input id="local-search-input"
+                   spellcheck="false"
+                   type="text"
+                   autocomplete="off"
+                   placeholder="请输入查询关键词"/>
+        </div>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+<div class="fixed-btn">
+    <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
+</div>
+<script>
+    $(function () {
+        var jsi_config = {
+            buildingTime: '08/01/2018',
+            current: $('.post-tags').length > 0 ? 'post' : 'archive',
+            snsQRCode: '/images/sns-qrcode.png',
+            donateImg: '/images/donate-qr.png',
+            localSearch: { dbPath: '' },
+            readMode: 'day'
+        };
+        
+            jsi_config.localSearch = {
+                dbPath: '/search.json',
+                trigger: 'auto',
+                topN: '1',
+                unescape: 'false'
+            }
+        
+        SimpleCore.init(jsi_config);
+        
+    });
+</script>
+</body>
+</html>
