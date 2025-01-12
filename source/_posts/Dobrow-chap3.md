@@ -41,7 +41,9 @@ for the Markov chain is a probability distribution 𝝀 with the property that, 
 $$\lim_{n\rightarrow\infty}P^n_{ij}=\lambda_j$$
 并且设初始分布$\boldsymbol{\alpha}=(\alpha_1,\dots,\alpha_n)$,状态总数为$m$
 则有：
-$$\begin{aligned}
+
+$$
+\begin{aligned}
   \lim_{n\rightarrow\infty}\boldsymbol{\alpha}\boldsymbol{P}^n &=(\alpha_1,\dots,\alpha_n)\begin{pmatrix}
    \lambda_1 & \lambda_2 & \cdots &  \lambda_m \\
    \lambda_1 & \lambda_2 & \cdots &  \lambda_m \\
@@ -62,8 +64,6 @@ $$\begin{aligned}
   \end{pmatrix} \\
   & = \boldsymbol{\lambda}
 \end{aligned}
-  
-
 $$
 
 
@@ -308,7 +308,7 @@ edit: 2020-05-05
 
 回顾停时的定义$T_j = \min\{n>0:X_n=j\}$，有如下定理：
 
-> **Theorem 3.6 Limit Theorem for Finite Irreducible Markov Chains**. Assume that X_0,X_1,\dots, is a finite irreducible Markov Chain. For each state j. let $\mu_j=E(T_j|X_0=j)$ be the expected return time to j. Then, $\mu_j$ is finite, and there exisits a unique, positve stationary distribution $\boldsymbol{\pi}$ such that 
+> **Theorem 3.6 Limit Theorem for Finite Irreducible Markov Chains**. Assume that $X_0,X_1,\dots$, is a finite irreducible Markov Chain. For each state $j$. let $\mu_j=E(T_j|X_0=j)$ be the expected return time to $j$. Then, $\mu_j$ is finite, and there exisits a unique, positve stationary distribution $\boldsymbol{\pi}$ such that 
 > $$ \pi_j =\frac{1}{\mu_j} , \forall j$$
 > Furthermore, $\forall i$
 > $$ \pi_j = \lim_{n\rightarrow\infty}\frac{1}{n}\sum_{m=0}^{n-1}P^m_{ij} $$
