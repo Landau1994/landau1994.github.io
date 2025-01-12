@@ -4,7 +4,7 @@ author: 夏目沉吟
 avatar: /images/faceicon.png
 authorLink: 'https://github.com/Landau1994'
 authorAbout: 'https://github.com/Landau1994'
-authorDesc: A PhD student in bioinformatics
+authorDesc: An apprentice in bioinformatics
 comments: false
 date: 2020-04-08 21:50:00
 keywords:
@@ -37,4 +37,4 @@ photos:
 
 #### 关于作者
 
-生物信息学博士研究生在读。知乎主页[https://www.zhihu.com/people/landau1994]。
+生物信息学博士。知乎主页[https://www.zhihu.com/people/landau1994]。
