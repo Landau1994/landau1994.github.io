@@ -300,17 +300,34 @@ mjx-container + br {
             </div>
             <h2 class="post-title">test mermaid</h2>
             <div class="post-meta">
-                本文共计117个字 |
+                本文共计388个字 |
                 您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
         <div class="post-content markdown-body">
-            <pre class="mermaid"><code>graph TD
+            <!-- htmlmin:ignore -->
+<pre class="mermaid">
+sequenceDiagram
+Alice-&gt;&gt;John: Hello John, how are you?
+loop Healthcheck
+    John-&gt;&gt;John: Fight against hypochondria
+end
+Note right of John: Rational thoughts!
+John--&gt;&gt;Alice: Great!
+John-&gt;&gt;Bob: How about you?
+Bob--&gt;&gt;John: Jolly good!
+</pre>
+<!-- htmlmin:ignore -->
+<!-- htmlmin:ignore -->
+<pre class="mermaid">
+graph TD
     A[开始] --&gt; B{判断}
     B -- Yes --&gt; C[执行]
     B -- No --&gt; D[跳过]
     C --&gt; E[结束]
-    D --&gt; E</code></pre>
+    D --&gt; E
+</pre>
+<!-- htmlmin:ignore -->
 <svg style="display: none" id="MJX-SVG-global-cache"><defs></defs></svg>
             
                 
