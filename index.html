@@ -42,10 +42,21 @@
     </script>
 
 
-<script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
-<script>
-  mermaid.initialize({ startOnLoad: true });
-</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'jsimple',
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true
+        }
+      });
+    });
+  </script>
+
     
 
     
@@ -289,9 +300,12 @@ mjx-container + br {
             <em>·</em>2025-01-15
             
         </div>
-        <a class="post-title" href="/2025/01/15/mermaid_example/" target="_blank" title="test mermaid">test mermaid</a>
+        <a class="post-title" href="/2025/01/15/udl-chap3-4/" target="_blank" title="udl-chap3-4">udl-chap3-4</a>
         <div class="post-meta">
             <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
+            
+                <em>·</em>
+                <a href="https://landau1994.github.io/tags/note/" target="_blank">note</a>
             
                 <em>·</em>
                 <a href="https://landau1994.github.io/tags/AI/" target="_blank">AI</a>
@@ -299,7 +313,7 @@ mjx-container + br {
         </div>
     </div>
     <div class="post-desc">
-        test mermaid
+        udl-chap3-4
     </div>
 </article>
 
@@ -317,12 +331,9 @@ mjx-container + br {
             <em>·</em>2025-01-15
             
         </div>
-        <a class="post-title" href="/2025/01/15/udl-chap3-4/" target="_blank" title="udl-chap3-4">udl-chap3-4</a>
+        <a class="post-title" href="/2025/01/15/mermaid_example/" target="_blank" title="test mermaid">test mermaid</a>
         <div class="post-meta">
             <a href="/tags" target="_blank"><i class="fa fa-tags"></i></a>
-            
-                <em>·</em>
-                <a href="https://landau1994.github.io/tags/note/" target="_blank">note</a>
             
                 <em>·</em>
                 <a href="https://landau1994.github.io/tags/AI/" target="_blank">AI</a>
@@ -330,7 +341,7 @@ mjx-container + br {
         </div>
     </div>
     <div class="post-desc">
-        udl-chap3-4
+        test mermaid
     </div>
 </article>
 
