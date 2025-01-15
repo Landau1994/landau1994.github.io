@@ -7,10 +7,10 @@ authorAbout: 'https://github.com/Landau1994'
 authorDesc: A PhD student in bioinformatics
 mathjax: true
 categories:
-  - math
+    - math
 tags:
-  - note
-  - stochastic Process
+    - note
+    - stochastic Process
 description: Markov Chains for the Long term
 date: 2020-05-06 22:15:53
 keywords:

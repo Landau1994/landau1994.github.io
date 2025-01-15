@@ -74,3 +74,16 @@ if (page.description) {
         });
     </script>
 <% } %>
+
+<% if (config.mermaid && config.mermaid.enable){ %>
+  <script src="<%= config.mermaid.cdn %>"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: {
+        useMaxWidth: false
+      }
+    });
+  </script>
+<% } %>

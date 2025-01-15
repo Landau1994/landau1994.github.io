@@ -32,13 +32,19 @@ photos:
 
 
 $h_1 = a[\beta_0 + \Omega_1x]$
+
 $h_2 = a[\beta_1 + \Omega_2h_1]$
+
 $h_3 = a[\beta_2 + \Omega_2h_2]$
+
 $\vdots$
+
 $h_K = a[\beta_{K-1} + \Omega_{K}h_{K-1}]$
+
 $y = \beta_K + \Omega_Kh_K$
 
-```Mermaid
+<!-- htmlmin:ignore -->
+<pre class="mermaid">
 graph LR
     x1((x₁)) --> h11((h₁₁))
     x1 --> h12((h₁₂))
@@ -63,7 +69,8 @@ graph LR
     style h21 fill:#fbb,stroke:#333,stroke-width:2px
     style h22 fill:#fbb,stroke:#333,stroke-width:2px
     style y fill:#bfb,stroke:#333,stroke-width:2px
-```
+</pre>
+<!-- htmlmin:ignore -->
 
 最重要的是末尾的：
 
