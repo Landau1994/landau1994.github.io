@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纯前端计数器测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .stat-card .label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        button.danger {
+            background: #f44336;
+        }
+        button.danger:hover {
+            background: #da190b;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .code-block .comment {
+            color: #6a9955;
+        }
+        ul {
+            line-height: 1.8;
+        }
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="emoji">🚀</span> 纯前端访客计数器</h1>
+        <p class="subtitle">无需服务器 · 即时加载 · 隐私友好</p>
+
+        <div class="success-box">
+            <strong>✅ 计数器已启动！</strong> 完全在您的浏览器中运行，无需任何服务器。
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card" id="busuanzi_container_site_pv" style="display: none;">
+                <div class="label">全站总访问量</div>
+                <div class="value" id="busuanzi_value_site_pv">0</div>
+            </div>
+
+            <div class="stat-card" id="busuanzi_container_page_pv" style="display: none;">
+                <div class="label">本页访问量</div>
+                <div class="value" id="busuanzi_value_page_pv">0</div>
+            </div>
+
+            <div class="stat-card" id="busuanzi_container_site_uv" style="display: none;">
+                <div class="label">访客总数</div>
+                <div class="value" id="busuanzi_value_site_uv">0</div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button onclick="location.reload()">🔄 刷新页面</button>
+            <button onclick="window.open(location.href, '_blank')">🆕 新标签页打开</button>
+            <button onclick="viewStats()">📊 查看详细数据</button>
+            <button onclick="resetCounter()" class="danger">🗑️ 重置计数器</button>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 工作原理</h3>
+            <ul>
+                <li><strong>localStorage：</strong>统计数据存储在浏览器本地存储中</li>
+                <li><strong>Cookie：</strong>使用 Cookie 识别唯一访客（有效期1年）</li>
+                <li><strong>无网络请求：</strong>完全离线工作，不向任何服务器发送数据</li>
+                <li><strong>隐私保护：</strong>所有数据仅保存在您的设备上</li>
+            </ul>
+        </div>
+
+        <h2>📝 如何在您的博客中使用</h2>
+
+        <h3>步骤 1：引入脚本</h3>
+        <div class="code-block">
+<span class="comment">&lt;!-- 在页面底部引入脚本 --&gt;</span>
+&lt;script src="js/busuanzi.simple.js"&gt;&lt;/script&gt;
+        </div>
+
+        <h3>步骤 2：添加显示元素</h3>
+        <div class="code-block">
+<span class="comment">&lt;!-- 全站访问量 --&gt;</span>
+&lt;span id="busuanzi_container_site_pv"&gt;
+  本站总访问量 &lt;span id="busuanzi_value_site_pv"&gt;&lt;/span&gt; 次
+&lt;/span&gt;
+
+<span class="comment">&lt;!-- 当前页面访问量 --&gt;</span>
+&lt;span id="busuanzi_container_page_pv"&gt;
+  本页访问量 &lt;span id="busuanzi_value_page_pv"&gt;&lt;/span&gt; 次
+&lt;/span&gt;
+
+<span class="comment">&lt;!-- 访客数 --&gt;</span>
+&lt;span id="busuanzi_container_site_uv"&gt;
+  访客数 &lt;span id="busuanzi_value_site_uv"&gt;&lt;/span&gt; 人
+&lt;/span&gt;
+        </div>
+
+        <h3>完成！</h3>
+        <p>就是这么简单！计数器会自动工作，无需任何配置。</p>
+
+        <h2>🧪 测试场景</h2>
+        <ul>
+            <li><strong>刷新测试：</strong>点击"刷新页面"，site_pv 和 page_pv 应该增加</li>
+            <li><strong>新标签测试：</strong>点击"新标签页打开"，site_pv 增加，site_uv 不变（同一访客）</li>
+            <li><strong>隐私模式：</strong>在隐私/无痕模式下打开，会被识别为新访客</li>
+            <li><strong>清除 Cookie：</strong>清除 Cookie 后，会被识别为新访客</li>
+        </ul>
+
+        <h2>⚠️ 注意事项</h2>
+        <ul>
+            <li>统计数据存储在浏览器本地，清除浏览器数据会重置计数</li>
+            <li>不同浏览器/设备的统计数据互不影响</li>
+            <li>适合个人博客、展示性网站使用</li>
+            <li>如需真实的全局统计，建议使用 Google Analytics 等专业工具</li>
+        </ul>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <strong>🎯 推荐场景：</strong>
+            <ul style="margin: 10px 0 0 0;">
+                <li>静态博客（Hexo、Jekyll、Hugo等）</li>
+                <li>GitHub Pages 托管的网站</li>
+                <li>不想依赖外部 API 的网站</li>
+                <li>重视用户隐私的网站</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="busuanzi.simple.js"></script>
+    <script>
+        function viewStats() {
+            const stats = window.busuanzi.getStats();
+            const message = `
+统计详情：
+
+📊 全站总浏览量：${stats.site_pv}
+👥 唯一访客数：${stats.site_uv}
+📄 页面数量：${Object.keys(stats.pages).length}
+🕒 访客数据：${Object.keys(stats.visitors).length} 条记录
+
+更多详情请查看浏览器控制台（F12）
+            `.trim();
+
+            console.log('=== Busuanzi 统计详情 ===');
+            console.log('全站数据:', stats);
+            console.log('当前页面:', window.location.pathname);
+            console.log('当前页面统计:', stats.pages[window.location.pathname]);
+
+            alert(message);
+        }
+
+        function resetCounter() {
+            if (confirm('确定要重置所有统计数据吗？\n\n此操作不可恢复！')) {
+                window.busuanzi.reset();
+                alert('统计数据已重置！页面即将刷新。');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

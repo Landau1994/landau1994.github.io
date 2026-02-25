@@ -1,0 +1,200 @@
+<h1 id="busuanzi-counter-versions---comparison-guide">Busuanzi Counter Versions - Comparison Guide</h1>
+<h2 id="available-versions">📦 Available Versions</h2>
+<h3 id="busuanzi.pure.mini.js-original">1. <strong>busuanzi.pure.mini.js</strong> (Original)</h3>
+<ul>
+<li>❌ Relies on external API (counter.busuanzi.icodeq.com)</li>
+<li>❌ Currently experiencing downtime</li>
+<li>✅ Minified for production</li>
+<li>✅ Cross-site statistics</li>
+</ul>
+<h3 id="busuanzi.modern.js-modern-api-version">2. <strong>busuanzi.modern.js</strong> (Modern API Version)</h3>
+<ul>
+<li>❌ Still relies on external API</li>
+<li>✅ Clean ES6+ code</li>
+<li>✅ Fetch API with JSONP fallback</li>
+<li>✅ Better error handling</li>
+<li>✅ Retry logic</li>
+</ul>
+<h3 id="busuanzi.standalone.js-recommended">3. <strong>busuanzi.standalone.js</strong> (Recommended)</h3>
+<ul>
+<li>✅ <strong>No external API required</strong></li>
+<li>✅ Works completely offline</li>
+<li>✅ Privacy-friendly (all data local)</li>
+<li>✅ Instant loading (no network delay)</li>
+<li>✅ 100% reliable (no API downtime)</li>
+<li>⚠️ Statistics are per-device (not shared)</li>
+<li>✅ Optional backend sync available</li>
+</ul>
+<hr />
+<h2 id="quick-start---standalone-version">🚀 Quick Start - Standalone Version</h2>
+<h3 id="basic-usage-no-backend">Basic Usage (No Backend)</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1"><span class="co">&lt;!-- Include the script --&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/busuanzi.standalone.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">&lt;!-- Add counter elements anywhere --&gt;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">&lt;span</span><span class="ot"> id=</span><span class="st">&quot;busuanzi_container_site_pv&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  Total views: <span class="kw">&lt;span</span><span class="ot"> id=</span><span class="st">&quot;busuanzi_value_site_pv&quot;</span><span class="kw">&gt;&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">&lt;span</span><span class="ot"> id=</span><span class="st">&quot;busuanzi_container_page_pv&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  Page views: <span class="kw">&lt;span</span><span class="ot"> id=</span><span class="st">&quot;busuanzi_value_page_pv&quot;</span><span class="kw">&gt;&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="kw">&lt;span</span><span class="ot"> id=</span><span class="st">&quot;busuanzi_container_site_uv&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-14" title="14">  Visitors: <span class="kw">&lt;span</span><span class="ot"> id=</span><span class="st">&quot;busuanzi_value_site_uv&quot;</span><span class="kw">&gt;&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="kw">&lt;/span&gt;</span></a></code></pre></div>
+<h3 id="with-optional-backend">With Optional Backend</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/busuanzi.standalone.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">&lt;script&gt;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="co">// Override with custom backend</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="kw">const</span> counter <span class="op">=</span> <span class="kw">new</span> <span class="at">StandaloneCounter</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="dt">backend</span><span class="op">:</span> <span class="st">&#39;https://your-api.com/track&#39;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="va">counter</span>.<span class="at">init</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">&lt;/script&gt;</span></a></code></pre></div>
+<hr />
+<h2 id="testing">🧪 Testing</h2>
+<h3 id="test-the-standalone-version">Test the Standalone Version</h3>
+<p>Open in your browser:</p>
+<pre><code>http://localhost:8888/busuanzi-standalone-test.html</code></pre>
+<p><strong>What you’ll see:</strong> - ✅ Instant counter display (no API wait) - ✅ Numbers increment on refresh - ✅ Works in incognito (new visitor) - ✅ Debug tools and controls</p>
+<hr />
+<h2 id="optional-backend-setup">🔧 Optional Backend Setup</h2>
+<p>If you want to sync statistics across devices/users:</p>
+<ol type="1">
+<li><strong>Install dependencies:</strong></li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">pip</span> install flask flask-cors</a></code></pre></div>
+<ol start="2" type="1">
+<li><strong>Run the backend:</strong></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">python3</span> busuanzi-backend.py</a></code></pre></div>
+<ol start="3" type="1">
+<li><strong>Update your frontend:</strong></li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">const</span> counter <span class="op">=</span> <span class="kw">new</span> <span class="at">StandaloneCounter</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">backend</span><span class="op">:</span> <span class="st">&#39;http://localhost:5000/api/track&#39;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="va">counter</span>.<span class="at">init</span>()<span class="op">;</span></a></code></pre></div>
+<hr />
+<h2 id="feature-comparison">📊 Feature Comparison</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Original</th>
+<th>Modern</th>
+<th><strong>Standalone</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>External API</td>
+<td>Required</td>
+<td>Required</td>
+<td><strong>Optional</strong></td>
+</tr>
+<tr class="even">
+<td>Works Offline</td>
+<td>❌</td>
+<td>❌</td>
+<td><strong>✅</strong></td>
+</tr>
+<tr class="odd">
+<td>Privacy</td>
+<td>Low</td>
+<td>Low</td>
+<td><strong>High</strong></td>
+</tr>
+<tr class="even">
+<td>Reliability</td>
+<td>Low</td>
+<td>Medium</td>
+<td><strong>High</strong></td>
+</tr>
+<tr class="odd">
+<td>Loading Speed</td>
+<td>Slow</td>
+<td>Slow</td>
+<td><strong>Instant</strong></td>
+</tr>
+<tr class="even">
+<td>Cross-device</td>
+<td>✅</td>
+<td>✅</td>
+<td>With backend</td>
+</tr>
+<tr class="odd">
+<td>ES6+ Code</td>
+<td>❌</td>
+<td>✅</td>
+<td><strong>✅</strong></td>
+</tr>
+<tr class="even">
+<td>Error Handling</td>
+<td>❌</td>
+<td>✅</td>
+<td><strong>✅</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="which-version-to-use">🎯 Which Version to Use?</h2>
+<h3 id="use-standalone-recommended-if">Use <strong>Standalone</strong> (Recommended) if:</h3>
+<ul>
+<li>✅ You want reliable, instant counters</li>
+<li>✅ Privacy is important</li>
+<li>✅ You don’t need cross-device sync</li>
+<li>✅ You have a static site (GitHub Pages, Netlify, etc.)</li>
+</ul>
+<h3 id="use-standalone-backend-if">Use <strong>Standalone + Backend</strong> if:</h3>
+<ul>
+<li>✅ You need cross-device statistics</li>
+<li>✅ You have server infrastructure</li>
+<li>✅ You want centralized analytics</li>
+</ul>
+<h3 id="use-modern-if">Use <strong>Modern</strong> if:</h3>
+<ul>
+<li>⚠️ You must use Busuanzi API (when it’s back online)</li>
+<li>⚠️ You need cross-site statistics</li>
+</ul>
+<hr />
+<h2 id="migration-from-original-to-standalone">🔨 Migration from Original to Standalone</h2>
+<p><strong>Good news:</strong> It’s a drop-in replacement!</p>
+<ol type="1">
+<li>Replace the script:</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb7-1" title="1"><span class="co">&lt;!-- OLD --&gt;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/busuanzi.pure.mini.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">&lt;!-- NEW --&gt;</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/busuanzi.standalone.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre></div>
+<ol start="2" type="1">
+<li>HTML stays the same! No changes needed to:</li>
+</ol>
+<ul>
+<li><code>busuanzi_container_*</code> divs</li>
+<li><code>busuanzi_value_*</code> spans</li>
+</ul>
+<hr />
+<h2 id="debugging">🐛 Debugging</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="co">// View current statistics</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="va">window</span>.<span class="va">counterInstance</span>.<span class="at">getStats</span>()</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">// Reset statistics (for testing)</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="va">window</span>.<span class="va">counterInstance</span>.<span class="at">reset</span>()</a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">// Check visitor ID</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="va">document</span>.<span class="at">cookie</span></a></code></pre></div>
+<hr />
+<h2 id="notes">📝 Notes</h2>
+<ul>
+<li><strong>localStorage</strong> stores up to 5-10MB (plenty for statistics)</li>
+<li><strong>Cookies</strong> track unique visitors (expires in 1 year)</li>
+<li><strong>No personal data</strong> is collected or transmitted</li>
+<li><strong>Works in all modern browsers</strong> (Chrome, Firefox, Safari, Edge)</li>
+</ul>
+<hr />
+<h2 id="summary">🎉 Summary</h2>
+<p>The <strong>standalone version</strong> is the best choice for most use cases: - No external dependencies - Privacy-friendly - Fast and reliable - Easy to deploy</p>
+<p>Test it now: http://localhost:8888/busuanzi-standalone-test.html</p>

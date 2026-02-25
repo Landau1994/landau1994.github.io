@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standalone Counter Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .stat-box {
+            background: #e8f5e9;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+        .stat-box strong {
+            color: #2e7d32;
+            font-size: 24px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button.danger {
+            background: #f44336;
+        }
+        button.danger:hover {
+            background: #da190b;
+        }
+        .code {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🚀 Standalone Counter (No External API)</h1>
+
+        <div class="info-box">
+            <strong>✅ Privacy First!</strong> This counter works completely offline and stores all data locally in your browser. No external API calls, no tracking!
+        </div>
+
+        <div class="stat-box" id="busuanzi_container_site_pv" style="display: none;">
+            📊 Total Site Page Views: <strong id="busuanzi_value_site_pv">0</strong>
+        </div>
+
+        <div class="stat-box" id="busuanzi_container_page_pv" style="display: none;">
+            📄 Current Page Views: <strong id="busuanzi_value_page_pv">0</strong>
+        </div>
+
+        <div class="stat-box" id="busuanzi_container_site_uv" style="display: none;">
+            👥 Unique Visitors: <strong id="busuanzi_value_site_uv">0</strong>
+        </div>
+
+        <h2>🧪 Test Controls</h2>
+        <button onclick="reloadPage()">🔄 Reload Page</button>
+        <button onclick="openNewTab()">🆕 Open in New Tab</button>
+        <button onclick="viewStats()">📊 View Raw Stats</button>
+        <button onclick="resetStats()" class="danger">🗑️ Reset Counter</button>
+
+        <h2>💡 How It Works</h2>
+        <ul>
+            <li><strong>localStorage:</strong> Stores all statistics locally in your browser</li>
+            <li><strong>Cookies:</strong> Tracks unique visitors across sessions</li>
+            <li><strong>No Network Calls:</strong> Works completely offline</li>
+            <li><strong>Privacy Friendly:</strong> All data stays on your device</li>
+        </ul>
+
+        <h2>🧪 Test Scenarios</h2>
+        <ol>
+            <li><strong>Refresh Test:</strong> Click "Reload Page" - site_pv and page_pv should increment</li>
+            <li><strong>New Tab Test:</strong> Click "Open in New Tab" - site_pv increases, site_uv stays same</li>
+            <li><strong>Incognito Test:</strong> Open in incognito - shows as new unique visitor</li>
+            <li><strong>Different Page:</strong> Change URL path - page_pv resets, site_pv continues</li>
+        </ol>
+
+        <h2>📝 Usage in Your Site</h2>
+        <div class="code">
+&lt;!-- Include the script --&gt;<br>
+&lt;script src="js/busuanzi.standalone.js"&gt;&lt;/script&gt;<br><br>
+&lt;!-- Add counter elements --&gt;<br>
+&lt;span id="busuanzi_container_site_pv"&gt;<br>
+&nbsp;&nbsp;Total: &lt;span id="busuanzi_value_site_pv"&gt;&lt;/span&gt;<br>
+&lt;/span&gt;
+        </div>
+
+        <h2>🔧 Debug Console</h2>
+        <div id="debug-output" class="code">
+            Open browser console (F12) to see detailed logs
+        </div>
+    </div>
+
+    <script src="busuanzi.standalone.js"></script>
+    <script>
+        function reloadPage() {
+            location.reload();
+        }
+
+        function openNewTab() {
+            window.open(location.href, '_blank');
+        }
+
+        function viewStats() {
+            const stats = window.counterInstance.getStats();
+            console.log('=== Current Statistics ===');
+            console.log('Site PV:', stats.site_pv);
+            console.log('Site UV:', stats.site_uv);
+            console.log('Total Visitors:', Object.keys(stats.visitors).length);
+            console.log('Total Pages:', Object.keys(stats.pages).length);
+            console.log('\nFull Stats:', stats);
+
+            alert(`Statistics:\n\nSite PV: ${stats.site_pv}\nSite UV: ${stats.site_uv}\nTotal Visitors: ${Object.keys(stats.visitors).length}\nTotal Pages: ${Object.keys(stats.pages).length}\n\nCheck console for full details`);
+        }
+
+        function resetStats() {
+            if (confirm('Are you sure you want to reset all statistics?')) {
+                window.counterInstance.reset();
+                location.reload();
+            }
+        }
+
+        // Log successful initialization
+        setTimeout(() => {
+            const stats = window.counterInstance.getStats();
+            const debugOutput = document.getElementById('debug-output');
+            debugOutput.innerHTML = `
+                <strong>✅ Counter Initialized Successfully!</strong><br><br>
+                Site PV: ${stats.site_pv}<br>
+                Site UV: ${stats.site_uv}<br>
+                Current Page PV: ${stats.pages[window.location.pathname]?.pv || 0}<br><br>
+                Press F12 to open DevTools for more details
+            `;
+        }, 100);
+    </script>
+</body>
+</html>
