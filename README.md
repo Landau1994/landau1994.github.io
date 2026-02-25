@@ -1,50 +1,67 @@
 # Coding for Life Sciences
 
-建站信息：
+## 建站信息
 
-    初建于2018年8月，重建于2020年4月。
+- **初建时间**: 2018年8月
+- **重建时间**: 2020年4月
+- **建站工具**: [Hexo](https://hexo.io/)
+- **主题**: 基于 [jsimple](https://github.com/SumiMakito/hexo-theme-jsimple) 主题，并进行了自定义修改。
 
-    建站工具：hexo
+---
 
-    基于jsimple主题，有修改。
+## 维护指南
 
-
-+ 保留修改后的主题的方法：删除主题中的.git隐藏文件夹，使用git rm --cached themes\jsimple; git add themes\jsimple;然后git commit。
-
-+ issue:20200410 添加rmarkdown的方法，blogdown, code trunk图片和缓存路径需要手动改。。。目测是原作者的bug...
-
-+ issue:20211027 日常更新与升级hexo依赖的javascript包：
-
+### 主题修改与同步
+若要保留对主题的修改，请先删除主题目录下的 `.git` 文件夹，然后运行：
 ```shell
-    npm update
-    npm audit fix
-    git add .
-    git commit -m "update depend package"
-    git push origin source
+git rm --cached themes/jsimple
+git add themes/jsimple
+git commit -m "Save modified theme"
 ```
 
-+ issue:20260225 使用 `npm-upgrade` 交互式升级 `package.json` 中的依赖包版本：
-
+### 依赖包更新
+#### 常规更新
 ```shell
-    npm install -g npm-upgrade
-    npm-upgrade
+npm update
+npm audit fix
+git add .
+git commit -m "update depend package"
+git push origin source
 ```
 
-Publish new content
-
+#### 交互式升级 (推荐)
+使用 `npm-upgrade` 交互式选择并升级 `package.json` 中的依赖版本：
 ```shell
-    hexo n post "title"
-    hexo g -d
-    git add . 
-    git commit -m 'publish new'
-    git push origin source
+npm install -g npm-upgrade
+npm-upgrade
 ```
 
-20220621
-manually fix, change version of package.json file, package-lock.json
+### 常见问题 (Troubleshooting)
+- **RMarkdown 支持 (2020-04-10)**: 使用 blogdown 时，code trunk 的图片和缓存路径可能需要手动调整（推测为原主题 Bug）。
 
-20250112
-or local use `./node_modules/hexo/bin/hexo `
+---
 
-20260225
-update depend package, fix minimatch. Used `npm-upgrade` to manage dependencies.
+## 使用方法
+
+### 发布新博文
+```shell
+hexo n post "title"
+hexo g -d
+git add . 
+git commit -m 'publish new'
+git push origin source
+```
+
+### 本地调试
+如需使用本地安装的 Hexo：
+```shell
+./node_modules/hexo/bin/hexo g
+```
+
+---
+
+## 更新日志
+
+- **2026-02-25**: 升级依赖包，修复 `minimatch`。引入 `npm-upgrade` 管理依赖。
+- **2025-01-12**: 增加本地 Hexo 调用方式说明。
+- **2022-06-21**: 手动修复 `package.json` 和 `package-lock.json` 版本冲突。
