@@ -1,0 +1,740 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
+<head>
+    <!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0;url=https://landau1994.github.io/warn.html">
+<![endif]-->
+<meta charset="utf-8">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<link rel="dns-prefetch" href="https://landau1994.github.io">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+<link rel="prefetch" href="https://landau1994.github.io">
+<link rel="prefetch" href="//www.google-analytics.com">
+
+
+<link rel="prerender" href="https://landau1994.github.io">
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<meta http-equiv="mobile-agent" content="format=html5; url=https://landau1994.github.io">
+<meta name="author" content="Longteng Wang">
+
+<link rel="stylesheet" href="/css/JSimple.css">
+
+
+<link rel="shortcut icon" href="/images/favicon.png">
+
+
+<title>我花了三年时间，整理了这份生物信息学资源清单（2026最新版） - Coding for Life Sciences</title>
+
+<meta name="keywords" content="Biology, Data Science,AI,Informatics,Modeling;">
+
+<meta name="description " content="关注从数据和模型中获取生物知识的博客">
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+    </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: {
+        useMaxWidth: false
+      }
+    });
+  </script>
+
+    
+
+    
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+<body>
+<div id="nav">
+    <nav class="nav-menu">
+        <a class="site-name current" href="/" title="CLS">CLS</a>
+        <a class="site-index current" href="/"><i class="fa fa-home"></i><span>首页</span></a>
+        <a href="/archives" title="归档"><i class="fa fa-archives"></i><span>归档</span></a>
+        <a href="/tags" title="标签"><i class="fa fa-tags"></i><span>标签</span></a>
+        <!-- custom single page of menus -->
+        
+        
+        <a href="/help" title="帮助">
+            <i class="fa fa-question-circle"></i>
+            <span>帮助</span>
+        </a>
+        
+    </nav>
+</div>
+
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-sns-qr" href="javascript:"><i class="fa fa-telegram"></i></a>
+</div>
+
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+            <div id="cover">
+    <div class="cover-img"></div>
+    <div class="cover-info">
+        
+        <h1 class="cover-siteName">Coding for Life Science</h1>
+        <h3 class="cover-siteTitle">Coding for Life Science</h3>
+        <p class="cover-siteDesc">关注从数据和模型中获取生物知识的博客</p>
+        <div class="cover-sns">
+            
+    &nbsp;&nbsp;<div class="btn btn-telegram">
+        <a href="" target="_blank" title="telegram" ref="friend">
+            <i class="fa fa-telegram"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-instagram">
+        <a href="" target="_blank" title="instagram" ref="friend">
+            <i class="fa fa-instagram"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-twitter">
+        <a href="https://twitter.com/Landau1994" target="_blank" title="twitter" ref="friend">
+            <i class="fa fa-twitter"></i>
+        </a>
+    </div>
+
+    &nbsp;&nbsp;<div class="btn btn-github">
+        <a href="https://github.com/Landau1994" target="_blank" title="github" ref="friend">
+            <i class="fa fa-github"></i>
+        </a>
+    </div>
+
+
+        </div>
+    </div>
+</div>
+
+            <div class="page-title">
+    <ul>
+        <li><a href="/">最近</a></li>
+        
+            
+                <li class="">
+                    <a href="/categories/genomics" data-name="基因组学">基因组学</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/implementation" data-name="编程实践">编程实践</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/reference" data-name="文献阅读">文献阅读</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/math" data-name="数学学习">数学学习</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/others" data-name="其他">其他</a>
+                </li>
+            
+        
+        <li class="page-search">
+    <form id="search" class="search-form">
+        <input type="text"
+               readonly="readonly"
+               id="local-search-input-tip"
+               placeholder="读物检索~" />
+        <button type="button" disabled="disabled" class="search-form-submit"><i class="fa fa-search"></i></button>
+    </form>
+</li>
+
+    </ul>
+</div>
+<div class="main-inner">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="https://github.com/Landau1994"
+                   target="_blank">
+                    <img width="48" src="/images/faceicon.png" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="https://github.com/Landau1994"
+                       target="_blank">研精极锐</a>
+                    <span title="最后编辑于&nbsp;2026-02-25">2026-02-25</span>
+                </p>
+                <p>An apprentice in bioinformatics</p>
+            </div>
+            <h2 class="post-title">我花了三年时间，整理了这份生物信息学资源清单（2026最新版）</h2>
+            <div class="post-meta">
+                本文共计4734个字 |
+                您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <h2 id="写在前面">写在前面</h2>
+<p>作为一名生物信息学 PhD，这三年来最常被师弟师妹们问到的问题就是：</p>
+<blockquote>
+<p>“学长，有什么好的生信学习资源推荐吗？” “AlphaFold 怎么用啊？” “哪个大模型适合写代码？” “R 和 Python 用什么 IDE 比较好？”</p>
+</blockquote>
+<p>每次都要翻聊天记录找链接，实在太麻烦了。于是，我决定把这些年收藏的优质资源<strong>系统性地整理出来</strong>，做成一个完整的资源导航页面。</p>
+<p>今天就把这份清单分享给大家。<strong>全文 7000+ 字，建议先收藏再看！</strong></p>
+<span id="more"></span>
+<h2 id="为什么要做这个清单">为什么要做这个清单？</h2>
+<p>说实话，生物信息学的学习曲线真的很陡峭：</p>
+<ul>
+<li>生物学背景的同学，<strong>编程是拦路虎</strong></li>
+<li>计算机背景的同学，<strong>生物知识是天书</strong></li>
+<li>两边都懂一点的，<strong>不知道从哪里开始系统学习</strong></li>
+</ul>
+<p>市面上的资源虽然很多，但<strong>良莠不齐</strong>。我见过太多人因为找不到合适的资源，在入门阶段就放弃了。</p>
+<p>所以这个清单的目标很明确：</p>
+<p>✅ <strong>只收录真正有价值的资源</strong> ✅ <strong>覆盖从入门到进阶的完整路径</strong> ✅ <strong>紧跟最新技术发展</strong>（尤其是 AI 工具）</p>
+<hr>
+<h2 id="清单概览">📋 清单概览</h2>
+<p>这份清单包含 <strong>13 个主题板块</strong>，<strong>190+ 个精选资源</strong>，涵盖：</p>
+<table>
+<thead>
+<tr class="header">
+<th>板块</th>
+<th>资源数</th>
+<th>适合人群</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>🔬 基本资源</td>
+<td>15+</td>
+<td>所有人</td>
+</tr>
+<tr class="even">
+<td>📚 生物信息学资源</td>
+<td>20+</td>
+<td>入门&amp;进阶</td>
+</tr>
+<tr class="odd">
+<td>🏛️ 研究机构与大型项目</td>
+<td>18+</td>
+<td>科研工作者</td>
+</tr>
+<tr class="even">
+<td>🛠️ 工具与教程</td>
+<td>12+</td>
+<td>实践者</td>
+</tr>
+<tr class="odd">
+<td>🧬 AI 生物学工具</td>
+<td>25+</td>
+<td>前沿研究者</td>
+</tr>
+<tr class="even">
+<td>🤖 AI 大语言模型</td>
+<td>40+</td>
+<td>效率提升</td>
+</tr>
+<tr class="odd">
+<td>📊 可视化工具</td>
+<td>5+</td>
+<td>数据分析</td>
+</tr>
+<tr class="even">
+<td>💻 数据分析工具</td>
+<td>25+</td>
+<td>日常开发</td>
+</tr>
+<tr class="odd">
+<td>🎓 课程与视频</td>
+<td>5+</td>
+<td>系统学习</td>
+</tr>
+</tbody>
+</table>
+<p>完整清单在这里 👉 <a href="/links/"><strong>资源导航页面</strong></a></p>
+<p>下面我挑几个<strong>最值得关注的板块</strong>详细说说。</p>
+<hr>
+<h2 id="重点板块一ai-生物学工具">🧬 重点板块一：AI 生物学工具</h2>
+<p>这是 2024-2026 年变化最大的领域！<strong>不夸张地说，AI 正在重新定义生物学研究。</strong></p>
+<h3 id="蛋白质结构预测---已经是基操了">1. 蛋白质结构预测 - 已经是基操了</h3>
+<p>还记得 2020 年 AlphaFold 2 横空出世的震撼吗？现在：</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://alphafoldserver.com/">AlphaFold 3</a></strong> - 最新版本，精度更高，速度更快
+<ul>
+<li>数据库已经有 <strong>2 亿+</strong> 蛋白质结构</li>
+<li>基本上你想要的蛋白，都能找到预测结构</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://robetta.bakerlab.org/">RoseTTAFold</a></strong> - Baker Lab 出品，开源实现
+<ul>
+<li>在某些蛋白质家族上比 AlphaFold 还准</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://esmatlas.com/">ESMFold</a></strong> - Meta 出品，<strong>最快</strong>
+<ul>
+<li>宏基因组蛋白结构图谱达到 <strong>6 亿+</strong></li>
+<li>适合大规模筛选</li>
+</ul></li>
+</ul>
+<p><strong>实用建议</strong>：现在做蛋白相关研究，第一步就是去 AlphaFold Database 查结构。实验验证之前先预测一下，能省好多时间和经费！</p>
+<h3 id="蛋白质设计---从预测到创造">2. 蛋白质设计 - 从预测到创造</h3>
+<p>更激进的是，AI 现在不只能预测结构，还能<strong>从头设计蛋白质</strong>：</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/dauparas/ProteinMPNN">ProteinMPNN</a></strong> - 给定结构，生成序列</li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/RosettaCommons/RFdiffusion">RFdiffusion</a></strong> - 扩散模型设计蛋白</li>
+<li><strong><a target="_blank" rel="noopener" href="https://generatebiomedicines.com/chroma">Chroma</a></strong> - Generate Biomedicines 的商业化产品</li>
+</ul>
+<p>这个方向太火了，已经有好几个 Biotech 公司拿到巨额融资。<strong>未来的药物设计，可能不需要从自然界筛选，而是直接 AI 生成。</strong></p>
+<h3 id="分子对接---药物发现的加速器">3. 分子对接 - 药物发现的加速器</h3>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/gcorso/DiffDock">DiffDock</a></strong> - 扩散模型做分子对接
+<ul>
+<li>比传统方法快 100 倍</li>
+<li>精度还更高</li>
+</ul></li>
+</ul>
+<p><strong>我的观察</strong>：传统的虚拟筛选管线正在被 AI 快速替代。如果你做药物发现，不学这些工具就真的落伍了。</p>
+<hr>
+<h2 id="重点板块二ai-大语言模型">🤖 重点板块二：AI 大语言模型</h2>
+<p>大模型不只是聊天工具，<strong>用对了能让科研效率翻倍！</strong></p>
+<h3 id="通用大模型---日常必备">1. 通用大模型 - 日常必备</h3>
+<p><strong>国际版：</strong> - <strong>ChatGPT (GPT-5.3)</strong> - 最强综合能力，但需要魔法上网 - <strong>Claude 4</strong> - <strong>长文本之王</strong>（可以处理整本书） - 我现在写论文都先让 Claude 帮忙润色 - <strong>Gemini</strong> - Google 出品，多模态能力强</p>
+<p><strong>国内版：</strong> - <strong>Kimi</strong> - 长文本处理很不错，免费！ - <strong>DeepSeek</strong> - 推理能力强，适合做数学题和代码 - <strong>豆包</strong> - 字节出品，速度快</p>
+<p><strong>实用技巧</strong>： - 写代码用 <strong>Claude</strong> 或 <strong>DeepSeek</strong> - 读文献用 <strong>Kimi</strong>（一次能塞好几篇论文） - 画图解用 <strong>GPT-5.3</strong> 或 <strong>Gemini</strong></p>
+<h3 id="生物医学专用模型---专业问题找专家">2. 生物医学专用模型 - 专业问题找专家</h3>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/microsoft/BioGPT">BioGPT</a></strong> - 微软训练的生物医学文本生成模型</li>
+<li><strong><a target="_blank" rel="noopener" href="https://sites.research.google/med-palm/">Med-PaLM</a></strong> - Google 的医疗专用模型</li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/ncbi/GeneGPT">GeneGPT</a></strong> - NCBI 出品，专门回答基因问题</li>
+</ul>
+<p><strong>举个例子</strong>：我最近在研究一个不熟悉的基因，直接问 GeneGPT，它给出的解释比我自己查文献快多了。</p>
+<h3 id="ai-辅助工具---效率加倍器">3. AI 辅助工具 - 效率加倍器</h3>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://cursor.sh/">Cursor</a></strong> - AI 代码编辑器
+<ul>
+<li><strong>强烈推荐！</strong> 写代码效率至少提升 50%</li>
+<li>直接在编辑器里问 AI，不用来回切换</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/features/copilot">GitHub Copilot</a></strong> - AI 编程助手
+<ul>
+<li>代码补全非常智能</li>
+<li>学生可以免费用</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://consensus.app/">Consensus</a></strong> - AI 文献搜索
+<ul>
+<li>输入问题，直接给你文献总结</li>
+<li>比自己翻 PubMed 快太多</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://elicit.org/">Elicit</a></strong> - AI 研究助手
+<ul>
+<li>帮你做系统性文献综述</li>
+<li>自动提取论文关键信息</li>
+</ul></li>
+</ul>
+<p><strong>真心话</strong>：如果你还在纯手工写代码、读文献，真的该试试这些工具了。<strong>工具用得好，下班下得早！</strong></p>
+<hr>
+<h2 id="重点板块三数据分析工具链">💻 重点板块三：数据分析工具链</h2>
+<p>工欲善其事，必先利其器。这个板块我花了很多心思整理。</p>
+<h3 id="ide-选择---找到最适合你的">1. IDE 选择 - 找到最适合你的</h3>
+<p><strong>R 用户：</strong> - <strong><a target="_blank" rel="noopener" href="https://posit.co/">RStudio</a></strong> - 老牌IDE，功能完善 - <strong><a target="_blank" rel="noopener" href="https://github.com/posit-dev/positron">Positron</a></strong> - Posit 新产品 - <strong>同时支持 Python 和 R</strong> - 界面现代化，推荐尝鲜</p>
+<p><strong>Python 用户：</strong> - <strong><a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VS Code</a></strong> - 万能编辑器 - 轻量、插件丰富 - 我现在 80% 的代码都在 VS Code 写</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://www.jetbrains.com/pycharm/">PyCharm</a></strong> - 专业 Python IDE
+<ul>
+<li>功能强大，但比较重</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://jupyter.org/">Jupyter Lab</a></strong> - 交互式分析
+<ul>
+<li>数据探索必备</li>
+<li>出图特别方便</li>
+</ul></li>
+</ul>
+<h3 id="包管理工具---依赖管理不再头疼">2. 包管理工具 - 依赖管理不再头疼</h3>
+<p><strong>Python 环境：</strong> - <strong><a target="_blank" rel="noopener" href="https://github.com/astral-sh/uv">uv</a></strong> - <strong>新星工具！</strong> - 用 Rust 写的，比 pip 快 <strong>10-100 倍</strong> - 强烈推荐，真的快到飞起</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://python-poetry.org/">Poetry</a></strong> - 现代化依赖管理
+<ul>
+<li>比 pip + requirements.txt 好用太多</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://docs.conda.io/">Conda</a></strong> - 跨语言包管理
+<ul>
+<li>生信领域的标配</li>
+</ul></li>
+</ul>
+<p><strong>R 环境：</strong> - <strong><a target="_blank" rel="noopener" href="https://github.com/r-lib/rig">rig</a></strong> - R 版本管理 - 多版本 R 切换很方便</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://rstudio.github.io/renv/">renv</a></strong> - 项目环境管理
+<ul>
+<li>保证项目的可复现性</li>
+</ul></li>
+</ul>
+<p><strong>避坑经验</strong>：很多人遇到的 “我电脑上能跑，你电脑上不能跑” 问题，90% 是因为环境管理不当。<strong>学会用这些工具，能省无数时间！</strong></p>
+<hr>
+<h2 id="重点板块四学习路径推荐">📚 重点板块四：学习路径推荐</h2>
+<p>资源虽好，但<strong>如何系统学习</strong>才是关键。根据我的经验：</p>
+<h3 id="新手路径0-6-个月">新手路径（0-6 个月）</h3>
+<ol type="1">
+<li><strong>编程基础</strong>
+<ul>
+<li>Python：<a target="_blank" rel="noopener" href="http://rosalind.info/">Rosalind</a> - 生信编程练习，边玩边学</li>
+<li>R：直接上手 Bioconductor，边用边学</li>
+</ul></li>
+<li><strong>生信基础</strong>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.biotrainee.com/">生信技能树</a> - 中文教程丰富</li>
+<li><a target="_blank" rel="noopener" href="https://carpentries.org/">The Carpentries</a> - 系统化培训</li>
+</ul></li>
+<li><strong>实战项目</strong>
+<ul>
+<li>跟着 <a target="_blank" rel="noopener" href="https://github.com/griffithlab/rnaseq_tutorial">NGS Analysis Tutorial</a> 做一遍</li>
+<li>去 <a target="_blank" rel="noopener" href="https://www.kaggle.com/">Kaggle</a> 找生信竞赛练手</li>
+</ul></li>
+</ol>
+<h3 id="进阶路径6-18-个月">进阶路径（6-18 个月）</h3>
+<ol type="1">
+<li><strong>深入特定方向</strong>
+<ul>
+<li>单细胞：从 <a target="_blank" rel="noopener" href="https://satijalab.org/seurat/">Seurat</a> 入手</li>
+<li>蛋白质：学 AlphaFold 和分子对接</li>
+</ul></li>
+<li><strong>关注前沿动态</strong>
+<ul>
+<li>定期看 <a target="_blank" rel="noopener" href="https://www.biorxiv.org/">bioRxiv</a> 预印本</li>
+<li>关注几个大牛的 Twitter/X</li>
+</ul></li>
+<li><strong>参与开源项目</strong>
+<ul>
+<li>去 GitHub 找感兴趣的项目贡献代码</li>
+<li>建立自己的作品集</li>
+</ul></li>
+</ol>
+<h3 id="高级路径18-个月">高级路径（18 个月+）</h3>
+<ol type="1">
+<li><strong>发表研究</strong>
+<ul>
+<li>找到细分领域的 gap</li>
+<li>开发自己的工具/算法</li>
+</ul></li>
+<li><strong>建立影响力</strong>
+<ul>
+<li>写技术博客分享经验</li>
+<li>在社区里活跃</li>
+</ul></li>
+</ol>
+<p><strong>核心建议</strong>：<strong>不要囤积资源！</strong> 选 2-3 个最适合你的，深入学习，比收藏 100 个资源更有用。</p>
+<hr>
+<h2 id="值得关注的研究机构">🏛️ 值得关注的研究机构</h2>
+<p>如果你想了解最前沿的研究，关注这些机构准没错：</p>
+<h3 id="国际顶尖机构">国际顶尖机构</h3>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://www.sanger.ac.uk/">Wellcome Sanger Institute</a></strong> - 基因组学研究先驱
+<ul>
+<li>人类基因组计划的主力军</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://www.broadinstitute.org/">Broad Institute</a></strong> - 哈佛-MIT 联合研究所
+<ul>
+<li>单细胞测序技术的引领者</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://arcinstitute.org/">Arc Institute</a></strong> - 新兴研究机构
+<ul>
+<li>Patrick Hsu 创立，专注前沿生物技术</li>
+</ul></li>
+</ul>
+<h3 id="大型科研计划">大型科研计划</h3>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://www.humancellatlas.org/">Human Cell Atlas</a></strong> - 人类细胞图谱计划
+<ul>
+<li>想了解单细胞领域，这是必看的</li>
+</ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://chanzuckerberg.com/">Chan Zuckerberg Initiative</a></strong> - CZI
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cellxgene.cziscience.com/">CELLxGENE</a> 单细胞数据门户超好用</li>
+</ul></li>
+</ul>
+<p><strong>实用建议</strong>：这些机构经常有公开的讲座和培训，可以关注他们的 YouTube 频道。</p>
+<hr>
+<h2 id="我的使用心得">💡 我的使用心得</h2>
+<h3 id="建立自己的工具箱">1. 建立自己的工具箱</h3>
+<p>不要什么都想学，根据你的研究方向，<strong>精选 10-15 个常用工具深度掌握</strong>。</p>
+<p>我自己的常用工具箱： - IDE: VS Code + Jupyter Lab - 包管理: uv + Conda - 代码助手: Cursor + GitHub Copilot - 文献管理: Zotero - 大模型: Claude + Kimi - 绘图: ggplot2 + BioRender</p>
+<h3 id="善用-ai-提效">2. 善用 AI 提效</h3>
+<p><strong>能让 AI 做的，就不要手工做：</strong> - 读文献 → 用 Consensus 或 Elicit - 写代码 → 用 Cursor 或 Copilot - 画图 → 用 BioRender 或 GPT-4 - 润色文章 → 用 Claude</p>
+<p>但记住：<strong>AI 是助手，不是替代品。</strong> 批判性思维永远不能丢。</p>
+<h3 id="持续学习的节奏">3. 持续学习的节奏</h3>
+<p><strong>不要试图一次性学完所有东西！</strong> 建议：</p>
+<ul>
+<li>每周固定 1-2 个小时学新工具</li>
+<li>每月读 2-3 篇前沿论文</li>
+<li>每季度学一个新技能</li>
+</ul>
+<p><strong>关键是持续，而不是爆发。</strong></p>
+<hr>
+<h2 id="常见问题">📍 常见问题</h2>
+<h3 id="q1-这么多资源从哪里开始">Q1: 这么多资源，从哪里开始？</h3>
+<p><strong>A</strong>: 根据你的目标选择： - 想快速上手 → 先看 <strong>工具与教程</strong> 板块 - 想系统学习 → 先看 <strong>课程与视频</strong> 板块 - 想了解前沿 → 先看 <strong>AI 生物学工具</strong> 板块</p>
+<h3 id="q2-免费资源够用吗要不要付费">Q2: 免费资源够用吗？要不要付费？</h3>
+<p><strong>A</strong>: <strong>90% 的情况下免费资源就够了。</strong> 付费工具我只推荐： - GitHub Copilot（学生免费） - ChatGPT Plus（如果你高频使用）</p>
+<p>其他的等你真正有需求了再考虑。</p>
+<h3 id="q3-英文不好怎么办">Q3: 英文不好怎么办？</h3>
+<p><strong>A</strong>: 1. <strong>优先用国内资源</strong>：生信技能树、生信菜鸟团的中文教程很全面 2. <strong>借助翻译工具</strong>：DeepL 的翻译质量很高 3. <strong>边用边学</strong>：实践中积累专业词汇，比死记硬背快</p>
+<h3 id="q4-资源会持续更新吗">Q4: 资源会持续更新吗？</h3>
+<p><strong>A</strong>: 会的！我会保持每月更新，添加新的优质资源。</p>
+<p>完整清单在这里 👉 <a href="/links/"><strong>资源导航页面</strong></a></p>
+<hr>
+<h2 id="写在最后">写在最后</h2>
+<p>这份清单耗费了我大量心血，但如果能帮到一个人少走弯路，就值了。</p>
+<p><strong>生物信息学的学习之路很长，但不孤单。</strong> 我们都是在这条路上摸索前进的。</p>
+<p>几句肺腑之言：</p>
+<ol type="1">
+<li><strong>不要被资源的数量吓到</strong> - 选择适合你的，深入学习</li>
+<li><strong>不要闭门造车</strong> - 多参与社区讨论，分享你的经验</li>
+<li><strong>不要停止学习</strong> - 这个领域变化太快，保持好奇心</li>
+<li><strong>不要忘记初心</strong> - 我们做这些，是为了推动科学进步</li>
+</ol>
+<hr>
+<h2 id="致谢">🙏 致谢</h2>
+<p>这份清单的诞生离不开： - 生信社区的前辈们无私分享 - 师兄师姐们的经验传授 - 开源社区的贡献者们</p>
+<p><strong>如果你觉得有帮助，欢迎分享给更多人！</strong></p>
+<p>有任何建议或补充，欢迎在评论区留言，或者直接访问 <a href="/links/">资源导航页面</a> 查看完整内容。</p>
+<hr>
+<p><strong>相关阅读：</strong> - <a href="/links/">计算生物学成长路线图</a> （附路线图）</p>
+<hr>
+<p><em>本文约 7000 字，阅读时间约 15 分钟</em> <em>最后更新：2026-02-25</em> <em>转载请注明出处</em></p>
+
+            
+                
+
+            
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
+        </div>
+        
+        <div class="post-tags">标签：
+            
+            <a href="/tags/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6/">生物信息学</a>
+            
+            <a href="/tags/%E8%B5%84%E6%BA%90%E5%AF%BC%E8%88%AA/">资源导航</a>
+            
+            <a href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具</a>
+            
+            <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/">学习路径</a>
+            
+        </div>
+        
+    </article>
+    
+        <p style="text-align: center">本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+    
+
+</div>
+
+
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <footer class="footer">
+    <div class="footer-inner" style="text-align: 'center'">
+        <p>
+            <a href="/about"  title="关于">关于</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <!-- 自定义链接 -->
+            <a href="/help" title="帮助" >帮助</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/links" title="友链">友链</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/sitemap.xml" title="地图">地图</a>
+        </p>
+        <p>
+            本站已建立&nbsp<a href="/timeline" id="siteBuildingTime"></a>&nbsp天，<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="licence">采用知识共享署名-相同方式共享 4.0 国际许可协议创作</a><br/>
+            ©2017-<span id="cpYear"></span> 基于&nbsp<a href="http://hexo.io" target="_blank" rel="nofollow">Hexo</a>
+            ，主题采用&nbsp&nbsp<a href="https://github.com/tangkunyin/hexo-theme-jsimple" target="_blank" rel="bookmark">JSimple</a>
+            ，作者&nbsp<a href="https://landau1994.github.io" target="_blank" rel="friend">landau1994</a>
+            ，Hosted by <a href="https://pages.github.com/" target="_blank" rel="nofollow">GitHub Pages</a>
+            <br/>
+            <span id="busuanzi_container_site_pv" style="display: none;">
+                本站总访问量 <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> 次
+            </span>
+            &nbsp; | &nbsp;
+            <span id="busuanzi_container_site_uv" style="display: none;">
+                本站访客数 <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span> 人
+            </span>
+        </p>
+    </div>
+</footer>
+
+<script src="/js/SimpleCore.js"></script>
+<script src="/js/busuanzi.simple.js"></script>
+
+
+</div>
+<!-- search pop -->
+<div class="popup search-popup local-search-popup">
+    <div class="local-search-header clearfix">
+        <span class="search-icon">
+            <i class="fa fa-search"></i>
+        </span>
+        <span class="popup-btn-close">
+            <i class="fa fa-times-circle"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+            <input id="local-search-input"
+                   spellcheck="false"
+                   type="text"
+                   autocomplete="off"
+                   placeholder="请输入查询关键词"/>
+        </div>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+<div class="fixed-btn">
+    <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
+</div>
+<script>
+    $(function () {
+        var jsi_config = {
+            buildingTime: '08/01/2018',
+            current: $('.post-tags').length > 0 ? 'post' : 'archive',
+            snsQRCode: '/images/sns-qrcode.png',
+            donateImg: '/images/donate-qr.png',
+            localSearch: { dbPath: '' },
+            readMode: 'day'
+        };
+        
+            jsi_config.localSearch = {
+                dbPath: '/search.json',
+                trigger: 'auto',
+                topN: '1',
+                unescape: 'false'
+            }
+        
+        SimpleCore.init(jsi_config);
+        
+    });
+</script>
+</body>
+</html>
