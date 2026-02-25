@@ -63,6 +63,6 @@ git push origin source
 
 ## 更新日志
 
-- **2026-02-25**: 升级依赖包，修复 `minimatch`。引入 `npm-upgrade` 管理依赖。修复 `hexo-renderer-pandoc` 的 `spawnSync pandoc ETIMEDOUT` 超时构建问题。
+- **2026-02-25**: 升级依赖包，修复 `minimatch`。引入 `npm-upgrade` 管理依赖。修复 `hexo-renderer-pandoc` 的 `spawnSync pandoc ETIMEDOUT` 超时构建问题。集成 `busuanzi.simple.js` 实现基于本地存储的 PV/UV 访问统计功能。
 - **2025-01-12**: 增加本地 Hexo 调用方式说明。
 - **2022-06-21**: 手动修复 `package.json` 和 `package-lock.json` 版本冲突。

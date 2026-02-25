@@ -13,7 +13,15 @@
             ，<%= __('theme_by') %>&nbsp&nbsp<a href="https://github.com/tangkunyin/hexo-theme-jsimple" target="_blank" rel="bookmark">JSimple</a>
             ，<%= __('author') %>&nbsp<a href="<%= theme.webmaster.home %>" target="_blank" rel="friend"><%= theme.webmaster.name %></a>
             ，Hosted by <a href="https://pages.github.com/" target="_blank" rel="nofollow">GitHub Pages</a>
+            <br/>
+            <span id="busuanzi_container_site_pv" style="display: none;">
+                <%= __('site_pv') %> <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> <%= __('site_pv_subfix') %>
+            </span>
+            &nbsp; | &nbsp;
+            <span id="busuanzi_container_site_uv" style="display: none;">
+                <%= __('site_uv') %> <span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span> <%= __('site_uv_subfix') %>
+            </span>
         </p>
     </div>
 </footer>
-<%- js(['js/SimpleCore']) %>
+<%- js(['js/SimpleCore', 'js/busuanzi.simple.js']) %>
