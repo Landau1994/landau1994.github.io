@@ -62,17 +62,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
 mjx-container[jax="SVG"] > svg {
   overflow: visible;
-}
-
-mjx-container[jax="SVG"] > svg a {
-  fill: blue;
-  stroke: blue;
 }
 
 mjx-container[jax="SVG"][display="true"] {
@@ -172,11 +167,11 @@ foreignObject[data-mjx-xml] {
   stroke-width: 3;
 }
 
-mjx-container {
+mjx-container[display="true"] {
   overflow: auto hidden;
 }
 
-mjx-container + br {
+mjx-container[display="true"] + br {
   display: none;
 }
 </style></head>
@@ -300,39 +295,13 @@ mjx-container + br {
             </div>
             <h2 class="post-title">Calculate pi in R quikstart</h2>
             <div class="post-meta">
-                本文共计1538个字 |
+                本文共计1512个字 |
                 您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
         <div class="post-content markdown-body">
             <p>R中也可以用<code>Rmpfr</code>包实现多精度的计算。例如，我们可以用如下代码实现AGM算法计算Pi到小数点后256位。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(Rmpfr)</a>
-<a class="sourceLine" id="cb1-2" title="2">piMpfr &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">prec=</span><span class="dv">256</span>, <span class="dt">itermax =</span> <span class="dv">100</span>, <span class="dt">verbose=</span><span class="ot">TRUE</span>) {</a>
-<a class="sourceLine" id="cb1-3" title="3">  m2 &lt;-<span class="st"> </span><span class="kw">mpfr</span>(<span class="dv">2</span>, prec) <span class="co"># '2' as mpfr number</span></a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="co">## -&gt; all derived numbers are mpfr (with precision 'prec')</span></a>
-<a class="sourceLine" id="cb1-5" title="5">  p &lt;-<span class="st"> </span>m2 <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>(m2) <span class="co"># 2 + sqrt(2) = 3.414..</span></a>
-<a class="sourceLine" id="cb1-6" title="6">  y &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sqrt</span>(m2)) <span class="co"># 2^ {1/4}</span></a>
-<a class="sourceLine" id="cb1-7" title="7">  x &lt;-<span class="st"> </span>(y<span class="op">+</span><span class="dv">1</span><span class="op">/</span>y) <span class="op">/</span><span class="st"> </span>m2</a>
-<a class="sourceLine" id="cb1-8" title="8">  it &lt;-<span class="st"> </span>0L</a>
-<a class="sourceLine" id="cb1-9" title="9">  <span class="cf">repeat</span> {</a>
-<a class="sourceLine" id="cb1-10" title="10">    p.old &lt;-<span class="st"> </span>p</a>
-<a class="sourceLine" id="cb1-11" title="11">    it &lt;-<span class="st"> </span>it<span class="op">+</span>1L</a>
-<a class="sourceLine" id="cb1-12" title="12">    p &lt;-<span class="st"> </span>p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>x) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>y)</a>
-<a class="sourceLine" id="cb1-13" title="13">    <span class="cf">if</span>(verbose) <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">"it=%2d, pi^ = %s, |.-.|/|.|=%e</span><span class="ch">\n</span><span class="st">"</span>,</a>
-<a class="sourceLine" id="cb1-14" title="14">                            it, <span class="kw">formatMpfr</span>(p, <span class="kw">min</span>(<span class="dv">50</span>, prec<span class="op">/</span><span class="kw">log2</span>(<span class="dv">10</span>))), <span class="dv">1</span><span class="op">-</span>p.old<span class="op">/</span>p))</a>
-<a class="sourceLine" id="cb1-15" title="15">    <span class="cf">if</span> (<span class="kw">abs</span>(p<span class="op">-</span>p.old) <span class="op">&lt;=</span><span class="st"> </span>m2<span class="op">^</span>(<span class="op">-</span>prec))</a>
-<a class="sourceLine" id="cb1-16" title="16">      <span class="cf">break</span></a>
-<a class="sourceLine" id="cb1-17" title="17">    <span class="cf">if</span>(it <span class="op">&gt;</span><span class="st"> </span>itermax) {</a>
-<a class="sourceLine" id="cb1-18" title="18">      <span class="kw">warning</span>(<span class="st">"not converged in"</span>, it, <span class="st">"iterations"</span>) ; <span class="cf">break</span></a>
-<a class="sourceLine" id="cb1-19" title="19">    }</a>
-<a class="sourceLine" id="cb1-20" title="20">    <span class="co">## else</span></a>
-<a class="sourceLine" id="cb1-21" title="21">    s &lt;-<span class="st"> </span><span class="kw">sqrt</span>(x)</a>
-<a class="sourceLine" id="cb1-22" title="22">    y &lt;-<span class="st"> </span>(y<span class="op">*</span>s <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>s) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>y)</a>
-<a class="sourceLine" id="cb1-23" title="23">    x &lt;-<span class="st"> </span>(s<span class="op">+</span><span class="dv">1</span><span class="op">/</span>s)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb1-24" title="24">  }</a>
-<a class="sourceLine" id="cb1-25" title="25">  p</a>
-<a class="sourceLine" id="cb1-26" title="26">}</a>
-<a class="sourceLine" id="cb1-27" title="27"><span class="kw">piMpfr</span>(<span class="dt">prec =</span> <span class="dv">256</span>)</a></code></pre></div>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">library<span class="punctuation">(</span>Rmpfr<span class="punctuation">)</span></span><br><span class="line">piMpfr <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>prec<span class="operator">=</span><span class="number">256</span><span class="punctuation">,</span> itermax <span class="operator">=</span> <span class="number">100</span><span class="punctuation">,</span> verbose<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">)</span> <span class="punctuation">{</span></span><br><span class="line">  m2 <span class="operator">&lt;-</span> mpfr<span class="punctuation">(</span><span class="number">2</span><span class="punctuation">,</span> prec<span class="punctuation">)</span> <span class="comment"># '2' as mpfr number</span></span><br><span class="line">  <span class="comment">## -&gt; all derived numbers are mpfr (with precision 'prec')</span></span><br><span class="line">  p <span class="operator">&lt;-</span> m2 <span class="operator">+</span> <span class="built_in">sqrt</span><span class="punctuation">(</span>m2<span class="punctuation">)</span> <span class="comment"># 2 + sqrt(2) = 3.414..</span></span><br><span class="line">  y <span class="operator">&lt;-</span> <span class="built_in">sqrt</span><span class="punctuation">(</span><span class="built_in">sqrt</span><span class="punctuation">(</span>m2<span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment"># 2^ {1/4}</span></span><br><span class="line">  x <span class="operator">&lt;-</span> <span class="punctuation">(</span>y<span class="operator">+</span><span class="number">1</span><span class="operator">/</span>y<span class="punctuation">)</span> <span class="operator">/</span> m2</span><br><span class="line">  it <span class="operator">&lt;-</span> 0L</span><br><span class="line">  <span class="keyword">repeat</span> <span class="punctuation">{</span></span><br><span class="line">    p.old <span class="operator">&lt;-</span> p</span><br><span class="line">    it <span class="operator">&lt;-</span> it<span class="operator">+</span><span class="number">1L</span></span><br><span class="line">    p <span class="operator">&lt;-</span> p <span class="operator">*</span> <span class="punctuation">(</span><span class="number">1</span><span class="operator">+</span>x<span class="punctuation">)</span> <span class="operator">/</span> <span class="punctuation">(</span><span class="number">1</span><span class="operator">+</span>y<span class="punctuation">)</span></span><br><span class="line">    <span class="keyword">if</span><span class="punctuation">(</span>verbose<span class="punctuation">)</span> cat<span class="punctuation">(</span>sprintf<span class="punctuation">(</span><span class="string">"it=%2d, pi^ = %s, |.-.|/|.|=%e\n"</span><span class="punctuation">,</span></span><br><span class="line">                            it<span class="punctuation">,</span> formatMpfr<span class="punctuation">(</span>p<span class="punctuation">,</span> <span class="built_in">min</span><span class="punctuation">(</span><span class="number">50</span><span class="punctuation">,</span> prec<span class="operator">/</span>log2<span class="punctuation">(</span><span class="number">10</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">-</span>p.old<span class="operator">/</span>p<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">    <span class="keyword">if</span> <span class="punctuation">(</span><span class="built_in">abs</span><span class="punctuation">(</span>p<span class="operator">-</span>p.old<span class="punctuation">)</span> <span class="operator">&lt;=</span> m2<span class="operator">^</span><span class="punctuation">(</span><span class="operator">-</span>prec<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span><span class="punctuation">(</span>it <span class="operator">&gt;</span> itermax<span class="punctuation">)</span> <span class="punctuation">{</span></span><br><span class="line">      warning<span class="punctuation">(</span><span class="string">"not converged in"</span><span class="punctuation">,</span> it<span class="punctuation">,</span> <span class="string">"iterations"</span><span class="punctuation">)</span> ; <span class="keyword">break</span></span><br><span class="line">    <span class="punctuation">}</span></span><br><span class="line">    <span class="comment">## else</span></span><br><span class="line">    s <span class="operator">&lt;-</span> <span class="built_in">sqrt</span><span class="punctuation">(</span>x<span class="punctuation">)</span></span><br><span class="line">    y <span class="operator">&lt;-</span> <span class="punctuation">(</span>y<span class="operator">*</span>s <span class="operator">+</span> <span class="number">1</span><span class="operator">/</span>s<span class="punctuation">)</span> <span class="operator">/</span> <span class="punctuation">(</span><span class="number">1</span><span class="operator">+</span>y<span class="punctuation">)</span></span><br><span class="line">    x <span class="operator">&lt;-</span> <span class="punctuation">(</span>s<span class="operator">+</span><span class="number">1</span><span class="operator">/</span>s<span class="punctuation">)</span><span class="operator">/</span><span class="number">2</span></span><br><span class="line">  <span class="punctuation">}</span></span><br><span class="line">  p</span><br><span class="line"><span class="punctuation">}</span></span><br><span class="line">piMpfr<span class="punctuation">(</span>prec <span class="operator">=</span> <span class="number">256</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
 <pre><code>## it= 1, pi^ = 3.1426067539416226007907198236183018919713562462772, |.-.|/|.|=-8.642723e-02
 ## it= 2, pi^ = 3.1415926609660442304977522351203396906792842568645, |.-.|/|.|=-3.227958e-04
 ## it= 3, pi^ = 3.1415926535897932386457739917571417940347896238675, |.-.|/|.|=-2.347934e-09
@@ -342,7 +311,7 @@ mjx-container + br {
 
 ## 1 'mpfr' number of precision  256   bits 
 ## [1] 3.141592653589793238462643383279502884197169399375105820974944592307816406286163</code></pre>
-<svg style="display: none" id="MJX-SVG-global-cache"><defs></defs></svg>
+
             
                 
 

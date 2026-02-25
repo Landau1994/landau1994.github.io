@@ -62,17 +62,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><style>mjx-container[jax="SVG"] {
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
 mjx-container[jax="SVG"] > svg {
   overflow: visible;
-}
-
-mjx-container[jax="SVG"] > svg a {
-  fill: blue;
-  stroke: blue;
 }
 
 mjx-container[jax="SVG"][display="true"] {
@@ -172,11 +167,11 @@ foreignObject[data-mjx-xml] {
   stroke-width: 3;
 }
 
-mjx-container {
+mjx-container[display="true"] {
   overflow: auto hidden;
 }
 
-mjx-container + br {
+mjx-container[display="true"] + br {
   display: none;
 }
 </style></head>
@@ -300,7 +295,7 @@ mjx-container + br {
             </div>
             <h2 class="post-title">rmarkdown-test</h2>
             <div class="post-meta">
-                本文共计1104个字 |
+                本文共计1082个字 |
                 您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
@@ -309,34 +304,12 @@ mjx-container + br {
 <h1 id="r-markdown">R Markdown</h1>
 <p>This is an R Markdown document. Please note this page was <strong>not</strong> rendered using the <a target="_blank" rel="noopener" href="http://rmarkdown.rstudio.com"><strong>rmarkdown</strong></a> package or <a target="_blank" rel="noopener" href="http://pandoc.org">Pandoc</a>. The R Markdown document is compiled to Markdown through <strong>knitr</strong>, and the Markdown document is rendered to HTML through <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-renderer-marked">Hexo’s Markdown renderer</a>.</p>
 <p>You can embed an R code chunk like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">summary</span>(cars)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">##      speed           dist       </span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">##  Min.   : 4.0   Min.   :  2.00  </span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="co">##  1st Qu.:12.0   1st Qu.: 26.00  </span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">##  Median :15.0   Median : 36.00  </span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co">##  Mean   :15.4   Mean   : 42.98  </span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co">##  3rd Qu.:19.0   3rd Qu.: 56.00  </span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co">##  Max.   :25.0   Max.   :120.00</span></a>
-<a class="sourceLine" id="cb1-9" title="9">fit &lt;-<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)</a>
-<a class="sourceLine" id="cb1-10" title="10">fit</a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co">## Call:</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="co">## lm(formula = dist ~ speed, data = cars)</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="co">## </span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co">## Coefficients:</span></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="co">## (Intercept)        speed  </span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="co">##     -17.579        3.932</span></a></code></pre></div>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">summary<span class="punctuation">(</span>cars<span class="punctuation">)</span></span><br><span class="line"><span class="comment">##      speed           dist       </span></span><br><span class="line"><span class="comment">##  Min.   : 4.0   Min.   :  2.00  </span></span><br><span class="line"><span class="comment">##  1st Qu.:12.0   1st Qu.: 26.00  </span></span><br><span class="line"><span class="comment">##  Median :15.0   Median : 36.00  </span></span><br><span class="line"><span class="comment">##  Mean   :15.4   Mean   : 42.98  </span></span><br><span class="line"><span class="comment">##  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span><br><span class="line"><span class="comment">##  Max.   :25.0   Max.   :120.00</span></span><br><span class="line">fit <span class="operator">&lt;-</span> lm<span class="punctuation">(</span>dist <span class="operator">~</span> speed<span class="punctuation">,</span> data <span class="operator">=</span> cars<span class="punctuation">)</span></span><br><span class="line">fit</span><br><span class="line"><span class="comment">## </span></span><br><span class="line"><span class="comment">## Call:</span></span><br><span class="line"><span class="comment">## lm(formula = dist ~ speed, data = cars)</span></span><br><span class="line"><span class="comment">## </span></span><br><span class="line"><span class="comment">## Coefficients:</span></span><br><span class="line"><span class="comment">## (Intercept)        speed  </span></span><br><span class="line"><span class="comment">##     -17.579        3.932</span></span><br></pre></td></tr></table></figure>
 <h1 id="including-plots">Including Plots</h1>
 <p>You can also embed R plots:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw">pie</span>(</a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="kw">c</span>(<span class="dv">280</span>, <span class="dv">60</span>, <span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb2-4" title="4">  <span class="kw">c</span>(<span class="st">'Sky'</span>, <span class="st">'Sunny side of pyramid'</span>, <span class="st">'Shady side of pyramid'</span>),</a>
-<a class="sourceLine" id="cb2-5" title="5">  <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">'#0292D8'</span>, <span class="st">'#F7EA39'</span>, <span class="st">'#C4B632'</span>),</a>
-<a class="sourceLine" id="cb2-6" title="6">  <span class="dt">init.angle =</span> <span class="dv">-50</span>, <span class="dt">border =</span> <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb2-7" title="7">)</a></code></pre></div>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">par<span class="punctuation">(</span>mar <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">pie<span class="punctuation">(</span></span><br><span class="line">  <span class="built_in">c</span><span class="punctuation">(</span><span class="number">280</span><span class="punctuation">,</span> <span class="number">60</span><span class="punctuation">,</span> <span class="number">20</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  <span class="built_in">c</span><span class="punctuation">(</span><span class="string">'Sky'</span><span class="punctuation">,</span> <span class="string">'Sunny side of pyramid'</span><span class="punctuation">,</span> <span class="string">'Shady side of pyramid'</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  col <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">'#0292D8'</span><span class="punctuation">,</span> <span class="string">'#F7EA39'</span><span class="punctuation">,</span> <span class="string">'#C4B632'</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  init.angle <span class="operator">=</span> <span class="operator">-</span><span class="number">50</span><span class="punctuation">,</span> border <span class="operator">=</span> <span class="literal">NA</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
 <p><img src="/figure/posts/rmarkdown-test_files/figure-gfm/pie-1.png"><!-- --></p>
-<svg style="display: none" id="MJX-SVG-global-cache"><defs></defs></svg>
+
             
                 
 
