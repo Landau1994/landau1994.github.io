@@ -140,3 +140,7 @@ mermaid:
   # Available themes: default | dark | forest | neutral
   theme: default
   cdn: https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
+
+# Pandoc renderer settings
+pandoc:
+  timeout: 60000

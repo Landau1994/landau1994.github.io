@@ -38,6 +38,7 @@ npm-upgrade
 
 ### 常见问题 (Troubleshooting)
 - **RMarkdown 支持 (2020-04-10)**: 使用 blogdown 时，code trunk 的图片和缓存路径可能需要手动调整（推测为原主题 Bug）。
+- **`spawnSync pandoc ETIMEDOUT` 错误 (2026-02-25)**: 由于 `hexo-renderer-pandoc` 默认超时时间较短（5000ms），在渲染包含大量复杂 LaTeX 公式的 Markdown 文件时易触发超时中断。解决方案：在根目录 `_config.yml` 中显式配置 `pandoc: \n  timeout: 60000` 将超时时间延长至 60 秒。
 
 ---
 
@@ -62,6 +63,6 @@ git push origin source
 
 ## 更新日志
 
-- **2026-02-25**: 升级依赖包，修复 `minimatch`。引入 `npm-upgrade` 管理依赖。
+- **2026-02-25**: 升级依赖包，修复 `minimatch`。引入 `npm-upgrade` 管理依赖。修复 `hexo-renderer-pandoc` 的 `spawnSync pandoc ETIMEDOUT` 超时构建问题。
 - **2025-01-12**: 增加本地 Hexo 调用方式说明。
 - **2022-06-21**: 手动修复 `package.json` 和 `package-lock.json` 版本冲突。
