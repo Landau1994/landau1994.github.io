@@ -12,8 +12,8 @@ tags:
   - note
 date: 2026-02-25 13:49:05
 keywords: 
-  - self-driving-lab 
   - AIVC
+  - self-driving-lab 
 description:
 photos:
 ---
