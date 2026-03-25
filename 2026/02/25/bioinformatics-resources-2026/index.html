@@ -295,7 +295,7 @@ mjx-container[display="true"] + br {
             </div>
             <h2 class="post-title">我花了三年时间，整理了这份生物信息学资源清单（2026最新版）</h2>
             <div class="post-meta">
-                本文共计4734个字 |
+                本文共计5174个字 |
                 您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
             </div>
         </div>
@@ -422,16 +422,36 @@ mjx-container[display="true"] + br {
 <h2 id="重点板块二ai-大语言模型">🤖 重点板块二：AI 大语言模型</h2>
 <p>大模型不只是聊天工具，<strong>用对了能让科研效率翻倍！</strong></p>
 <h3 id="通用大模型---日常必备">1. 通用大模型 - 日常必备</h3>
-<p><strong>国际版：</strong> - <strong>ChatGPT (GPT-5.3)</strong> - 最强综合能力，但需要魔法上网 - <strong>Claude 4</strong> - <strong>长文本之王</strong>（可以处理整本书） - 我现在写论文都先让 Claude 帮忙润色 - <strong>Gemini</strong> - Google 出品，多模态能力强</p>
-<p><strong>国内版：</strong> - <strong>Kimi</strong> - 长文本处理很不错，免费！ - <strong>DeepSeek</strong> - 推理能力强，适合做数学题和代码 - <strong>豆包</strong> - 字节出品，速度快</p>
-<p><strong>实用技巧</strong>： - 写代码用 <strong>Claude</strong> 或 <strong>DeepSeek</strong> - 读文献用 <strong>Kimi</strong>（一次能塞好几篇论文） - 画图解用 <strong>GPT-5.3</strong> 或 <strong>Gemini</strong></p>
+<p>这块变化太快，<strong>不要死记具体版本号</strong>。更实用的方式是按场景选模型：</p>
+<ul>
+<li><strong>ChatGPT</strong> - 综合能力稳定，适合头脑风暴、数据分析思路整理、图表草稿和通用问答</li>
+<li><strong>Claude</strong> - 长文本、写作润色、代码解释和重构依然很强
+<ul>
+<li>我现在处理论文初稿、审稿意见和大段方法部分，还是更常用 Claude</li>
+</ul></li>
+<li><strong>Gemini</strong> - 多模态能力突出，适合处理 PDF、截图、图表和网页信息</li>
+</ul>
+<p><strong>国内常用：</strong></p>
+<ul>
+<li><strong>Kimi</strong> - 中文长文本体验很好，适合快速梳理论文和网页资料</li>
+<li><strong>DeepSeek</strong> - 推理和代码性价比很高，适合脚本、小工具和 debug</li>
+<li><strong>通义 / 豆包</strong> - 中文交互顺手，做轻量问答、改写和内容整理很方便</li>
+</ul>
+<p><strong>实用技巧</strong>：</p>
+<ul>
+<li>写代码和 debug：优先 <strong>Claude</strong>、<strong>DeepSeek</strong>，再配合 <strong>Cursor</strong></li>
+<li>读长文献、看补充材料：优先 <strong>Kimi</strong> 或 <strong>Claude</strong></li>
+<li>处理图表、截图、网页和 PDF：优先 <strong>Gemini</strong> 或 <strong>ChatGPT</strong></li>
+<li>最终写进论文或汇报前，<strong>一定回到原文献和原始数据做核对</strong></li>
+</ul>
 <h3 id="生物医学专用模型---专业问题找专家">2. 生物医学专用模型 - 专业问题找专家</h3>
 <ul>
-<li><strong><a target="_blank" rel="noopener" href="https://github.com/microsoft/BioGPT">BioGPT</a></strong> - 微软训练的生物医学文本生成模型</li>
-<li><strong><a target="_blank" rel="noopener" href="https://sites.research.google/med-palm/">Med-PaLM</a></strong> - Google 的医疗专用模型</li>
-<li><strong><a target="_blank" rel="noopener" href="https://github.com/ncbi/GeneGPT">GeneGPT</a></strong> - NCBI 出品，专门回答基因问题</li>
+<li><strong><a target="_blank" rel="noopener" href="https://deepmind.google/models/gemma/medgemma/">MedGemma</a></strong> - Google DeepMind 的开放医学模型系列，适合做医学文本和影像相关探索</li>
+<li><strong>Med-Gemini</strong> - 医学多模态方向很强，代表了近两年医疗大模型的发展趋势</li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/ncbi/GeneGPT">GeneGPT</a></strong> - 把大模型和 NCBI 工具调用结合起来，查基因时很有启发性</li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/microsoft/BioGPT">BioGPT</a></strong> - 现在更像经典基线模型，做复现或教学了解可以看看</li>
 </ul>
-<p><strong>举个例子</strong>：我最近在研究一个不熟悉的基因，直接问 GeneGPT，它给出的解释比我自己查文献快多了。</p>
+<p><strong>我的建议</strong>：生物医学专用模型很适合做第一轮探索，但在很多科研场景里，<strong>顶级通用模型 + 文献检索工具 + 你自己的专业判断</strong>，往往比单独依赖某个专用模型更稳。</p>
 <h3 id="ai-辅助工具---效率加倍器">3. AI 辅助工具 - 效率加倍器</h3>
 <ul>
 <li><strong><a target="_blank" rel="noopener" href="https://cursor.sh/">Cursor</a></strong> - AI 代码编辑器
@@ -444,6 +464,12 @@ mjx-container[display="true"] + br {
 <li>代码补全非常智能</li>
 <li>学生可以免费用</li>
 </ul></li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/openclaw/openclaw">OpenClaw</a></strong> - 开源 AI Agent 框架，适合折腾自动化工作流
+<ul>
+<li>更像“能调用工具的个人 AI 助手”，不只是聊天</li>
+<li>如果你想把文献整理、PDF 提取、消息通知、脚本执行串成一个半自动流程，它很值得关注</li>
+<li>但门槛比 Cursor/Copilot 高一些，更适合喜欢自己搭系统的同学</li>
+</ul></li>
 <li><strong><a target="_blank" rel="noopener" href="https://consensus.app/">Consensus</a></strong> - AI 文献搜索
 <ul>
 <li>输入问题，直接给你文献总结</li>
@@ -453,6 +479,7 @@ mjx-container[display="true"] + br {
 <ul>
 <li>帮你做系统性文献综述</li>
 <li>自动提取论文关键信息</li>
+<li>不过需要付费</li>
 </ul></li>
 </ul>
 <p><strong>真心话</strong>：如果你还在纯手工写代码、读文献，真的该试试这些工具了。<strong>工具用得好，下班下得早！</strong></p>
@@ -580,9 +607,23 @@ mjx-container[display="true"] + br {
 <h2 id="我的使用心得">💡 我的使用心得</h2>
 <h3 id="建立自己的工具箱">1. 建立自己的工具箱</h3>
 <p>不要什么都想学，根据你的研究方向，<strong>精选 10-15 个常用工具深度掌握</strong>。</p>
-<p>我自己的常用工具箱： - IDE: VS Code + Jupyter Lab - 包管理: uv + Conda - 代码助手: Cursor + GitHub Copilot - 文献管理: Zotero - 大模型: Claude + Kimi - 绘图: ggplot2 + BioRender</p>
+<p>我自己的常用工具箱：</p>
+<ul>
+<li>IDE: VS Code + Jupyter Lab</li>
+<li>包管理: uv + Conda</li>
+<li>代码助手: Cursor + GitHub Copilot</li>
+<li>文献管理: Zotero</li>
+<li>大模型: Claude + Kimi + ChatGPT</li>
+<li>绘图: ggplot2 + BioRender</li>
+</ul>
 <h3 id="善用-ai-提效">2. 善用 AI 提效</h3>
-<p><strong>能让 AI 做的，就不要手工做：</strong> - 读文献 → 用 Consensus 或 Elicit - 写代码 → 用 Cursor 或 Copilot - 画图 → 用 BioRender 或 GPT-4 - 润色文章 → 用 Claude</p>
+<p><strong>能让 AI 做的，就不要手工做：</strong></p>
+<ul>
+<li>读文献 → 用 Consensus、Elicit 或 scite</li>
+<li>写代码 → 用 Cursor 或 Copilot</li>
+<li>画图/解释图表 → 用 BioRender、Gemini 或 ChatGPT</li>
+<li>润色文章 → 用 Claude</li>
+</ul>
 <p>但记住：<strong>AI 是助手，不是替代品。</strong> 批判性思维永远不能丢。</p>
 <h3 id="持续学习的节奏">3. 持续学习的节奏</h3>
 <p><strong>不要试图一次性学完所有东西！</strong> 建议：</p>
@@ -623,7 +664,7 @@ mjx-container[display="true"] + br {
 <hr>
 <p><strong>相关阅读：</strong> - <a href="/links/">计算生物学成长路线图</a> （附路线图）</p>
 <hr>
-<p><em>本文约 7000 字，阅读时间约 15 分钟</em> <em>最后更新：2026-02-25</em> <em>转载请注明出处</em></p>
+<p><em>本文约 7000 字，阅读时间约 15 分钟</em> <em>最后更新：2026-03-25</em> <em>转载请注明出处</em></p>
 
             
                 
