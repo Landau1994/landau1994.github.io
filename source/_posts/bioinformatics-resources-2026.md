@@ -119,29 +119,34 @@ comments: true
 
 ### 1. 通用大模型 - 日常必备
 
-**国际版：**
-- **ChatGPT (GPT-5.3)** - 最强综合能力，但需要魔法上网
-- **Claude 4** - **长文本之王**（可以处理整本书）
-  - 我现在写论文都先让 Claude 帮忙润色
-- **Gemini** - Google 出品，多模态能力强
+这块变化太快，**不要死记具体版本号**。更实用的方式是按场景选模型：
 
-**国内版：**
-- **Kimi** - 长文本处理很不错，免费！
-- **DeepSeek** - 推理能力强，适合做数学题和代码
-- **豆包** - 字节出品，速度快
+- **ChatGPT** - 综合能力稳定，适合头脑风暴、数据分析思路整理、图表草稿和通用问答
+- **Claude** - 长文本、写作润色、代码解释和重构依然很强
+  - 我现在处理论文初稿、审稿意见和大段方法部分，还是更常用 Claude
+- **Gemini** - 多模态能力突出，适合处理 PDF、截图、图表和网页信息
+
+**国内常用：**
+
+- **Kimi** - 中文长文本体验很好，适合快速梳理论文和网页资料
+- **DeepSeek** - 推理和代码性价比很高，适合脚本、小工具和 debug
+- **通义 / 豆包** - 中文交互顺手，做轻量问答、改写和内容整理很方便
 
 **实用技巧**：
-- 写代码用 **Claude** 或 **DeepSeek**
-- 读文献用 **Kimi**（一次能塞好几篇论文）
-- 画图解用 **GPT-5.3** 或 **Gemini**
+
+- 写代码和 debug：优先 **Claude**、**DeepSeek**，再配合 **Cursor**
+- 读长文献、看补充材料：优先 **Kimi** 或 **Claude**
+- 处理图表、截图、网页和 PDF：优先 **Gemini** 或 **ChatGPT**
+- 最终写进论文或汇报前，**一定回到原文献和原始数据做核对**
 
 ### 2. 生物医学专用模型 - 专业问题找专家
 
-- **[BioGPT](https://github.com/microsoft/BioGPT)** - 微软训练的生物医学文本生成模型
-- **[Med-PaLM](https://sites.research.google/med-palm/)** - Google 的医疗专用模型
-- **[GeneGPT](https://github.com/ncbi/GeneGPT)** - NCBI 出品，专门回答基因问题
+- **[MedGemma](https://deepmind.google/models/gemma/medgemma/)** - Google DeepMind 的开放医学模型系列，适合做医学文本和影像相关探索
+- **Med-Gemini** - 医学多模态方向很强，代表了近两年医疗大模型的发展趋势
+- **[GeneGPT](https://github.com/ncbi/GeneGPT)** - 把大模型和 NCBI 工具调用结合起来，查基因时很有启发性
+- **[BioGPT](https://github.com/microsoft/BioGPT)** - 现在更像经典基线模型，做复现或教学了解可以看看
 
-**举个例子**：我最近在研究一个不熟悉的基因，直接问 GeneGPT，它给出的解释比我自己查文献快多了。
+**我的建议**：生物医学专用模型很适合做第一轮探索，但在很多科研场景里，**顶级通用模型 + 文献检索工具 + 你自己的专业判断**，往往比单独依赖某个专用模型更稳。
 
 ### 3. AI 辅助工具 - 效率加倍器
 
@@ -153,6 +158,11 @@ comments: true
   - 代码补全非常智能
   - 学生可以免费用
 
+- **[OpenClaw](https://github.com/openclaw/openclaw)** - 开源 AI Agent 框架，适合折腾自动化工作流
+  - 更像“能调用工具的个人 AI 助手”，不只是聊天
+  - 如果你想把文献整理、PDF 提取、消息通知、脚本执行串成一个半自动流程，它很值得关注
+  - 但门槛比 Cursor/Copilot 高一些，更适合喜欢自己搭系统的同学
+
 - **[Consensus](https://consensus.app/)** - AI 文献搜索
   - 输入问题，直接给你文献总结
   - 比自己翻 PubMed 快太多
@@ -160,6 +170,7 @@ comments: true
 - **[Elicit](https://elicit.org/)** - AI 研究助手
   - 帮你做系统性文献综述
   - 自动提取论文关键信息
+  - 不过需要付费
 
 **真心话**：如果你还在纯手工写代码、读文献，真的该试试这些工具了。**工具用得好，下班下得早！**
 
@@ -293,19 +304,21 @@ comments: true
 不要什么都想学，根据你的研究方向，**精选 10-15 个常用工具深度掌握**。
 
 我自己的常用工具箱：
+
 - IDE: VS Code + Jupyter Lab
 - 包管理: uv + Conda
 - 代码助手: Cursor + GitHub Copilot
 - 文献管理: Zotero
-- 大模型: Claude + Kimi
+- 大模型: Claude + Kimi + ChatGPT
 - 绘图: ggplot2 + BioRender
 
 ### 2. 善用 AI 提效
 
 **能让 AI 做的，就不要手工做：**
-- 读文献 → 用 Consensus 或 Elicit
+
+- 读文献 → 用 Consensus、Elicit 或 scite
 - 写代码 → 用 Cursor 或 Copilot
-- 画图 → 用 BioRender 或 GPT-4
+- 画图/解释图表 → 用 BioRender、Gemini 或 ChatGPT
 - 润色文章 → 用 Claude
 
 但记住：**AI 是助手，不是替代品。** 批判性思维永远不能丢。
@@ -388,5 +401,5 @@ comments: true
 ---
 
 *本文约 7000 字，阅读时间约 15 分钟*
-*最后更新：2026-02-25*
+*最后更新：2026-03-25*
 *转载请注明出处*
