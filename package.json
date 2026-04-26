@@ -6,7 +6,7 @@
     "version": "8.1.1"
   },
   "dependencies": {
-    "@xmldom/xmldom": "0.9.9",
+    "@xmldom/xmldom": "0.9.10",
     "ejs": "^4.0.1",
     "hexo": "^8.1.1",
     "hexo-deployer-git": "^4.0.0",
@@ -25,13 +25,12 @@
     "hexo-server": "^3.0.0",
     "highlight.js": "^11.11.1",
     "kind-of": "^6.0.3",
-    "mermaid": "^11.12.3",
     "minimist": "^1.2.8",
     "moment": "^2.30.1",
     "prismjs": "^1.30.0",
     "underscore": "^1.13.8"
   },
   "overrides": {
-    "@xmldom/xmldom": "0.9.9"
+    "@xmldom/xmldom": "0.9.10"
   }
 }

@@ -63,6 +63,7 @@ git push origin source
 
 ## 更新日志
 
+- **2026-04-26**: 移除冗余的 `mermaid` 依赖，修复 `npm audit` 报出的安全漏洞（含 `dompurify` 漏洞）。
 - **2026-04-01**: 统一 `@xmldom/xmldom` 版本至 `0.9.9` 以解决潜在的版本冲突并修复漏洞。
 - **2026-03-18**: 移除冗余开发依赖 `grunt`。发布新文章《多智能体对话》。
 - **2026-02-25**: 升级依赖包，修复 `minimatch`。引入 `npm-upgrade` 管理依赖。修复 `hexo-renderer-pandoc` 的 `spawnSync pandoc ETIMEDOUT` 超时构建问题。集成 `busuanzi.simple.js` 实现基于本地存储的 PV/UV 访问统计功能。发布 2026 年系列博文（AlphaGenome, LUMI-lab, Bioinformatics Resources 2026）。
