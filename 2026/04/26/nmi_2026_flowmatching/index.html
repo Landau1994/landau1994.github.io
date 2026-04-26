@@ -26,7 +26,7 @@
 <link rel="shortcut icon" href="/images/favicon.png">
 
 
-<title>标签 - Coding for Life Sciences</title>
+<title>nmi 2026 flow matching for generative modelling in bioinformatics and computational biology - Coding for Life Sciences</title>
 
 <meta name="keywords" content="Biology, Data Science,AI,Informatics,Modeling;">
 
@@ -242,8 +242,30 @@ mjx-container[display="true"] + br {
 
             <div class="page-title">
     <ul>
-        <li><a href="/" data-name="首页" title="Back Home">首页</a></li>
-        <li><a href="/archives" data-name="归档" title="归档">归档</a></li>
+        <li><a href="/">最近</a></li>
+        
+            
+                <li class="">
+                    <a href="/categories/genomics" data-name="基因组学">基因组学</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/implementation" data-name="编程实践">编程实践</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/reference" data-name="文献阅读">文献阅读</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/math" data-name="数学学习">数学学习</a>
+                </li>
+            
+                <li class="">
+                    <a href="/categories/others" data-name="其他">其他</a>
+                </li>
+            
+        
         <li class="page-search">
     <form id="search" class="search-form">
         <input type="text"
@@ -259,79 +281,151 @@ mjx-container[display="true"] + br {
 <div class="main-inner">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
         <div class="post-header">
-            <h3 class="post-title">总的来说，本站目前涉及28个领域 😄️</h3>
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="https://github.com/Landau1994"
+                   target="_blank">
+                    <img width="48" src="/images/faceicon.png" alt="avatar"/>
+                </a>
+                <p><span class="label">作者</span>
+                    <a href="https://github.com/Landau1994"
+                       target="_blank">研精极锐</a>
+                    <span title="最后编辑于&nbsp;2026-04-26">2026-04-26</span>
+                </p>
+                <p>An apprentice in bioinformatics</p>
+            </div>
+            <h2 class="post-title">NMI 2026 Flow matching for generative modelling in bioinformatics and computational biology</h2>
+            <div class="post-meta">
+                本文共计2893个字 |
+                您是第&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>位看到它们的小伙伴
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <h1 id="flow-matching-for-generative-modelling-in-bioinformatics-and-computational-biology">Flow matching for generative modelling in bioinformatics and computational biology</h1>
+<blockquote>
+<p>[!abstract] TL;DR (Executive Summary) <strong>One-sentence summary</strong>: 本文综述了流匹配（Flow Matching, FM）作为一种新兴的生成式人工智能范式，如何通过高效学习高维生物数据分布间的映射，推动分子建模、单细胞/多细胞分析及虚拟细胞（AI-based virtual cell）的发展。</p>
+</blockquote>
+<h2 id="context-rationale">1. Context &amp; Rationale</h2>
+<ul>
+<li><strong>Research Question</strong>: 如何在生物信息学和计算生物学中高效地学习从一个生物状态（如患病状态）到另一个状态（如健康状态）的非平凡映射，并解决传统生成模型（如扩散模型）采样速度慢和约束处理难的问题？</li>
+<li><strong>The Gap</strong>: 手动推导生物映射需要极高的专业知识；现有的生成模型（如 GANs, VAEs, Diffusion）在处理生物分子的几何约束（如 SE(3) 不变性）、离散序列数据以及大规模采样效率方面存在局限。</li>
+<li><strong>Hypothesis</strong>: 流匹配（FM）作为一种基于最优传输（Optimal Transport）理论的无模拟（Simulation-free）训练范式，可以提供比扩散模型更简洁、更高效且更具可解释性的生物数据建模手段。</li>
+</ul>
+<h2 id="methodology-bio-comp">2. Methodology (Bio + Comp)</h2>
+<h3 id="dry-lab-in-silico">💻 Dry Lab (In Silico)</h3>
+<ul>
+<li><strong>Algorithm/Model</strong>:
+<ul>
+<li><strong>核心理论</strong>: 基于连续正则化流（CNFs），通过回归向量场（Vector Field）来学习概率路径（Probability Paths）。</li>
+<li><strong>变体</strong>: 条件流匹配（CFM）、修正流（Rectified Flow）、离散流匹配（Discrete FM，利用连续时间马尔可夫链）。</li>
+<li><strong>架构</strong>: 结合了 Transformer, 图神经网络（GNNs）和 SE(3) 等变网络（SE(3)-equivariant networks）。</li>
+</ul></li>
+<li><strong>Datasets</strong>:
+<ul>
+<li>分子层面：PDB, GEOM-Drugs, Swiss-Prot, SAbDab。</li>
+<li>细胞层面：HLCA (Human Lung Cell Atlas), MERFISH, PBMC。</li>
+<li>影像层面：EMDB, fastMRI, JUMP。</li>
+</ul></li>
+<li><strong>Code Availability</strong>:
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/amorehead/awesome-generative-flows">Awesome Generative Flows (GitHub)</a></li>
+<li><a target="_blank" rel="noopener" href="https://ai.meta.com/research/publications/flow-matching-guide-and-code">Meta AI Flow Matching Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/atong01/conditional-flow-matching">torchcfm</a></li>
+</ul></li>
+</ul>
+<h2 id="key-results">3. Key Results</h2>
+<h3 id="main-findings">Main Findings</h3>
+<ol type="1">
+<li><strong>分子建模（Molecular Modelling）</strong>: FM 在蛋白质折叠（如 FoldFlow）、小分子构象生成（如 FlowMol）中表现卓越，采样速度比扩散模型快 100 倍，且能更好地处理手性及几何约束。</li>
+<li><strong>细胞建模（Cellular Modelling）</strong>: FM 能够模拟单细胞在药物扰动下的表型演变（如 CellFlow），通过学习连续向量场预测细胞状态的轨迹。</li>
+<li><strong>技术优势</strong>: 相比扩散模型，FM 需要更少的推理步数（Inference Steps），实现更简单，且支持非高斯先验（Non-Gaussian priors），极大地增强了生物学合理性。</li>
+<li><strong>虚拟细胞愿景</strong>: FM 被视为构建“人工智能虚拟细胞”的关键脚手架，能够跨越分子、结构和表型尺度进行端到端的模拟。</li>
+</ol>
+<h3 id="key-figures">Key Figures</h3>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Figure</th>
+<th style="text-align: left;">Description &amp; Takeaway</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Fig 1</strong></td>
+<td style="text-align: left;"><strong>FM 及其应用概览</strong>: 展示了从细胞群体 A 到 B 的速度场映射，以及在蛋白质和分子建模中的生成策略。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Fig 2</strong></td>
+<td style="text-align: left;"><strong>发展时间线</strong>: 描绘了从 2015 年正则化流起步，到 2022 年 FM 模型提出，再到 2024-2025 年在生物信息领域爆发式增长的过程。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Fig 3</strong></td>
+<td style="text-align: left;"><strong>应用分类法</strong>: 将 FM 应用分为分子建模（基础）、单/多细胞建模（中间）和虚拟细胞建模（最高层）三个层次。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="critical-analysis-for-grantsprojects">4. Critical Analysis (For Grants/Projects)</h2>
+<blockquote>
+<p>[!success] Innovation 1. <strong>Conceptual</strong>: 将复杂的生物过程建模为高维概率分布间的最优传输路径，提供了统一的数学框架。 2. <strong>Technical</strong>: 实现了“无模拟”训练，显著降低了计算成本；通过引入离散流匹配解决了生物序列（DNA/RNA/蛋白质）的生成难题。</p>
+</blockquote>
+<blockquote>
+<p>[!failure] Limitations &amp; Critiques - <strong>模式崩溃（Mode Collapse）</strong>: 在特定路径选择下（如修正流），FM 仍可能面临稳定性挑战。 - <strong>数据稀疏性</strong>: 对于极高维且稀疏的生物数据集，FM 的收敛性及表达能力仍需进一步理论验证。 - <strong>端点不稳定性</strong>: 向量场在时间端点附近可能存在梯度方差不稳定的问题。</p>
+</blockquote>
+<blockquote>
+<p>[!tip] Relevance to My Research : - <em>Method to adapt</em>: 借鉴 CellFlow 的向量场学习方法，用于单细胞蛋白质组学轨迹推断。 - <em>Idea to steal</em>: 利用最优传输路径（Optimal-transport paths）来减少生物样本模拟过程中的采样步数，提升实时分析效率。</p>
+</blockquote>
+<h2 id="manuscript-snippets">5. Manuscript Snippets</h2>
+<ul>
+<li>“Flow matching is a powerful and principled, data-driven framework for efficiently learning a mapping between arbitrary pairs of high-dimensional data distributions…” (描述 FM 的核心优势)</li>
+<li>“The rapid emergence of FM as a unifying paradigm for generative modelling marks a pivotal moment in the computational life sciences.” (强调领域地位)</li>
+</ul>
+<h2 id="references">6. References</h2>
+<ul>
+<li><strong>Related Papers</strong>:
+<ul>
+<li>[[Lipman et al., 2023]] (Flow matching for generative modeling)</li>
+<li>[[Tong et al., 2024]] (Improving and generalizing flow-based generative models with minibatch optimal transport)</li>
+</ul></li>
+<li><strong>Cited By</strong>:
+<ul>
+<li>(该综述发表较新，预计将成为 2026 年后生成式生物 AI 的重要引文)</li>
+</ul></li>
+</ul>
+
+            
+                
+
+            
+        </div>
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> 打赏
+            </a>
         </div>
         
-
-        <div class="post-content markdown-body" itemprop="articleBody">
-            <ul class="tag-list">
-                
-                <li><a href="/tags/AI/">AI(4)</a></li>
-                
-                <li><a href="/tags/AIVC/">AIVC(1)</a></li>
-                
-                <li><a href="/tags/AI%E5%B7%A5%E5%85%B7/">AI工具(1)</a></li>
-                
-                <li><a href="/tags/ATAC-seq/">ATAC-seq(1)</a></li>
-                
-                <li><a href="/tags/ChIP-seq/">ChIP-seq(1)</a></li>
-                
-                <li><a href="/tags/ENCODE/">ENCODE(1)</a></li>
-                
-                <li><a href="/tags/Graph/">Graph(3)</a></li>
-                
-                <li><a href="/tags/HiC/">HiC(1)</a></li>
-                
-                <li><a href="/tags/Network/">Network(3)</a></li>
-                
-                <li><a href="/tags/NodeJS/">NodeJS(1)</a></li>
-                
-                <li><a href="/tags/Probability/">Probability(2)</a></li>
-                
-                <li><a href="/tags/Python/">Python(1)</a></li>
-                
-                <li><a href="/tags/R/">R(8)</a></li>
-                
-                <li><a href="/tags/art/">art(3)</a></li>
-                
-                <li><a href="/tags/biology/">biology(3)</a></li>
-                
-                <li><a href="/tags/cell-biology/">cell biology(1)</a></li>
-                
-                <li><a href="/tags/genetics/">genetics(1)</a></li>
-                
-                <li><a href="/tags/genomics/">genomics(1)</a></li>
-                
-                <li><a href="/tags/hexo/">hexo(1)</a></li>
-                
-                <li><a href="/tags/immunology/">immunology(2)</a></li>
-                
-                <li><a href="/tags/machine-learning/">machine learning(1)</a></li>
-                
-                <li><a href="/tags/note/">note(26)</a></li>
-                
-                <li><a href="/tags/sc-seq/">sc-seq(3)</a></li>
-                
-                <li><a href="/tags/scRNA-seq/">scRNA-seq(6)</a></li>
-                
-                <li><a href="/tags/stochastic-Process/">stochastic Process(4)</a></li>
-                
-                <li><a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/">学习路径(1)</a></li>
-                
-                <li><a href="/tags/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E5%AD%A6/">生物信息学(1)</a></li>
-                
-                <li><a href="/tags/%E8%B5%84%E6%BA%90%E5%AF%BC%E8%88%AA/">资源导航(1)</a></li>
-                
-            </ul>
+        <div class="post-tags">标签：
+            
+            <a href="/tags/note/">note</a>
+            
         </div>
-        <p style="width: 100%; text-align: center"><img src="/images/tags-bg.png" alt="tags-bg"></p>
+        
     </article>
+    
+        <p style="text-align: center">本文代表个人观点，内容仅供参考。若有不恰当之处，望不吝赐教！</p>
+    
+    
+    
+
 </div>
+
 
         </div><!-- end #main-->
     </div><!-- end #body -->
     <footer class="footer">
-    <div class="footer-inner" style="text-align: 'left'">
+    <div class="footer-inner" style="text-align: 'center'">
         <p>
             <a href="/about"  title="关于">关于</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
             <!-- 自定义链接 -->
