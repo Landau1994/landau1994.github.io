@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "8.1.1"
+    "version": "8.1.2"
   },
   "dependencies": {
-    "@xmldom/xmldom": "0.9.10",
     "ejs": "^4.0.1",
     "hexo": "^8.1.1",
     "hexo-deployer-git": "^4.0.0",
@@ -31,6 +30,8 @@
     "underscore": "^1.13.8"
   },
   "overrides": {
-    "@xmldom/xmldom": "0.9.10"
+    "hexo-math": {
+      "katex": "0.18.2"
+    }
   }
 }
